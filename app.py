@@ -17,18 +17,24 @@ def index():
     return render_template('home.html')
 
 
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+
 @app.route('/graph')
 def graph():
 
     return render_template('graph.html')
 
 
-@app.route('/print_items')
-def print_items():
+@app.route('/table')
+def table():
     def fetch():
         conn = sqlite3.connect("US_STOCKS.db")
         cursor = conn.cursor()
-        cursor.execute("SELECT TICKER, SECTOR, PRICE FROM OVERVIEW")
+        cursor.execute(
+            "SELECT TICKER, SECTOR, PRICE, INDUSTRY, VOLUME FROM OVERVIEW")
         items = cursor.fetchmany(50)
         return items
         # simply to have a proposer display without commas and parantheses specific to tuple format
@@ -40,7 +46,7 @@ def print_items():
         from_csv_to_sqlite3()
         items = fetch()
 
-    return render_template('print_items.html', items=items)
+    return render_template('table.html', items=items)
 
 
 if __name__ == '__main__':
