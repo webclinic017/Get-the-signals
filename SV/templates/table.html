@@ -1,0 +1,30 @@
+{%extends "base.html"%} {%block content%}
+
+<head>
+  <h1>Available stocks</h1>
+
+  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse sit aliquid recusandae dignissimos dolorem
+    repellendus culpa ex rem cum error? Corrupti, earum. Rerum possimus consequuntur et ipsum amet dicta dolores?Lorem
+    ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus maxime natus porro commodi provident quisquam iusto
+    ut ullam possimus nihil modi, dolore nulla debitis corrupti eos laboriosam est veniam eum?</p>
+  <table class="table small table-hover table-striped">
+    <thead class="thead-dark">
+      <th scope="col">Ticker</th>
+      <th scope="col">Sector</th>
+      <th scope="col">Price</th>
+      <th scope="col">Industry</th>
+      <th scope="col">Volume</th>
+    </thead>
+    {% for item in items %}
+    <tr>
+      <td>{{ item[0] }}</td>
+      <td>{{ item[1] }}</td>
+      <td>{{ item[2] }}</td>
+      <td>{{ item[3] }}</td>
+      <td>{{ item[4] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</head>
+{%endblock%}

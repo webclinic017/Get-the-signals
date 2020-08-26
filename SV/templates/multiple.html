@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="http://cdn.bokeh.org/bokeh/release/bokeh-1.2.0.min.css" rel="stylesheet" type="text/css">
+    <script src="http://cdn.bokeh.org/bokeh/release/bokeh-1.2.0.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+
+
+</head>
+
+
+<body>
+
+    <H3> How to display multiple bokeh's in one page</H3>
+
+
+    <p> Source: https://stackoverflow.com/questions/37158800/embedding-multiple-bokeh-html-plots-into-flask</p>
+
+    <div class="row">
+        <div class="col-sm">
+            <!--LEFT-->
+            <div style="width: 60%; display: inline-block;">
+                {{ div | safe }}
+                {{ script | safe }}
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <!--RIGHT-->
+            {{ div2 | safe }}
+            {{ script2 | safe }}
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+{% endblock %}
