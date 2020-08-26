@@ -1,27 +1,32 @@
-import os
-from flask import Flask, render_template, url_for, redirect
-from flask import Flask, request, render_template, abort, Response
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-import sqlite3
-import numpy as np
+# Authentication
 
-from bokeh.plotting import figure, output_file, show
-from bokeh.layouts import column
-from bokeh.models import ColumnDataSource, CustomJS, Slider
-from bokeh.embed import components
-from bokeh.models import DataRange1d
-
-from bokeh.embed import components
-from bokeh.plotting import figure
-from bokeh.resources import INLINE
-from bokeh.util.string import encode_utf8
 
 from sqlite_utils import from_csv_to_sqlite3
+from bokeh.util.string import encode_utf8
+from bokeh.resources import INLINE
+from bokeh.models import DataRange1d
+from bokeh.embed import components
+from bokeh.models import ColumnDataSource, CustomJS, Slider
+from bokeh.layouts import column
+from bokeh.plotting import figure, output_file, show
+import numpy as np
+import sqlite3
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, url_for, redirect, request, Response, abort
+import os
+from flask_migrate import Migrate
+from flask_login import LoginManager
+
+
+login_manager = LoginManager()
+
+
+#####################################
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "mysecretkey"
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 @app.route('/')
