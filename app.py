@@ -66,36 +66,26 @@ def graph():
     return render_template('graph.html', **kwargs)
 
 
-# to add https://docs.bokeh.org/en/latest/docs/gallery/bar_mixed.html
-# to add https://docs.bokeh.org/en/latest/docs/gallery/bar_nested_colormapped.html
-@app.route('/bar')
-def bar():
-    # init a basic bar chart:
-    # http://bokeh.pydata.org/en/latest/docs/user_guide/plotting.html#bars
-    # https://github.com/realpython/flask-bokeh-example/blob/master/tutorial.md
-    fig = figure(plot_width=600, plot_height=600)
-    fig.vbar(
-        x=[1, 2, 3, 4],
-        width=0.5,
-        bottom=0,
-        top=[1.7, 2.2, 4.6, 3.9],
-        color='navy'
-    )
+@app.route('/multiple')
+def multiple():
+    title = 'multiple'
+    from bokeh.plotting import figure
 
-    # grab the static resources
-    js_resources = INLINE.render_js()
-    css_resources = INLINE.render_css()
+    # First Plot
+    p = figure(plot_width=400, plot_height=400)
+    p.circle([1, 2, 3, 4, 5], [6, 7, 2, 4, 5],
+             size=20, color="navy", alpha=0.5)
 
-    # render template
-    script, div = components(fig)
-    html = render_template(
-        'bar.html',
-        plot_script=script,
-        plot_div=div,
-        js_resources=js_resources,
-        css_resources=css_resources,
-    )
-    return encode_utf8(html)
+    # Second Plot
+    p2 = figure(plot_width=400, plot_height=400)
+    p2.square([5, 8, 3, 4, 5], [20, 7, 2, 1, 25],
+              size=20, color="red", alpha=0.5)
+
+    script, div = components(p)
+    script2, div2 = components(p2)
+
+    return render_template('multiple.html', title=title, script=script,
+                           div=div, script2=script2, div2=div2)
 
 
 @app.route('/table')
