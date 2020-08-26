@@ -6,50 +6,68 @@
 
 <html lang="en">
 
-<link rel="stylesheet" href="master_versus.css">
-
 <head>
     <meta charset="utf-8">
     <title>{{ title }}</title>
-
-    <div class="container pt-4">
-        <div class="row">
-            <div class="col-sm">
-
-                <h4> Macro-economic </h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique molestiae delectus,
-                    quam nisi voluptatum laudantium tempore exercitationem ea est beatae itaque ut, iure officia
-                    cupiditate cumque ex corporis eligendi quia?</p>
-            </div>
-
-            <div class="col-sm">
-
-                <div align="center">
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.css" rel="stylesheet"
-                        type="text/css">
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-widgets.css" rel="stylesheet"
-                        type="text/css">
-
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.css" rel="stylesheet"
-                        type="text/css">
 </head>
 
 <body>
-    <!-- <h1>Chart</h1> -->
-    {{ plot_div|safe }}
-    {{ slider_div|safe }}
-    {{ script|safe }}
+    <div class="container p-2"></div>
+    <div class="row">
+        <div class="col-sm">
 
+            <h4> Macro-economic </h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique molestiae delectus,
+                quam nisi voluptatum laudantium tempore exercitationem ea est beatae itaque ut, iure officia
+                cupiditate cumque ex corporis eligendi quia?</p>
+        </div>
+
+        <div class="col-sm">
+
+            <div>
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.css" rel="stylesheet"
+                    type="text/css">
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-widgets.css" rel="stylesheet"
+                    type="text/css">
+
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.css" rel="stylesheet"
+                    type="text/css">
+            </div>
+
+
+
+            <!-- <h1>Chart</h1> -->
+            {{ plot_div|safe }}
+            {{ slider_div|safe }}
+            {{ script|safe }}
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-widgets.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.js"></script>
+
+        </div>
+
+    </div>
+
+    <div class="row p-2">
+        <div class="col-sm">
+
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique molestiae delectus,
+                quam nisi voluptatum laudantium tempore exercitationem ea est beatae itaque ut, iure officia
+                cupiditate cumque ex corporis eligendi quia?</p>
+        </div>
+        <div class="col-sm">
+            <h4> Micro-economic </h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio quod aliquid ab pariatur aspernatur, nemo
+                quasi
+                temporibus ea, veritatis saepe voluptatum sunt eos! Iure beatae harum qui impedit ad. Voluptatibus!</p>
+
+        </div>
+
+    </div>
+    </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-widgets.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.js"></script>
-</div>
-</div>
-
-</div>
-
-</div>
 
 </html>
 
