@@ -37,6 +37,6 @@ flask db upgrade
 <p>https://stackoverflow.com/questions/57018186/cant-activate-environment-from-visual-studio-code</p>
 
 <ul>
-	<li>ctrl + shift +p find the settings.json, append two rows: "python.terminal.activateEnvironment": true, "terminal.integrated.shell.windows": "C:\WINDOWS\System32\cmd.exe",</li>li>
+	<li>ctrl + shift +p find the settings.json, append two rows: "python.terminal.activateEnvironment": true, "terminal.integrated.shell.windows": "C:\WINDOWS\System32\cmd.exe",</li>
 	<li>choose to run the task in the terminal</li>
 </ul>
