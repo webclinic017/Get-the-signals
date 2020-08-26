@@ -1,7 +1,11 @@
-# Authentication
+from SV import app, db
+from flask import render_template, redirect, request, url_for, flash, abort
+from flask_login import login_user, login_required, logout_user
+from SV.models import User
+from SV.forms import LoginForm, RegistrationForm
+from werkzeug.security import generate_password_hash, check_password_hash
 
-
-from sqlite_utils import from_csv_to_sqlite3
+from SV.sqlite_utils import from_csv_to_sqlite3
 from bokeh.util.string import encode_utf8
 from bokeh.resources import INLINE
 from bokeh.models import DataRange1d
@@ -9,48 +13,78 @@ from bokeh.embed import components
 from bokeh.models import ColumnDataSource, CustomJS, Slider
 from bokeh.layouts import column
 from bokeh.plotting import figure, output_file, show
-import numpy as np
+
 import sqlite3
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, url_for, redirect, request, Response, abort
-import os
-from flask_migrate import Migrate
-from flask_login import LoginManager
-
-
-login_manager = LoginManager()
-
-
-#####################################
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = "mysecretkey"
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path(basedir, 'data.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
-db = SQLAlchemy(app)
-Migrate(app, db)
-
-
-login_manager.init__app(app)
-login_manager.login_view = 'login'
 
 
 @app.route('/')
-def index():
-    return render_template('home.html')
-
-
-@app.route('/home')
 def home():
     return render_template('home.html')
 
 
+@app.route('/welcome')
+@login_required
+def welcome_user():
+    return render_template('welcome_user.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You logged out!')
+    return redirect(url_for('home'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Grab the user from our User Models table
+        user = User.query.filter_by(email=form.email.data).first()
+
+        # Check that the user was supplied and the password is right
+        # The verify_password method comes from the User object
+        # https://stackoverflow.com/questions/2209755/python-operation-vs-is-not
+
+        if user.check_password(form.password.data) and user is not None:
+            # Log in the user
+
+            login_user(user)
+            flash('Logged in successfully.')
+
+            # If a user was trying to visit a page that requires a login
+            # flask saves that URL as 'next'.
+            next = request.args.get('next')
+
+            # So let's now check if that next exists, otherwise we'll go to
+            # the welcome page.
+            if next == None or not next[0] == '/':
+                next = url_for('welcome_user')
+
+            return redirect(next)
+    return render_template('login.html', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data,
+                    password=form.password.data)
+
+        db.session.add(user)
+        db.session.commit()
+        flash('Thanks for registering! Now you can login!')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
+
 @app.route('/graph')
+@login_required
 def graph():
     x = [x*0.005 for x in range(0, 200)]
     y = x
@@ -83,6 +117,7 @@ def graph():
 
 
 @app.route('/multiple')
+@login_required
 def multiple():
     title = 'multiple'
     from bokeh.plotting import figure
@@ -105,6 +140,7 @@ def multiple():
 
 
 @app.route('/table')
+@login_required
 def table():
     def fetch():
         conn = sqlite3.connect("US_STOCKS.db")
