@@ -1,22 +1,31 @@
 {%extends "base.html"%}
 
 {% block content%}
+<!-- http://127.0.0.1:5000/SV/templates -->
 
+<head>
+    <link href="http://127.0.0.1:5000/static/style_home.css" rel="stylesheet" type="text/css">
+    <title>Sversus-Home</title>
+</head>
 
-<div class="row">
-    <div class="col-sm">
-        <div style="margin-top:200px;">
-            <h1 class=" display-1">S-Versus</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias accusantium libero consectetur debitis
-                possimus doloremque accusamus cupiditate eaque placeat, temporibus id ea nemo sit architecto maxime
-                facere at exercitationem fugiat!</p>
+<body>
+    <div class="row">
+
+        <div class="col-sm">
+            <div class="container">
+                <h1 class=" display-1">S-Versus</h1>
+                <p class="lead">Get an edge by identifying the
+                    <span style="color:aqua">competitive arena</span>.
+                    S-Versus connects to different data
+                    sources and compiles the data to understand which companies are
+                    the most frontal competitors of
+                    tomorrow.</p>
+
+            </div>
         </div>
-    </div>
 
-    <div class="col-sm">
-        <div style="margin-top:250px;">
-
-            <div class="jumbotron">
+        <div class="col-sm">
+            <div class="card-body text-center">
                 {% if current_user.is_authenticated %}
                 <p class="lead text-center">Hi {{current_user.username}}</p>
                 {% else %}
@@ -24,8 +33,25 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
-</div>
+
+
+
+    <footer id="main-footer" class="bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center py-1">
+                    <h3 class="lead">Alexandre Nesovic</h3>
+                    <p>Copyright &copy;
+                        <span id="year"></span>
+                    </p>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#contactModal">Contact</button>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+</body>
 
 {%endblock%}

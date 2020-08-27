@@ -2,24 +2,44 @@
 {% block content %}
 
 
+<head>
+    <link href="http://127.0.0.1:5000/static/style_register.css" rel="stylesheet" type="text/css">
+    <title>Sversus-Registration</title>
+</head>
 
-<div class="jumbotron">
-    <h1 class="display-3">Registration</h1>
-
-    <form class=" form form-horizontal" method="POST" role="form">
-
-        {# This hidden_tag is a CSRF security feature. #}
-        {{ form.hidden_tag() }}
-        {{ form.email.label(class="lead") }}<br>
-        {{ form.email(class="form-group") }}<br>
-
-        {{ form.username.label(class="lead") }}<br>{{ form.username(class="form-group") }}<br>
-        {{ form.password.label(class="lead") }}<br> {{ form.password(class="form-group") }}<br>
-
-        {{ form.pass_confirm.label(class="lead") }}<br> {{ form.pass_confirm(class="form-group") }}<br>
+<body>
 
 
-        {{ form.submit(class="btn btn-primary btn-lg") }}
-    </form>
-</div>
+    <div class="row">
+
+        <div class="col-sm">
+            <h3 class="display-4">Registration</h3>
+        </div>
+
+        <div class="col-sm">
+            <div class="card-body">
+                <form class=" form form-horizontal" method="POST" role="form">
+                    <div class="form-group">
+                        {# This hidden_tag is a CSRF security feature. #}
+                        {{ form.hidden_tag() }}
+                        {{ form.email(class="form-control form-control-lg", placeholder="Email") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.username(class="form-control form-control-lg", placeholder="Username") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password(class="form-control form-control-lg",placeholder="Password") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.pass_confirm(class="form-control form-control-lg",placeholder="Confirm Password") }}
+                    </div>
+                    {{ form.submit(class="btn btn-outline-dark btn-block") }}
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
 {% endblock %}
