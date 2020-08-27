@@ -29,6 +29,8 @@ flask db upgrade
     <li>Containerize automated web scraping process, deploy to AWS lambda, and link it to the website through an API</li>
 </ul>
 
+![alt-text](screencaps/home.PNG)
+![alt-text](screencaps/registration.PNG)
 ![alt-text](screencaps/graph.PNG)
 ![alt-text](screencaps/table.PNG)
 ![alt-text](screencaps/multiple.PNG)
