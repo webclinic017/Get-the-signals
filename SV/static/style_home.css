@@ -20,3 +20,7 @@ body {
     display: flex;
     align-items: center;
   }
+
+#home-section{
+  padding-top: 150px;
+}

@@ -2,18 +2,18 @@
 {% block content %}
 
 
-
-
-
-<body>
+<head>
+    <meta charset="UTF-8">
     <link href="http://cdn.bokeh.org/bokeh/release/bokeh-1.2.0.min.css" rel="stylesheet" type="text/css">
     <script src="http://cdn.bokeh.org/bokeh/release/bokeh-1.2.0.min.js"></script>
 
-    <meta charset="UTF-8">
+    <link href="http://127.0.0.1:5000/static/style_multiple.css" rel="stylesheet" type="text/css">
     <title>{{title}}</title>
+</head>
+
+<body id="Multiple_page">
 
     <H3 class="display-3"> Multiple bokeh in one page</H3>
-
 
     <p> Source: https://stackoverflow.com/questions/37158800/embedding-multiple-bokeh-html-plots-into-flask</p>
 
@@ -33,9 +33,7 @@
         </div>
     </div>
 
-
 </body>
 
-</html>
 
 {% endblock %}
