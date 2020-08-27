@@ -1,14 +1,31 @@
 {%extends "base.html"%}
 
 {% block content%}
-<h1 class="display-3">S-Versus</h1>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur dolorum odio in natus error, repellat cumque omnis
-    exercitationem hic vel! Reprehenderit, expedita ab eligendi dolore eaque voluptatibus assumenda qui corporis.</p>
-<div class="jumbotron">
-    {% if current_user.is_authenticated %}
-    <p class="lead">Hi {{current_user.username}}</p>
-    {% else %}
-    <p class="lead">Please login or register</p>
-    {% endif %}
+
+
+<div class="row">
+    <div class="col-sm">
+        <div style="margin-top:200px;">
+            <h1 class=" display-1">S-Versus</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias accusantium libero consectetur debitis
+                possimus doloremque accusamus cupiditate eaque placeat, temporibus id ea nemo sit architecto maxime
+                facere at exercitationem fugiat!</p>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        <div style="margin-top:250px;">
+
+            <div class="jumbotron">
+                {% if current_user.is_authenticated %}
+                <p class="lead">Hi {{current_user.username}}</p>
+                {% else %}
+                <p class="lead text-center">Please login or register</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
 </div>
+
 {%endblock%}
