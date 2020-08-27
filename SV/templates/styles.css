@@ -1,8 +1,8 @@
 body {
-    background: rgb(189, 13, 13);
-    color: #fff;
-  }
-  
+  background: rgb(255, 255, 255);
+  color: rgb(49, 46, 46);
+}
+
 .navbar {
   border-bottom: #008ed6 3px solid;
   opacity: 0.8;

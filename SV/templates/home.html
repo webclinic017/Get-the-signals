@@ -18,7 +18,7 @@
 
             <div class="jumbotron">
                 {% if current_user.is_authenticated %}
-                <p class="lead">Hi {{current_user.username}}</p>
+                <p class="lead text-center">Hi {{current_user.username}}</p>
                 {% else %}
                 <p class="lead text-center">Please login or register</p>
                 {% endif %}
