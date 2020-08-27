@@ -1,0 +1,13 @@
+body {
+  background: rgb(255, 255, 255);
+  color: rgb(49, 46, 46);
+}
+
+.navbar {
+  border-bottom: #008ed6 3px solid;
+  opacity: 0.8;
+}
+
+.navbar.navbar-expand-sm.bg-dark.navbar-dark.fixed-top li a{
+  color: white !important;
+}
