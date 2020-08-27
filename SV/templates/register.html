@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST">
-    {# This hidden_tag is a CSRF security feature. #}
-    {{ form.hidden_tag() }}
-    {{ form.email.label }} {{ form.email() }}<br>
-    {{ form.username.label }} {{ form.username() }}<br>
-    {{ form.password.label }} {{ form.password() }}<br>
-    {{ form.pass_confirm.label }} {{ form.pass_confirm() }}<br>
-    {{ form.submit() }}
-</form>
+
+
+
+<div class="jumbotron">
+    <h1 class="display-3">Registration</h1>
+
+    <form class=" form form-horizontal" method="POST" role="form">
+
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+        {{ form.email.label(class="lead") }}<br>
+        {{ form.email(class="form-group") }}<br>
+
+        {{ form.username.label(class="lead") }}<br>{{ form.username(class="form-group") }}<br>
+        {{ form.password.label(class="lead") }}<br> {{ form.password(class="form-group") }}<br>
+
+        {{ form.pass_confirm.label(class="lead") }}<br> {{ form.pass_confirm(class="form-group") }}<br>
+
+
+        {{ form.submit(class="btn btn-primary btn-lg") }}
+    </form>
+</div>
 {% endblock %}
