@@ -1,4 +1,4 @@
-This is my very first Flask project (Python, Bootstrap, HTML, CSS,...). The aim is to build a web app that connects to different API's. 
+This is my first Flask project (Python, Bootstrap, HTML, CSS,...). The aim is to build a web app that connects to different API's. 
 It will gather data from diverse web sources, synthesize and display the competitive arenas for every chosen stock.
 The app is connected to various sqlite databases.
 The app integrates a user authentication procedure.
