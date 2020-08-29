@@ -154,7 +154,9 @@ def table():
 
     try:
         items = fetch()
+        print("one")
     except sqlite3.OperationalError:
+        print("two")
         from_csv_to_sqlite3()
         items = fetch()
 

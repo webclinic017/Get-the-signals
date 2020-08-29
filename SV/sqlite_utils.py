@@ -6,7 +6,7 @@ import os
 def from_csv_to_sqlite3():
     # load data
     df = pd.read_csv(
-        f'{os.path.dirname(os.path.realpath(__file__))}\\Overview.csv')
+        f'{os.path.dirname(os.path.realpath(__file__))}/Overview.csv')
     # strip whitespace from headers
     df.columns = df.columns.str.strip()
     con = sqlite3.connect("US_STOCKS.db")
