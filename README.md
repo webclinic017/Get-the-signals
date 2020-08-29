@@ -4,10 +4,10 @@ The app is connected to various sqlite databases.
 The app integrates a user authentication procedure.
 
 
-<h4> Command to create virtual env</h4>
+<h4> Command to create virtual env (VS code, Ubunu 20) </h4>
 
 ```
-python -m venv .sversus
+python3 -m venv .sversus
 ```
 
 <h4> Commands to initiate DB's and apply models</h4>
