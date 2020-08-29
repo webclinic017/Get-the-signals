@@ -4,8 +4,11 @@ The app is connected to various sqlite databases.
 The app integrates a user authentication procedure.
 
 
-python -m venv .venv
+<h4> Command to create virtual env</h4>
 
+```
+python -m venv .sversus
+```
 
 <h4> Commands to initiate DB's and apply models</h4>
 
