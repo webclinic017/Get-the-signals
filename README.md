@@ -4,7 +4,7 @@ The app is connected to various sqlite databases.
 The app integrates a user authentication procedure.
 
 
-<h4> Command to create virtual env (VS code, Ubunu 20) </h4>
+<h4> Command to create virtual env (VS code, Ubuntu 20) </h4>
 <p>In <strong>Python</strong> command line:</p>
 
 ```
