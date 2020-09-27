@@ -33,6 +33,7 @@ flask db upgrade
     <li>Connect DB to external API to gather economic data</li>
     <li>Containerize automated web scraping process, deploy to AWS lambda, and link it to the website through an API</li>
     <li>Detect all minimas for a chosen stock and give the ability to download a csv with flagged positions</li>
+    <li>Detect double & tripple bottoms & tops</li>
 </ul>
 
 ![alt-text](screencaps/home.PNG)
