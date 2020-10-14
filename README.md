@@ -5,10 +5,11 @@ The app integrates a user authentication procedure.
 
 
 <h4> Command to create virtual env (VS code, Ubuntu 20) </h4>
-<p>In <strong>Python</strong> command line:</p>
+<p>In <strong>project root dir</strong> open command line:</p>
 
 ```
 python3 -m venv .sversus
+source .sversus/bin/activate
 ```
 
 <h4> Commands to initiate DB's and apply models</h4>
