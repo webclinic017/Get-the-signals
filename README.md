@@ -15,7 +15,7 @@ sudo apt-get install libsqlite3-dev
 
 To initiate db, run:
 
-'''python3 db_create.py```
+```python3 db_create.py```
 
 <h4> To be implemented </h4>
 
