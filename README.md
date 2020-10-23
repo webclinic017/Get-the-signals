@@ -10,22 +10,12 @@ The app integrates a user authentication procedure.
 ```
 python3 -m venv .sversus
 source .sversus/bin/activate
+sudo apt-get install libsqlite3-dev
 ```
 
-<h4> Commands to initiate DB's and apply models</h4>
+To initiate db, run:
 
-Setting env variable first
-
-```
-$env:FLASK_APP = "webapp"
-``` 
-
-```
-flask db init
-flask db migrate -m "some message"
-flask db upgrade
-```
-
+'''python3 db_create.py```
 
 <h4> To be implemented </h4>
 
