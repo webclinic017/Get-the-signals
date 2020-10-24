@@ -46,6 +46,6 @@ To initiate db, run:
 
 <h4> Regarding general DB alimentation </h4>
 
-While being in the folder containing the data to upload (```Overview.csv``` in this case), connect to the remote MySQL db with terminal and execute a command like the following:
+While being in the folder containing the data to upload (```Overview.csv``` in this case), connect to the remote MySQL db with terminal and execute a command like the following: </br>
 <code>LOAD DATA LOCAL INFILE 'Overview.csv'INTO TABLE financetest COLUMNS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;</code>
 
