@@ -18,6 +18,7 @@
       <th scope="col">Sector</th>
       <th scope="col">Price</th>
       <th scope="col">Industry</th>
+      <th scope="col">Change</th>
       <th scope="col">Volume</th>
     </thead>
     {% for item in items %}
@@ -27,6 +28,7 @@
       <td>{{ item[2] }}</td>
       <td>{{ item[3] }}</td>
       <td>{{ item[4] }}</td>
+      <td>{{ item[5] }}</td>
     </tr>
     {% endfor %}
   </table>
