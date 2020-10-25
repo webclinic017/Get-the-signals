@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import pymysql
 import os
 
@@ -27,4 +30,4 @@ db.commit()
 cursor.close()
 db.close()
 
-
+print('successfully added data')
