@@ -4,9 +4,17 @@ from flask_login import login_user, login_required, logout_user
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
+#import sqlite3
+import pymysql
+import os
 
-from SV.sqlite_utils import from_csv_to_sqlite3
+
+
+db_user = os.environ.get('aws_db_user')
+db_pass = os.environ.get('aws_db_pass')
+db_endp = os.environ.get('aws_db_endpoint')
+
+
 
 
 @app.route('/')
@@ -80,25 +88,23 @@ def register():
 @login_required
 def table():
     def fetch():
-        conn = sqlite3.connect("US_STOCKS.db")
-        cursor = conn.cursor()
+        db = pymysql.connect(host=f'{db_endp}',user=f'{db_user}',password=f'{db_pass}',database='flaskfinance')
+        cursor = db.cursor()
         cursor.execute(
-            "SELECT TICKER, SECTOR, PRICE, INDUSTRY, VOLUME FROM OVERVIEW")
+        "SELECT ticker, sector, price, industry, change_, volume FROM financetest")
         items = cursor.fetchmany(50)
+        print(items)
+        cursor.close()
+        db.close()
+
         return items
         # simply to have a proposer display without commas and parantheses specific to tuple format
         # items = [item[0] for item in items]
 
-    try:
-        items = fetch()
-        print("one")
-    except sqlite3.OperationalError:
-        print("two")
-        from_csv_to_sqlite3()
-        items = fetch()
-
+    items = fetch()
+    #fetch() = func above
     return render_template('table.html', items=items)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
