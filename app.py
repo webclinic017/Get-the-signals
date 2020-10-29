@@ -91,7 +91,7 @@ def table():
         db = pymysql.connect(host=f'{db_endp}',user=f'{db_user}',password=f'{db_pass}',database='flaskfinance')
         cursor = db.cursor()
         cursor.execute(
-        "SELECT ticker, sector, price, industry, change_, volume FROM financetest")
+        "SELECT ticker, sector, price, industry, change_, volume FROM usStocksOverview")
         items = cursor.fetchmany(50)
         print(items)
         cursor.close()

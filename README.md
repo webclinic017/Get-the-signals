@@ -29,9 +29,7 @@ To initiate db, run:
 
 ![alt-text](screencaps/home.PNG)
 ![alt-text](screencaps/registration.PNG)
-![alt-text](screencaps/graph.PNG)
 ![alt-text](screencaps/table.PNG)
-![alt-text](screencaps/multiple.PNG)
 
 
 <h4>Personnal issues encountered and turnaroud:</h4>
