@@ -28,8 +28,8 @@ To initiate db, run:
 </ul>
 
 ![alt-text](screencaps/home.PNG)
-![alt-text](screencaps/registration.PNG)
-![alt-text](screencaps/table.PNG)
+![alt-text](screencaps/registration.png)
+![alt-text](screencaps/table.png)
 
 
 <h4>Personnal issues encountered and turnaroud:</h4>
