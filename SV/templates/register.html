@@ -21,10 +21,21 @@
                     <div class="form-group">
                         {# This hidden_tag is a CSRF security feature. #}
                         {{ form.hidden_tag() }}
+
                         {{ form.email(class="form-control form-control-lg", placeholder="Email") }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form.username(class="form-control form-control-lg", placeholder="Username") }}
+                        {% if form.username.errors %}
+                            {% for error in form.username.errors %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form.password(class="form-control form-control-lg",placeholder="Password") }}

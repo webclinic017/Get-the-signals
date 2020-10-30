@@ -20,14 +20,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
     os.path.join(basedir, 'data.sqlite') """
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_pass}@{db_endpoint}:3306/flaskfinance'
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 Migrate(app, db)
 
-# We can now pass in our app to the login manager
 login_manager.init_app(app)
-
 # Tell users what view to go to when they need to login.
 login_manager.login_view = "login"

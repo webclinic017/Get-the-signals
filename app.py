@@ -4,7 +4,6 @@ from flask_login import login_user, login_required, logout_user
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from werkzeug.security import generate_password_hash, check_password_hash
-#import sqlite3
 import pymysql
 import os
 
@@ -80,7 +79,12 @@ def register():
         db.session.commit()
         flash('Thanks for registering! Now you can login!')
         return redirect(url_for('login'))
+
+    print(form.username.errors)
+    print(form.email.errors)
+    
     return render_template('register.html', form=form)
+
 
 
 
