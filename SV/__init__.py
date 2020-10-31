@@ -11,7 +11,7 @@ db_endpoint = os.environ.get('aws_db_endpoint')
 # Create a login manager object
 login_manager = LoginManager()
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 # Often people will also separate these into a separate config.py file
 app.config['SECRET_KEY'] = 'mysecretkey'
