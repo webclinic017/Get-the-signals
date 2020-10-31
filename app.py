@@ -111,4 +111,6 @@ def table():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,static_url_path='SV/static')
+
+# https://stackoverflow.com/questions/15077489/static-assets-dont-show-up-for-flask-on-elastic-beanstalk
