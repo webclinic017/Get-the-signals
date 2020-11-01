@@ -20,9 +20,8 @@ To initiate db, run:
 <h4> To be implemented </h4>
 
 <ul>
-    <li>Page with macro-economic information (bokeh figures)</li>
+    <li>Page with macro-economic information</li>
     <li>Connect DB to external API to gather economic data</li>
-    <li>Containerize automated web scraping process, deploy to AWS lambda, and link it to the website through an API</li>
     <li>Detect all minimas for a chosen stock and give the ability to download a csv with flagged positions</li>
     <li>Detect double & tripple bottoms & tops</li>
 </ul>
