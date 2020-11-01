@@ -10,7 +10,6 @@ The app integrates a user authentication procedure.
 ```
 python3 -m venv .sversus
 source .sversus/bin/activate
-sudo apt-get install libsqlite3-dev
 ```
 
 To initiate db, run:
