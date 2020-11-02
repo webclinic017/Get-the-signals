@@ -30,7 +30,7 @@ To initiate db, run:
 ![alt-text](screencaps/table.png)
 
 
-<h4>Personnal issues encountered and turnaroud:</h4>
+<h4>(Windows)Personnal issues encountered and turnaroud:</h4>
 
 <p>https://stackoverflow.com/questions/57018186/cant-activate-environment-from-visual-studio-code</p>
 
@@ -44,7 +44,7 @@ In the app folder, run the following command: </br>
 <code>docker run -it --name signalnoise -p 5000:5000 -v ${PWD}:/app python:3.7 bash</code>
 </br>
 <code>pip install -r requirements.txt</code>
-
+</br>
 Start specific container after exit: </br>
 <code>docker start `docker ps -a -q --filter "name=signalnoise"`</code>
 
