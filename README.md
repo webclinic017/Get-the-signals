@@ -39,8 +39,8 @@ To initiate db, run:
 	<li>choose to run the task in the terminal</li>
 </ul>
 
-<h4> Dockerization fo the app </h4> </br>
+<h4> Dockerization of the app </h4> </br>
 In the app folder, run the following command: </br>
-```docker run -it --name signalnoise -p 5000:5000 -v ${PWD}:/app python:3.7 bash```
+<code>docker run -it --name signalnoise -p 5000:5000 -v ${PWD}:/app python:3.7 bash</code>
 </br>
-```pip install -r requirements.txt```
+<code>pip install -r requirements.txt</code>
