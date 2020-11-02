@@ -55,3 +55,11 @@ To get into a Docker container's shell:</br>
 Stop all containers:
 <code>docker stop $(docker ps -aq)</code></br>
 
+
+<h4> General considrations about Docker</h4>
+
+<ul>
+<li>A Dockerfile is a recipe for creating Docker images</li>
+<li>A Docker image gets built by running a Docker command (which uses that Dockerfile)</li>
+<li>A Docker container is a running instance of a Docker image</li>
+</ul>
