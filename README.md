@@ -12,7 +12,7 @@ python3 -m venv .sversus
 source .sversus/bin/activate
 ```
 
-To initiate db, run:
+To initiate db (cutover), run:
 
 ```python3 db_create.py```
 
