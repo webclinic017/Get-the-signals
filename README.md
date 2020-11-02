@@ -48,7 +48,10 @@ In the app folder, run the following command: </br>
 </br>
 Start specific container after exit: </br>
 <code>docker start `docker ps -a -q --filter "name=signalnoise"`</code>
-
+</br>
+To get into a Docker container's shell:</br>
+<code>docker exec -it signalnoise bash</code>
+</br>
 Stop all containers:
 <code>docker stop $(docker ps -aq)</code></br>
 
