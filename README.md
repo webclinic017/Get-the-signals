@@ -57,7 +57,7 @@ Stop all containers:
 
 
 <h4> General considrations about Docker</h4>
-
+</br>
 <ul>
 <li>A Dockerfile is a recipe for creating Docker images</li>
 <li>A Docker image gets built by running a Docker command (which uses that Dockerfile)</li>
