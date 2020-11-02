@@ -44,3 +44,10 @@ In the app folder, run the following command: </br>
 <code>docker run -it --name signalnoise -p 5000:5000 -v ${PWD}:/app python:3.7 bash</code>
 </br>
 <code>pip install -r requirements.txt</code>
+
+Start specific container after exit: </br>
+<code>docker start `docker ps -a -q --filter "name=signalnoise"`</code>
+
+Stop all containers:
+<code>docker stop $(docker ps -aq)</code></br>
+
