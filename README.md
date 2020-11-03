@@ -55,6 +55,7 @@ To get into a Docker container's shell:</br>
 Stop all containers:
 <code>docker stop $(docker ps -aq)</code></br>
 
+<h4> Creating the image </h4>
 
 <h4> General considrations about Docker</h4>
 </br>
