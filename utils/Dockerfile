@@ -6,6 +6,7 @@ WORKDIR /app
 COPY ./app .
 # run command at build time
 RUN pip install -r requirements.txt
+RUN cat script.sh >> ~/.bashrc
 ENV FLASK_ENV development
 # Container ports
 EXPOSE 5000
