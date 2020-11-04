@@ -56,7 +56,7 @@ Stop all containers:
 <code>docker stop $(docker ps -aq)</code></br>
 </br>
 Building the image:</br>
-<code>docker build -t cb:signalnoise -f Dockerfile</code>
+<code>docker build -t signaloise .</code>
 </br>
 Running the image:</br>
 <code>docker run -it --rm -p 5000:5000 signalnoise</code>
