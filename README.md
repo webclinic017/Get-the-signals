@@ -57,8 +57,6 @@ Stop all containers:
 </br>
 
 
-<code>docker pull mysql</code>
-
 Building the image:</br>
 <code>docker build -t signalnoise .</code>
 </br>
