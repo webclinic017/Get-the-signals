@@ -55,11 +55,20 @@ To get into a Docker container's shell:</br>
 Stop all containers:
 <code>docker stop $(docker ps -aq)</code></br>
 </br>
+
+
+<code>docker pull mysql</code>
+
 Building the image:</br>
-<code>docker build -t signaloise .</code>
+<code>docker build -t signalnoise .</code>
 </br>
 Running the image:</br>
-<code>docker run -it --rm -p 5000:5000 signalnoise</code>
+<code>docker run -p 5000:5000 signalnoise</code>
+
+</br>
+<code>docker container ls</code></br>
+<code>docker exec -it <name> bash</code></br>
+
 
 <h4> General considrations about Docker</h4>
 </br>
