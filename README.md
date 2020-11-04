@@ -64,7 +64,7 @@ Running the image:</br>
 <code>docker run -e aws_db_endpoint='<DNS>' -e aws_db_pass='<password>' -e aws_db_user='<password>' -p 5000:5000 signalnoise</code>
 </br>
 </br>
-Other useful instruction:</br>
+Other useful instructions:</br>
 <code>docker container ls</code></br>
 <code>docker exec -it <name> bash</code></br>
 
