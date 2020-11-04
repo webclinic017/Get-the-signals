@@ -66,8 +66,7 @@ Running the image:</br>
 </br>
 Other useful instructions:</br>
 <code>docker container ls</code></br>
-<code>docker exec -it <name> bash</code></br>
-
+<code>docker image ls</code></br>
 
 <h4> General considrations about Docker</h4>
 </br>
