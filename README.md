@@ -30,6 +30,7 @@ To initiate db (cutover), run:
 ![alt-text](screencaps/table.png)
 
 <h4> Directory tree: </h4>
+
 ![alt-text](screencaps/tree.png)
 
 
