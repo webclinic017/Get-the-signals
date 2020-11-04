@@ -54,7 +54,7 @@ To get into a Docker container's shell:</br>
 </br>
 Stop all containers:
 <code>docker stop $(docker ps -aq)</code></br>
-
+</br>
 Building the image:</br>
 <code>docker build -t cb:signalnoise -f Dockerfile</code>
 </br>
