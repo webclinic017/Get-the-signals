@@ -6,8 +6,12 @@ WORKDIR /app
 COPY ./app .
 # run command at build time
 RUN pip install -r requirements.txt
-RUN cat script.sh >> ~/.bashrc
-ENV FLASK_ENV development
+ARG aws_db_endpoint
+ARG aws_db_user
+ARG aws_db_pass
+ENV aws_db_endpoint=$aws_db_endpoint
+ENV aws_db_pass=$aws_db_pass
+ENV aws_db_user=$aws_db_pass
 # Container ports
 EXPOSE 5000
 # Start-up command
