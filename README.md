@@ -29,6 +29,10 @@ To initiate db (cutover), run:
 ![alt-text](screencaps/registration.png)
 ![alt-text](screencaps/table.png)
 
+<h4> Directory tree: </h4>
+![alt-text](screencaps/tree.png)
+
+
 
 <h4>(Windows)Personnal issues encountered and turnaroud:</h4>
 
