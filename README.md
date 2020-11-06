@@ -85,4 +85,17 @@ Other useful instructions:</br>
 Inside the root directory run the following command:</br>
 <code>zip -r package.zip * .ebextensions</code></br>
 
+To debug static files issue (css):</br>
+https://stackoverflow.com/questions/15077489/static-assets-dont-show-up-for-flask-on-elastic-beanstalk
+</br>
 
+Create following foler in root dir of the app: </br>
+```.ebextensions/python.config```</br>
+Add:</br>
+<code>
+option_settings:
+  - namespace: aws:elasticbeanstalk:container:python
+    option_name: StaticFiles
+    value: /static/=PATH/FROM/MY/APP/BASE/DIR/TO/STATIC/DIR
+
+</code>
