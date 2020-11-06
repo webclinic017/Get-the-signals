@@ -81,7 +81,8 @@ Other useful instructions:</br>
 </ul>
 </br>
 
-Regarding the AWS deployment, to zip the new versions to upload.Inside the root directory run the following command:</br>
+<h5> Regarding the AWS deployment, to zip the new versions to upload</h5>
+Inside the root directory run the following command:</br>
 <code>zip -r package.zip * .ebextensions</code></br>
 
 
