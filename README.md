@@ -74,9 +74,14 @@ Other useful instructions:</br>
 <code>docker image ls</code></br>
 
 <h4> General considrations about Docker</h4>
-</br>
 <ul>
 <li>A Dockerfile is a recipe for creating Docker images</li>
 <li>A Docker image gets built by running a Docker command (which uses that Dockerfile)</li>
 <li>A Docker container is a running instance of a Docker image</li>
 </ul>
+</br>
+
+Regarding the AWS deployment, to zip the new versions to upload.Inside the root directory run the following command:</br>
+<code>zip -r package.zip * .ebextensions</code></br>
+
+
