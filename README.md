@@ -25,7 +25,7 @@ To initiate db (cutover), run:
     <li>Detect double & tripple bottoms & tops</li>
 </ul>
 
-![alt-text](screencaps/home.PNG)
+![alt-text](screencaps/home.png)
 ![alt-text](screencaps/registration.png)
 ![alt-text](screencaps/table.png)
 
