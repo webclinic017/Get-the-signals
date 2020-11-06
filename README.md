@@ -93,7 +93,7 @@ Create following foler in root dir of the app: </br>
 ```.ebextensions/python.config```</br>
 Add:</br>
 <code>
-option_settings:</code>
-<code>  - namespace: aws:elasticbeanstalk:container:python</code>
-    <code>option_name: StaticFiles</code>
+option_settings:</code></br>
+<code>  - namespace: aws:elasticbeanstalk:container:python</code></br>
+    <code>option_name: StaticFiles</code></br>
     <code>value: /static/=static/</code>
