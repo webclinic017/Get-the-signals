@@ -1,5 +1,12 @@
 {%extends "base.html"%}
 {% block content%}
+
+<head>
+    <link href="/static/style_login.css" rel="stylesheet" type="text/css">
+    <title>GTS-Login</title>
+</head>
+
+<body>
 <div class="jumbotron">
     <h1 class="display-5">Please log in to access the content</h1>
 
@@ -12,5 +19,5 @@
         {{form.submit(class="btn btn-primary")}}
     </form>
 </div>
-
+</body>
 {%endblock%}
