@@ -19,7 +19,6 @@
     <div class="container margin-top-10">
         
 
-        
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="main-nav">
             <div class="container">
                 <a href="{{ url_for('home') }}" class="navbar-brand">GTS</a>
@@ -33,6 +32,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ url_for('table') }}" class="nav-link">Table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
                         </li>
                         {% if current_user.is_authenticated %}
                         <li class="nav-item">
@@ -57,7 +59,7 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
-
+</div>
         {% block content %}
         {% endblock %}
 

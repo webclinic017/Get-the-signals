@@ -110,6 +110,11 @@ def table():
     return render_template('table.html', items=items)
 
 
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 

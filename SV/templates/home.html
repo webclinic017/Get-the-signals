@@ -7,6 +7,8 @@
     <title>GTS-Home</title>
 </head>
 
+<div class="container margin-top-10">
+
 <body>
     <div class="row">
         <div class="col-sm">
@@ -21,9 +23,9 @@
         <div class="col-sm">
             <div class="card-body text-center">
                 {% if current_user.is_authenticated %}
-                <p class="lead text-center">Hi {{current_user.username}}</p>
+                <p class="lead text-right">Hi {{current_user.username}}</p>
                 {% else %}
-                <p class="lead text-center">Please login or register</p>
+                <p class="lead text-right">Please <b>login</b> or <b>register</b></p>
                 {% endif %}
             </div>
         </div>
@@ -31,7 +33,7 @@
     </div>
 
 </body>
-
+</div>
 <footer id="main-footer" class="bg-dark">
 
     <div class="container">
