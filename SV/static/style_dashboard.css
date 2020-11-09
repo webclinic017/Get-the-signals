@@ -7,7 +7,8 @@
 
 #sidebar {
   position:absolute;
-  top:0px;
+  top:57px;
+  bottom: 60px;
   left:-200px;
   width:200px;
   height:100%;
@@ -20,7 +21,7 @@
 #sidebar .toggle-btn {
   position:absolute;
   left:220px;
-  top:10px;
+  top:20px;
 }
 #sidebar .toggle-btn span {
   display:block;
