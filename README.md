@@ -25,6 +25,7 @@ To initiate db (cutover), run:
 ![alt-text](screencaps/home.png)
 ![alt-text](screencaps/registration.png)
 ![alt-text](screencaps/table.png)
+![alt-text](screencaps/dashboard.png)
 
 <h4> Directory tree: </h4>
 
