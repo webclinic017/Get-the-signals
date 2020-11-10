@@ -1,8 +1,5 @@
-This is my first Flask project (Python, Bootstrap, HTML, CSS,...). The aim is to build a web app that connects to different API's. 
-It will gather data from diverse web sources, synthesize and display the competitive arenas for every chosen stock.
-The app is connected to various sqlite databases.
+Deployment w. AWS Beanstalk. Backend w. AWS RDS MySQL. First Flask project (Python, Bootstrap, HTML, CSS,...). Aim is to build a web app that connects to different API's. Will gather data from diverse web sources, synthesize and display the competitive arenas for every chosen stock.
 The app integrates a user authentication procedure.
-
 
 <h4> Command to create virtual env (VS code, Ubuntu 20) </h4>
 <p>In <strong>project root dir</strong> open command line:</p>
