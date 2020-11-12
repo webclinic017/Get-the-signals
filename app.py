@@ -66,24 +66,6 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-
-    if form.validate_on_submit():
-        user = User(email=form.email.data,
-                    username=form.username.data,
-                    password=form.password.data)
-
-        db.session.add(user)
-        db.session.commit()
-        flash('Thanks for registering! Now you can login!')
-        return redirect(url_for('login'))
-
-    print(form.username.errors)
-    print(form.email.errors)
-    
-    return render_template('register.html', form=form)
 
 
 
@@ -114,6 +96,12 @@ def table():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+
+@app.route('/chart')
+@login_required
+def chart():
+    return render_template('chart.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
