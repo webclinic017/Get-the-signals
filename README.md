@@ -16,8 +16,8 @@ To initiate db (cutover), run:
 <h4> To be implemented </h4>
 
 <ul>
-    <li>Page with macro-economic information</li>
-    <li>Connect DB to external API to gather economic data</li>
+    <li>RTVS detector + visualization of normality</lI>
+    <li>Connect to my RDS DB</li>
     <li>Detect all minimas for a chosen stock and give the ability to download a csv with flagged positions</li>
     <li>Detect double & tripple bottoms & tops</li>
 </ul>
