@@ -1,0 +1,25 @@
+{%extends "base.html"%}
+{%block content%}
+
+<head>
+  <link href="/static/style_rtvs.css" rel="stylesheet" type="text/css">
+  <title>GTS-Table</title>
+</head>
+<div class="container margin-top-10">
+
+<body id="RTVS_page">
+  <h4 class="display-4">RTVS</h1>
+
+  <p>The RTVS detector lists the stocks that were characterized by a sudden surge in volume or price.</p>
+   
+   
+    <form method="POST">
+        <input name="text">
+        <input type="submit" id="validate" value="Go!">
+    </form>
+
+</body>
+{% include "base_dashboard.html" %}
+
+{%endblock%}
+
