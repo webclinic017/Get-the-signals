@@ -83,3 +83,5 @@ Inside the root directory run the following command:</br>
 To debug static files issue (css):</br>
 https://stackoverflow.com/questions/15077489/static-assets-dont-show-up-for-flask-on-elastic-beanstalk
 
+Regarding big files upload towards S3:</br>
+https://aws.amazon.com/premiumsupport/knowledge-center/s3-large-file-uploads/
