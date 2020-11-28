@@ -68,8 +68,6 @@ def login():
 
 
 
-
-
 @app.route('/table')
 @login_required
 def table():
@@ -88,7 +86,6 @@ def table():
         # items = [item[0] for item in items]
 
     items = fetch()
-    #fetch() = func above
     return render_template('table.html', items=items)
 
 
@@ -103,7 +100,20 @@ def dashboard():
 def chart():
     return render_template('chart.html')
 
+
+@app.route('/rtvs')
+@login_required
+def rtvs():
+    return render_template('rtvs.html')
+
+@app.route('/rtvs', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    processed_text = text.upper()
+    print(processed_text)
+    return render_template('rtvs.html')
+
+#https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 
-# https://stackoverflow.com/questions/15077489/static-assets-dont-show-up-for-flask-on-elastic-beanstalk
