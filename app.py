@@ -4,6 +4,9 @@ from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import os
+import plotly
+import plotly.graph_objs as go
+import json
 
 
 from SV.models import User
@@ -62,15 +65,11 @@ def login():
 
 
 
-def fetch():
-    qu = "SELECT ticker, sector, price, industry, change_, volume FROM usStocksOverview"
-    items = db_acc_obj.exc_query(db_name='flaskfinance', query=qu, \
-        retres=QuRetType.MANY)
-
-    print(items)
-    return items
-
-def fetch_manual(nRows):
+def fetch(nRows):
+    """
+    :param nRows: used to specify the number of rows to display in the /table page table
+    :returns: the table
+    """
     qu = "SELECT ticker, sector, price, industry, change_, volume FROM usStocksOverview"
     items = db_acc_obj.exc_query(db_name='flaskfinance', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
@@ -79,18 +78,20 @@ def fetch_manual(nRows):
     return items
 
 
+
 @app.route('/table')
 @login_required
 def table():
-    items = fetch()
+    nRows= 50
+    items = fetch(nRows)
     return render_template('table.html', items=items)
 
 
 @app.route(f'/table', methods=['POST'])
-def talbe_form():
+def table_form():
     nRows = request.form['text']
     nRows = int(nRows)
-    items = fetch_manual(nRows)
+    items = fetch(nRows)
     print(nRows)
     return render_template('table.html', items=items)
 
@@ -105,11 +106,30 @@ def dashboard():
 def chart():
     return render_template('chart.html')
 
+def create_lineChart(tick='PLUG'):
+    qu=f"SELECT * FROM NASDAQ_15 WHERE Symbol='{tick}'"
+    df = db_acc_obj.exc_query(db_name='marketdata', query=qu,\
+        retres=QuRetType.ALLASPD)
+    print(df)
+    data = [go.Scatter(
+        x=df['Date'],
+        y=df['Close'])
+    ]
+
+    lineJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return lineJSON
+
+
+
 
 @app.route('/rtvs')
 @login_required
 def rtvs():
-    return render_template('rtvs.html')
+
+    line = create_lineChart(tick)
+
+    return render_template('rtvs.html', plot=line, tick=tick)
 
 @app.route('/rtvs', methods=['POST'])
 def my_form_post():
