@@ -78,22 +78,6 @@ def fetch(nRows=50):
     return items
 
 
-
-@app.route('/table')
-@login_required
-def table():
-    items = fetch()
-    return render_template('table.html', items=items)
-
-
-@app.route(f'/table', methods=['POST'])
-def table_form():
-    nRows = request.form['text']
-    nRows = int(nRows)
-    items = fetch(nRows)
-    print(nRows)
-    return render_template('table.html', items=items)
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -121,21 +105,42 @@ def create_lineChart(tick='PLUG'):
 
 
 
-
 @app.route('/rtvs')
 @login_required
 def rtvs():
 
+    return render_template('rtvs.html')
+
+@app.route('/table')
+@login_required
+def table():
+    items = fetch()
+    return render_template('table.html', items=items)
+
+
+@app.route('/table', methods=['POST'])
+def table_form():
+    nRows = request.form['text']
+    nRows = int(nRows)
+    items = fetch(nRows)
+    print(nRows)
+    return render_template('table.html', items=items)
+
+
+@app.route('/charts')
+@login_required
+def charts():
+
     line = create_lineChart()
+    return render_template('charts.html', plot=line, tick='PLUG')
 
-    return render_template('rtvs.html', plot=line, tick=tick)
-
-@app.route('/rtvs', methods=['POST'])
+@app.route('/charts', methods=['POST'])
 def my_form_post():
     text = request.form['text']
     processed_text = text.upper()
+    line = create_lineChart(tick=processed_text)
     print(processed_text)
-    return render_template('rtvs.html')
+    return render_template('charts.html', plot=line,tick=processed_text)
 
 #https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':

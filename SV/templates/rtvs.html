@@ -17,23 +17,6 @@
   <p>The RTVS detector lists the stocks that were characterized by a sudden surge in volume or price.</p>
    
 
-  <div class="row">
-
-    <div class="col-2">
-      <input name = "text" type="text" class="form-control" placeholder="N° rows">
-    </div>
-    <div class="col">
-      <input type="submit" class="btn  btn-dark" id="validate" value="Go!">
-    </div>
-
-  </div>
-
-        <center><p>{{tick}}</p></center>
-        <div class="chart" id="line">
-            <script>
-              var graphs = {{plot | safe}};
-              Plotly.plot('line',graphs,{});
-            </script>
   
 </body>
 {% include "base_dashboard.html" %}
