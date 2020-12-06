@@ -1,20 +1,14 @@
 from SV import app, db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user
-from SV.models import User
-from SV.forms import LoginForm, RegistrationForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import os
 
 
-
-db_user = os.environ.get('aws_db_user')
-db_pass = os.environ.get('aws_db_pass')
-db_endp = os.environ.get('aws_db_endpoint')
-
-
-
+from SV.models import User
+from SV.forms import LoginForm, RegistrationForm
+from utils.db_manage import QuRetType, std_db_acc_obj
 
 @app.route('/')
 def home():
@@ -68,26 +62,37 @@ def login():
 
 
 
+def fetch():
+    qu = "SELECT ticker, sector, price, industry, change_, volume FROM usStocksOverview"
+    items = db_acc_obj.exc_query(db_name='flaskfinance', query=qu, \
+        retres=QuRetType.MANY)
+
+    print(items)
+    return items
+
+def fetch_manual(nRows):
+    qu = "SELECT ticker, sector, price, industry, change_, volume FROM usStocksOverview"
+    items = db_acc_obj.exc_query(db_name='flaskfinance', query=qu, \
+        retres=QuRetType.MANY, nRows=nRows)
+
+    print(items)
+    return items
+
+
 @app.route('/table')
 @login_required
 def table():
-    def fetch():
-        db = pymysql.connect(host=f'{db_endp}',user=f'{db_user}',password=f'{db_pass}',database='flaskfinance')
-        cursor = db.cursor()
-        cursor.execute(
-        "SELECT ticker, sector, price, industry, change_, volume FROM usStocksOverview")
-        items = cursor.fetchmany(50)
-        print(items)
-        cursor.close()
-        db.close()
-
-        return items
-        # simply to have a proposer display without commas and parantheses specific to tuple format
-        # items = [item[0] for item in items]
-
     items = fetch()
     return render_template('table.html', items=items)
 
+
+@app.route(f'/table', methods=['POST'])
+def talbe_form():
+    nRows = request.form['text']
+    nRows = int(nRows)
+    items = fetch_manual(nRows)
+    print(nRows)
+    return render_template('table.html', items=items)
 
 @app.route('/dashboard')
 @login_required
@@ -115,5 +120,7 @@ def my_form_post():
 
 #https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':
+    db_acc_obj = std_db_acc_obj() 
     app.run(host='0.0.0.0', debug=True)
+
 
