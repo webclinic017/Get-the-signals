@@ -65,7 +65,7 @@ def login():
 
 
 
-def fetch(nRows):
+def fetch(nRows=50):
     """
     :param nRows: used to specify the number of rows to display in the /table page table
     :returns: the table
@@ -82,8 +82,7 @@ def fetch(nRows):
 @app.route('/table')
 @login_required
 def table():
-    nRows= 50
-    items = fetch(nRows)
+    items = fetch()
     return render_template('table.html', items=items)
 
 
@@ -127,7 +126,7 @@ def create_lineChart(tick='PLUG'):
 @login_required
 def rtvs():
 
-    line = create_lineChart(tick)
+    line = create_lineChart()
 
     return render_template('rtvs.html', plot=line, tick=tick)
 

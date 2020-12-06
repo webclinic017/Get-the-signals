@@ -79,8 +79,8 @@ class DBManager:
         return conCM
 
 
-    def exc_query(self, db_name, query, nRows, retres = QuRetType.NONE, outpfile = None,\
-         ):
+    def exc_query(self, db_name, query, retres = QuRetType.NONE, outpfile = None,\
+         **kwargs):
         """
         opens a cursor, executes a query and returns the result depending on type
 
@@ -94,6 +94,9 @@ class DBManager:
     
         :returns: data in format as specified by retres
         """
+        if kwargs.get('nRows')!=None:
+            self.nRows = kwargs['nRows']
+
         try:
             ret = None
             with self.connection(db_name) as conn:
@@ -110,7 +113,7 @@ class DBManager:
                     elif retres is QuRetType.ALL:
                         ret = c.fetchall()
                     elif retres is QuRetType.MANY:
-                        ret = c.fetchmany(nRows)
+                        ret = c.fetchmany(self.nRows)
                     else:
                         pass
 
