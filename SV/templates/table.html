@@ -5,7 +5,6 @@
   <link href="/static/style_table.css" rel="stylesheet" type="text/css">
   <title>GTS-Table</title>
 </head>
-<div class="container margin-top-10">
 
 <body id="Table_page">
   <h4 class="display-4">Available stocks</h1>
@@ -32,7 +31,7 @@
 
 <div class="table-wrapper-scroll-y my-custom-scrollbar" >
 
-<table class="table table-bordered table-striped mb-0">
+<table class="table table-bordered table-striped table-sm table-hover">
   <thead class="thead-dark">
     <th scope="col">Ticker</th>
     <th scope="col">Sector</th>
@@ -52,7 +51,6 @@
   </tr>
   {% endfor %}
 </table>
-</div>
 
 </body>
 {% include "base_dashboard.html" %}
