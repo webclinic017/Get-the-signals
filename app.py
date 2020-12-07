@@ -108,6 +108,7 @@ def create_lineChart(tick='PLUG'):
 @app.route('/rtvs')
 @login_required
 def rtvs():
+
     return render_template('rtvs.html')
 
 @app.route('/table')
@@ -129,6 +130,7 @@ def table_form():
 @app.route('/charts')
 @login_required
 def charts():
+
     line = create_lineChart()
     return render_template('charts.html', plot=line, tick='PLUG')
 
