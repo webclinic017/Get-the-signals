@@ -2,11 +2,13 @@ from SV import app, db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from wtforms import TextField, Form
 import pymysql
 import os
 import plotly
 import plotly.graph_objs as go
 import json
+import pandas as pd
 
 
 from SV.models import User
@@ -64,9 +66,15 @@ def login():
 
 
 
+class SearchForm(Form):
+    autocomp = TextField('Insert ticker', id='tick_autocomplete')
+    # https://www.youtube.com/watch?v=32Vmb1sYbuw&ab_channel=Cairocoders
+    pass
 
 def fetch(nRows=50):
     """
+    Function is used in table function
+
     :param nRows: used to specify the number of rows to display in the /table page table
     :returns: the table
     """
@@ -90,7 +98,22 @@ def chart():
     return render_template('chart.html')
 
 def create_lineChart(tick='PLUG'):
-    qu=f"SELECT * FROM NASDAQ_15 WHERE Symbol='{tick}'"
+    """
+    Lists of stock for both NASDAQ and NYSE are present in /utils
+    Instead of having a big table with both NASDAQ and NYSE stocks
+    We have two list of stocks. The requests to RDS are going to be sent relatively to which list 
+    the code can find the tick. Spares time execution.
+    """
+
+    nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
+
+    if tick in nasdaq:
+        table_chart = 'NASDAQ_15'
+    else:
+        print('nyse')
+        table_chart = 'NYSE_15'
+
+    qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}'"
     df = db_acc_obj.exc_query(db_name='marketdata', query=qu,\
         retres=QuRetType.ALLASPD)
     print(df)
