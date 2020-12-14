@@ -103,6 +103,9 @@ def create_lineChart(tick='PLUG'):
     Instead of having a big table with both NASDAQ and NYSE stocks
     We have two list of stocks. The requests to RDS are going to be sent relatively to which list 
     the code can find the tick. Spares time execution.
+    
+    :param 1: user input in chart page
+    :returns: json to generate plotly in HTML
     """
 
     nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
