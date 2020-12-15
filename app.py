@@ -1,5 +1,5 @@
 from SV import app, db
-from flask import render_template, redirect, request, url_for, flash, abort
+from flask import render_template, Response, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import TextField, Form
@@ -15,8 +15,22 @@ from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 
+
+class SearchForm(Form):
+    autocomp = TextField('Insert Stock', id='stock_autocomplete')
+ 
+
+@app.route('/_autocomplete', methods=['GET'])
+def autocomplete():
+    nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
+
+    return Response(json.dumps(nasdaq), mimetype='application/json')
+ 
+
+
 @app.route('/')
 def home():
+
     return render_template('home.html')
 
 
@@ -66,10 +80,6 @@ def login():
 
 
 
-class SearchForm(Form):
-    autocomp = TextField('Insert ticker', id='tick_autocomplete')
-    # https://www.youtube.com/watch?v=32Vmb1sYbuw&ab_channel=Cairocoders
-    pass
 
 def fetch(nRows=50):
     """
@@ -82,7 +92,6 @@ def fetch(nRows=50):
     items = db_acc_obj.exc_query(db_name='flaskfinance', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
 
-    print(items)
     return items
 
 
@@ -119,7 +128,6 @@ def create_lineChart(tick='PLUG'):
     qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}'"
     df = db_acc_obj.exc_query(db_name='marketdata', query=qu,\
         retres=QuRetType.ALLASPD)
-    print(df)
     data = [go.Scatter(
         x=df['Date'],
         y=df['Close'])
@@ -149,24 +157,37 @@ def table_form():
     nRows = request.form['text']
     nRows = int(nRows)
     items = fetch(nRows)
-    print(nRows)
     return render_template('table.html', items=items)
 
 
-@app.route('/charts')
+""" @app.route('/charts')
 @login_required
 def charts():
+    form = SearchForm(request.form)
 
     line = create_lineChart()
     return render_template('charts.html', plot=line, tick='PLUG')
+ """
+
+@app.route('/charts',methods=['GET','POST'])
+@login_required
+def charts():
+    form = SearchForm(request.form)
+
+    line = create_lineChart()
+    return render_template('charts.html', form=form, plot=line, tick='PLUG')
+
+
+
 
 @app.route('/charts', methods=['POST'])
 def my_form_post():
+
     text = request.form['text']
     processed_text = text.upper()
     line = create_lineChart(tick=processed_text)
     print(processed_text)
-    return render_template('charts.html', plot=line,tick=processed_text)
+    return render_template('charts.html',plot=line,tick=processed_text)
 
 #https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':
