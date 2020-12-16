@@ -16,6 +16,8 @@ To initiate db (cutover), run:
 <h4> To do: </h4>
 
 <ul>
+    <li>Add working autocomplete to chart field</li>
+    <li>Add boolean before func. toRDS</li>
     <li>RTVS detector + visualization of normality</lI>
     <li>Tooltips for infra. health: https://getbootstrap.com/docs/4.3/components/tooltips/ </li>
     <li>API connection w. EC2 to check infra. health</li>
