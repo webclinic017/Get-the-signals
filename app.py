@@ -101,10 +101,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/chart')
-@login_required
-def chart():
-    return render_template('chart.html')
 
 def create_lineChart(tick='PLUG'):
     """
@@ -160,34 +156,22 @@ def table_form():
     return render_template('table.html', items=items)
 
 
-""" @app.route('/charts')
+
+@app.route('/charts')
 @login_required
 def charts():
-    form = SearchForm(request.form)
 
     line = create_lineChart()
     return render_template('charts.html', plot=line, tick='PLUG')
- """
-
-@app.route('/charts',methods=['GET','POST'])
-@login_required
-def charts():
-    form = SearchForm(request.form)
-
-    line = create_lineChart()
-    return render_template('charts.html', form=form, plot=line, tick='PLUG')
-
-
-
 
 @app.route('/charts', methods=['POST'])
 def my_form_post():
-
-    text = request.form['text']
+    text = request.form['stock_input']
     processed_text = text.upper()
     line = create_lineChart(tick=processed_text)
     print(processed_text)
-    return render_template('charts.html',plot=line,tick=processed_text)
+    return render_template('charts.html', plot=line,tick=processed_text)
+
 
 #https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':
