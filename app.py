@@ -177,7 +177,7 @@ def my_form_post():
 @app.route('/infraHealth')
 @login_required
 def infraHealth():
-    return render_template('infraHealth.html')
+    return render_template('infraHealth.html', healh_finviz=, health_eod=)
 
 
 
