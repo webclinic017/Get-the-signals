@@ -26,7 +26,12 @@
           <div class="card-body">
               <h6 class="card-title">EOD Data</h4>
               <p class="card-text">
+                {%if health%}
                 <span class="dotGreen"></span>
+                {%else%}
+                <span class="dotRed"></span>
+                {% endif %}
+
               OK
               </p>
           </div>
