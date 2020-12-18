@@ -3,3 +3,22 @@
     padding-right: 210px;
     padding-left: 210px;
   }
+
+
+
+.dotGreen {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(21, 255, 0);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+
+.dotRed {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(255, 0, 0);
+  border-radius: 50%;
+  display: inline-block;
