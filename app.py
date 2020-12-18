@@ -30,7 +30,6 @@ def autocomplete():
 
 @app.route('/')
 def home():
-
     return render_template('home.html')
 
 
@@ -149,6 +148,7 @@ def table():
 
 
 @app.route('/table', methods=['POST'])
+@login_required
 def table_form():
     nRows = request.form['text']
     nRows = int(nRows)
@@ -165,12 +165,22 @@ def charts():
     return render_template('charts.html', plot=line, tick='PLUG')
 
 @app.route('/charts', methods=['POST'])
+@login_required
 def my_form_post():
     text = request.form['stock_input']
     processed_text = text.upper()
     line = create_lineChart(tick=processed_text)
     print(processed_text)
     return render_template('charts.html', plot=line,tick=processed_text)
+
+
+@app.route('/infraHealth')
+@login_required
+def infraHealth():
+    return render_template('infraHealth.html')
+
+
+
 
 
 #https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
