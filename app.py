@@ -21,10 +21,8 @@ class SearchForm(Form):
 
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():
-    nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
-
-    print(nasdaq)
-    return Response(json.dumps(nasdaq), mimetype='application/json')
+    stocksList = list(pd.read_csv('utils/stocks_list.csv').iloc[:, 1])
+    return Response(json.dumps(stocksList), mimetype='application/json')
 
 
 
