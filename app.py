@@ -1,5 +1,4 @@
-from SV import app, db
-from flask import render_template, Response, redirect, request, url_for, flash, abort
+from flask import Flask, render_template, Response, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import TextField, Form
@@ -10,22 +9,23 @@ import plotly.graph_objs as go
 import json
 import pandas as pd
 
-
+from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 
 
 class SearchForm(Form):
-    autocomp = TextField('Insert Stock', id='stock_autocomplete')
- 
+    stock = TextField('Insert Stock', id='stock_autocomplete')
+
 
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():
     nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
 
+    print(nasdaq)
     return Response(json.dumps(nasdaq), mimetype='application/json')
- 
+
 
 
 @app.route('/')
@@ -45,7 +45,6 @@ def logout():
     logout_user()
     flash('You logged out!')
     return redirect(url_for('home'))
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -77,9 +76,6 @@ def login():
             return redirect(next)
     return render_template('login.html', form=form)
 
-
-
-
 def fetch(nRows=50):
     """
     Function is used in table function
@@ -93,13 +89,10 @@ def fetch(nRows=50):
 
     return items
 
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html')
-
-
 
 def create_lineChart(tick='PLUG'):
     """
@@ -109,7 +102,7 @@ def create_lineChart(tick='PLUG'):
     the code can find the tick. Spares time execution.
     
     :param 1: user input in chart page
-    :returns: json to generate plotly in HTML
+    :returns: json to generate a plotly chart in HTML
     """
 
     nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
@@ -132,8 +125,6 @@ def create_lineChart(tick='PLUG'):
 
     return lineJSON
 
-
-
 @app.route('/rtvs')
 @login_required
 def rtvs():
@@ -146,7 +137,6 @@ def table():
     items = fetch()
     return render_template('table.html', items=items)
 
-
 @app.route('/table', methods=['POST'])
 @login_required
 def table_form():
@@ -156,28 +146,32 @@ def table_form():
     return render_template('table.html', items=items)
 
 
-
-@app.route('/charts')
+@app.route('/charts',methods=['GET', 'POST'])
 @login_required
 def charts():
-
+    form = SearchForm(request.form)
     line = create_lineChart()
-    return render_template('charts.html', plot=line, tick='PLUG')
+    return render_template('charts.html', form=form, plot=line, tick='PLUG')
 
-@app.route('/charts', methods=['POST'])
+
+@app.route('/submit', methods=['POST'])
 @login_required
-def my_form_post():
-    text = request.form['stock_input']
+def getUserInput():
+    # text = request.form['stock_input']
+    form = SearchForm(request.form)
+    text = form.stock.data
     processed_text = text.upper()
-    line = create_lineChart(tick=processed_text)
     print(processed_text)
-    return render_template('charts.html', plot=line,tick=processed_text)
+
+    line = create_lineChart(tick=processed_text)
+    return render_template('charts.html', form=form, plot=line,tick=processed_text)
 
 
 @app.route('/infraHealth')
 @login_required
 def infraHealth():
     return render_template('infraHealth.html', health=True)
+
 
 
 
