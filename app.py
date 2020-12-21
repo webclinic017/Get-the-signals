@@ -144,6 +144,13 @@ def table_form():
     return render_template('table.html', items=items)
 
 
+@app.route('/investInfra')
+@login_required
+def investInfra():
+    return render_template('investInfra.html')
+
+
+
 @app.route('/charts',methods=['GET', 'POST'])
 @login_required
 def charts():
