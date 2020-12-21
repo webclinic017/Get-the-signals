@@ -14,7 +14,7 @@
 </head>
 
 <body id="Charts_page">
-  <h4 class="display-4">Charts</h1>
+  <h2>Charts</h2>
 
   
 
@@ -39,7 +39,12 @@
   });
 </script>
 
-  <center><p>{{tick}}</p></center>
+  <center>
+    <p>
+      <strong>{{tick}}</strong>
+    </p>
+  </center>
+  
   <div class="chart" id="line">
       <script>
         var graphs = {{plot | safe}};

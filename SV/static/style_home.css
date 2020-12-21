@@ -21,6 +21,31 @@ body {
     align-items: center;
   }
 
-#home-section{
-  padding-top: 150px;
+#home-section {
+  background: url(back.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  min-height: 700px;
+}
+
+
+#explore-head-section {
+  background: url(birds.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#home-section .dark-overlay {
+  background: rgba(0, 0, 0, 0.479);
+}
+
+#explore-head-section .dark-overlay {
+  background: rgba(0, 0, 0, 0.479);
+}
+
+.birds_story{
+text-align:justify;
 }

@@ -3,3 +3,9 @@
     padding-right: 210px;
     padding-left: 210px;
   }
+
+h2 {
+    color:rgba(0, 0, 255, 0.89);
+    font-family: Arial;
+    font-weight: bold;
+} 

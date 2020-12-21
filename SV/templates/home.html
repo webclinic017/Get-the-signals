@@ -1,38 +1,74 @@
 {%extends "base.html"%}
 
 {% block content%}
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <link href="/static/style_home.css" rel="stylesheet" type="text/css">
     <title>GTS-Home</title>
 </head>
 
-<div class="container margin-top-10">
 
 <body>
-    <div class="row">
-        <div class="col-sm">
-            <div class="card-body">
-                <h4 class=" display-4">Get the signals.</h4>
-                <p class="lead">GTS is the interface to a back end infrastructure that continuously scans the
-                    US stock market, gathering near <span style="color:aqua">real-time</span> information that is analyzed, providing daily selections of stocks to invest in.
-                </p>
+
+      <!-- HOME SECTION -->
+    <header id="home-section">
+        <div class="dark-overlay">
+
+                <div class="home-inner container">
+
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card-body">
+                                <h4 class=" display-4">Get the signals.</h4>
+                                <p class="lead">GTS is the interface to a back end infrastructure that continuously scans the
+                                    US stock market, gathering near <span style="color:aqua">real-time</span> information that is analyzed, providing daily selections of stocks to invest in.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <div class="card-body text-center">
+                                {% if current_user.is_authenticated %}
+                                <p class="lead text-right">Hi {{current_user.username}}</p>
+                                {% else %}
+                                <p class="lead text-right">Please <b>login</b></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </header>
+    
+    <!-- Story -->
+      <section id="explore-head-section">
+        <div class="dark-overlay">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col py-5">
+                        </div>
+
+                            <div class="col py-5" id="birds">
+                                <p id="birds_story">What is it that drives a swarm of bees or a flock of birds? Who calls the shots for the next group movement among these creatures? 
+                                    Is there a decision-maker or are there several of them? Is their common movement due to exogenous shocks, be it wind or noise? 
+                                    Has, what is considered as exogenous, been internalized and anticipated in such a way that it can no longer be considered as so? Or is perhaps their 
+                                    movement the result of frequencies that are unknown to the human kind? Finally, which is the place of chaos and order in the harmonious dance presented 
+                                    by these clouds of starlings?
+                            </p>
+                            </div>
+
+                        </div>
+                </div>
             </div>
         </div>
+        
+      </section>
 
-        <div class="col-sm">
-            <div class="card-body text-center">
-                {% if current_user.is_authenticated %}
-                <p class="lead text-right">Hi {{current_user.username}}</p>
-                {% else %}
-                <p class="lead text-right">Please <b>login</b></p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    </div>
 
-</body>
 </div>
 <footer id="main-footer" class="bg-dark">
 
@@ -47,6 +83,8 @@
 
 </footer>
 
+</body>
+</html>
 
 
 {%endblock%}
