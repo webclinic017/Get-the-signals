@@ -113,7 +113,7 @@ def create_lineChart(tick='PLUG'):
         print('nyse')
         table_chart = 'NYSE_15'
 
-    qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}'"
+    qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}' and Date>'2018-01-01' "
     df = db_acc_obj.exc_query(db_name='marketdata', query=qu,\
         retres=QuRetType.ALLASPD)
     data = [go.Scatter(
