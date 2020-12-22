@@ -1,7 +1,7 @@
 #Table_page{
     padding-top: 100px;
-    padding-right: 210px;
-    padding-left: 210px;
+    padding-right: 260px;
+    padding-left: 260px;
   }
 
 
@@ -24,7 +24,7 @@
 
 
 h2 {
-  color:rgba(0, 0, 255, 0.89);
+  color:rgba(0, 163, 212, 0.952) !important;
   font-family: Arial;
   font-weight: bold;
 } 
