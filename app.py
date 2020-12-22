@@ -154,11 +154,12 @@ def investInfra():
 @app.route('/charts',methods=['GET', 'POST'])
 @login_required
 def charts():
-    form = SearchForm(request.form)
-    line = create_lineChart()
-    return render_template('charts.html', form=form, plot=line, tick='PLUG')
+    #form = SearchForm(request.form)
+    #line = create_lineChart()
+    #return render_template('charts.html', form=form, plot=line, tick='PLUG')
+    return render_template('charts.html')
 
-
+"""
 @app.route('/submit', methods=['POST'])
 @login_required
 def getUserInput():
@@ -170,7 +171,7 @@ def getUserInput():
 
     line = create_lineChart(tick=processed_text)
     return render_template('charts.html', form=form, plot=line,tick=processed_text)
-
+"""
 
 @app.route('/infraHealth')
 @login_required
