@@ -16,13 +16,10 @@ To initiate db (cutover), run:
 <h4> To do: </h4>
 
 <ul>
-    <li>Add working autocomplete to chart field</li>
-    <li>Add boolean before func. toRDS</li>
+	<li>Peers Seekingalpha</li>
     <li>RTVS detector + visualization of normality</lI>
     <li>Tooltips for infra. health: https://getbootstrap.com/docs/4.3/components/tooltips/ </li>
     <li>API connection w. EC2 to check infra. health</li>
-    <li>Detect all minimas for a chosen stock and give the ability to download a csv with flagged positions</li>
-    <li>Detect double & tripple bottoms & tops</li>
 </ul>
 
 ![alt-text](screencaps/home.png)
