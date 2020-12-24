@@ -33,12 +33,10 @@
 
 <table class="table table-bordered table-striped table-sm table-hover">
   <thead class="thead-dark">
-    <th scope="col">Ticker</th>
-    <th scope="col">Sector</th>
-    <th scope="col">Price</th>
-    <th scope="col">Industry</th>
-    <th scope="col">Change</th>
-    <th scope="col">Volume</th>
+    <th scope="col">ValidTick</th>
+    <th scope="col">SignalDate</th>
+    <th scope="col">ScanDate</th>
+    <th scope="col">NScanDaysInterval</th>
   </thead>
   {% for item in items %}
   <tr>
@@ -46,8 +44,6 @@
     <td>{{ item[1] }}</td>
     <td>{{ item[2] }}</td>
     <td>{{ item[3] }}</td>
-    <td>{{ item[4] }}</td>
-    <td>{{ item[5] }}</td>
   </tr>
   {% endfor %}
 </table>

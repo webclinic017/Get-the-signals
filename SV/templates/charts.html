@@ -16,32 +16,40 @@
 <body id="Charts_page">
   <h2>Charts</h2>
 
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div id="tradingview_1a900"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL Chart</span></a> by TradingView</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-  <script type="text/javascript">
-  new TradingView.widget(
-  {
-  "width": 1200,
-  "height": 710,
-  "symbol": "NASDAQ:AAPL",
-  "interval": "D",
-  "timezone": "Etc/UTC",
-  "theme": "dark",
-  "style": "1",
-  "locale": "en",
-  "toolbar_bg": "#f1f3f6",
-  "enable_publishing": false,
-  "allow_symbol_change": true,
-  "container_id": "tradingview_1a900"
-}
-  );
-  </script>
-</div>
-<!-- TradingView Widget END -->
+  
 
+  <form class="form-inline" method="post" action="/submit">
+    <div class="form-group mx-sm-3 mb-2">
+        {{ form.stock(class="form-control")}}
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+  </form>
+
+
+<script>
+  $(function () {
+      $.ajax({
+          url: '{{ url_for("autocomplete") }}'
+      }).done(function (data) {
+          $('#stock_autocomplete').autocomplete({
+              source: data,
+              minLength: 2
+          });
+      });
+  });
+</script>
+
+  <center>
+    <p>
+      <strong>{{tick}}</strong>
+    </p>
+  </center>
+  
+  <div class="chart" id="line">
+      <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('line',graphs,{});
+      </script>
 
 </body>
 
