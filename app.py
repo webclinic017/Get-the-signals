@@ -74,23 +74,39 @@ def login():
             return redirect(next)
     return render_template('login.html', form=form)
 
-def fetch(nRows=50):
+def fetch(nRows=100):
     """
     Function is used in table function
 
     :param nRows: used to specify the number of rows to display in the /table page table
     :returns: the table
     https://stackoverflow.com/questions/7219385/how-to-join-only-one-column
+
+    1. Gets data from DB and joins to have last Close market prices 
+    2. Calculates price evolution
     """
-    qu = "SELECT Signals_aroon_crossing.*, NASDAQ_TODAY.Close FROM Signals_aroon_crossing\
-         LEFT JOIN NASDAQ_TODAY\
-    ON Signals_aroon_crossing.ValidTick = NASDAQ_TODAY.Symbol"
+    qu = "SELECT Signals_aroon_crossing.*, US_TODAY.Close FROM Signals_aroon_crossing\
+         LEFT JOIN US_TODAY\
+    ON Signals_aroon_crossing.ValidTick = US_TODAY.Symbol\
+    ORDER BY SignalDate DESC"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
-    dfitems = pd.DataFrame(items)
 
-    # Get prices for this specific list of stocks
-    print(dfitems)
+    # Transform tuple of tuples in list of lists for mutability
+    listofTuples = list(items)
+    listofLists = []
+    for tuple in listofTuples:
+        l = list(tuple)
+        listofLists.append(l)
+
+  
+    dfitems = pd.DataFrame(items)
+    PriceEvolution = (( (dfitems.iloc[:,5] - dfitems.iloc[:,4]) / dfitems.iloc[:,4] ) * 100).tolist()
+    print(PriceEvolution)
+    #for list in listofLists:
+
+
+
     return items
 
 @app.route('/dashboard')
@@ -167,8 +183,11 @@ def tuplesToCSV(Tuples):
         c2 = line[1].strftime("%Y-%m-%d")
         c3 = line[2].strftime("%Y-%m-%d")
         c4 = str(line[3])
+        c5 = str(line[4])
+        c6 = str(line[5])
+
         reReconstructedLine  = c1 + ',' + c2 + ','\
-             + c3 + ',' + c4 + '\n'
+             + c3 + ',' + c4 + ',' + c5 + ',' + c6 + '\n'
         reReconstructedCSV = reReconstructedCSV + reReconstructedLine
 
     return reReconstructedCSV

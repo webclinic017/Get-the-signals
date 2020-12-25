@@ -17,11 +17,38 @@
   
   </br>
   <h5><strong>Storage infrastructure</strong></h5>
+  </br>
+  One <code>marketdata</code> database stored in AWS RDS (MYySQL). Three tables:
+
+  <div class="DBs">
+
+      <div class="d-flex justify-content-center row-hl">
+        <div class="p-4 item-hl">
+          <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
+          </br>
+          <p>Historical</p>
+        </div>
+        <div class="p-4 item-hl">
+          <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
+          </br>
+          <p>Last Close</p>
+        </div>
+        <div class="p-4 item-hl">
+          <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
+          </br>
+          <p>Now</p>
+        </div>
+      </div>
+  </div>
   <p>
     <ul>
-      <li>Historical</li>
-      <li>Today (To avoid useless research among 4 million rows for each DB request that needs only daily data</li>
-      <li>Now (to come)</li>
+      <code>NASDAQ_15</code> & <code>NYSE_15</code>: historical data. 5 Years of daily stock quotes for approx. 7k american stocks.
+    </br>
+      
+      <code>US_TODAY</code>: to avoid useless research among 4 million rows for each DB request that needs only daily data</li>
+    </br>
+      
+      <code>NASDAQ_NOW</code> (to come)</li>
     </ul>
   </p>
 </br>
