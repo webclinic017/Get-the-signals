@@ -90,7 +90,8 @@ def fetch(nRows=200):
             SELECT Signals_aroon_crossing.*, US_TODAY.Close FROM Signals_aroon_crossing\
             LEFT JOIN US_TODAY\
             ON Signals_aroon_crossing.ValidTick = US_TODAY.Symbol\
-            ORDER BY SignalDate DESC)t"
+            )t\
+            ORDER BY SignalDate DESC"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
 
@@ -199,9 +200,10 @@ def tuplesToCSV(Tuples):
         c4 = str(line[3])
         c5 = str(line[4])
         c6 = str(line[5])
+        c7 = str(line[6])
 
         reReconstructedLine  = c1 + ',' + c2 + ','\
-             + c3 + ',' + c4 + ',' + c5 + ',' + c6 + '\n'
+             + c3 + ',' + c4 + ',' + c5 + ',' + c6 + ',' + c7 + '\n'
         reReconstructedCSV = reReconstructedCSV + reReconstructedLine
 
     return reReconstructedCSV
