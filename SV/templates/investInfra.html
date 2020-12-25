@@ -16,42 +16,57 @@
   </p>
   
   </br>
-  <h5><strong>Storage infrastructure</strong></h5>
-  </br>
-  One <code>marketdata</code> database stored in AWS RDS (MYySQL). Three tables:
+  <h5>a) Overview</h5>
 
-  <div class="DBs">
+  <h5>b) Storage</h5>
+      </br>
+      One <code>marketdata</code> database stored in AWS RDS (MySQL). Three tables:
 
-      <div class="d-flex justify-content-center row-hl">
-        <div class="p-4 item-hl">
-          <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
-          </br>
-          <p>Historical</p>
-        </div>
-        <div class="p-4 item-hl">
-          <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
-          </br>
-          <p>Last Close</p>
-        </div>
-        <div class="p-4 item-hl">
-          <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
-          </br>
-          <p>Now</p>
-        </div>
+      <div class="DBs">
+
+          <div class="d-flex justify-content-center row-hl">
+            <div class="p-4 item-hl">
+              <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
+              </br>
+              <p>Historical</p>
+            </div>
+            <div class="p-4 item-hl">
+              <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
+              </br>
+              <p>Last Close</p>
+            </div>
+            <div class="p-4 item-hl">
+              <img alt="dl icon" src="../static/DB-symbol.png" width="40" height="40" >
+              </br>
+              <p>Now</p>
+            </div>
+          </div>
       </div>
-  </div>
-  <p>
-    <ul>
-      <code>NASDAQ_15</code> & <code>NYSE_15</code>: historical data. 5 Years of daily stock quotes for approx. 7k american stocks.
-    </br>
-      
-      <code>US_TODAY</code>: to avoid useless research among 4 million rows for each DB request that needs only daily data</li>
-    </br>
-      
-      <code>NASDAQ_NOW</code> (to come)</li>
-    </ul>
-  </p>
-</br>
+      <p>
+        <ul>
+          <code>NASDAQ_15</code> & <code>NYSE_15</code>: historical data. 5 Years of daily stock quotes for approx. 7k american stocks.
+        </br>
+          
+          <code>US_TODAY</code>: to avoid useless research among 4 million rows for each DB request that needs only daily data</li>
+        </br>
+          
+          <code>NASDAQ_NOW</code> (to come)</li>
+        </ul>
+      </p>
+    
+    <hr class="solid">
+
+  <h3><strong>Data</strong></h3>
+
+  <h5>a) Golden Sources</h5>
+  </br>
+
+  <h5>b) Data Structures</h5>
+  
+    <hr class="solid">
+
+  <h3><strong>Strategy testing</strong></h3>
+  </br>
   <h5><strong>Multiple filters for one single final convergence testing: </strong></h5>
   </br>
   <ul>

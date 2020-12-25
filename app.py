@@ -74,7 +74,7 @@ def login():
             return redirect(next)
     return render_template('login.html', form=form)
 
-def fetch(nRows=100):
+def fetch(nRows=200):
     """
     Function is used in table function
 
@@ -85,29 +85,43 @@ def fetch(nRows=100):
     1. Gets data from DB and joins to have last Close market prices 
     2. Calculates price evolution
     """
-    qu = "SELECT Signals_aroon_crossing.*, US_TODAY.Close FROM Signals_aroon_crossing\
-         LEFT JOIN US_TODAY\
-    ON Signals_aroon_crossing.ValidTick = US_TODAY.Symbol\
-    ORDER BY SignalDate DESC"
+    qu = "select distinct ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal, `Close` from\
+            (\
+            SELECT Signals_aroon_crossing.*, US_TODAY.Close FROM Signals_aroon_crossing\
+            LEFT JOIN US_TODAY\
+            ON Signals_aroon_crossing.ValidTick = US_TODAY.Symbol\
+            ORDER BY SignalDate DESC)t"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
 
-    # Transform tuple of tuples in list of lists for mutability
-    listofTuples = list(items)
-    listofLists = []
-    for tuple in listofTuples:
-        l = list(tuple)
-        listofLists.append(l)
+    # checking if sql query is empty before starting pandas manipulation.
+    # If empty we simply return items. No Bug.
+    # If we process below py calculations with an item the website is throw an error.
+    if items:
+        # Transform tuple of tuples in list of lists for mutability
+        listofTuples = list(items)
+        listofLists = []
+        for tup in listofTuples:
+            l = list(tup)
+            listofLists.append(l)
 
-  
-    dfitems = pd.DataFrame(items)
-    PriceEvolution = (( (dfitems.iloc[:,5] - dfitems.iloc[:,4]) / dfitems.iloc[:,4] ) * 100).tolist()
-    print(PriceEvolution)
-    #for list in listofLists:
+    
+        dfitems = pd.DataFrame(items)
+        PriceEvolution = (( (dfitems.iloc[:,5] - dfitems.iloc[:,4]) / dfitems.iloc[:,4] ) * 100).tolist()
+        
+        count=0
+        for line in listofLists:
+            line.append(round(PriceEvolution[count],2))
+            count +=1
+        # re-cast to tuple of tuples for easier integration in HTML
 
 
+        tupleOfTuples = tuple(tuple(x) for x in listofLists)
 
-    return items
+        return tupleOfTuples
+    else:
+        return items
+
 
 @app.route('/dashboard')
 @login_required
