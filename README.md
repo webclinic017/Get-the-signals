@@ -22,10 +22,6 @@ To initiate db (cutover), run:
     <li>API connection w. EC2 to check infra. health</li>
 </ul>
 
-![alt-text](screencaps/home.png)
-![alt-text](screencaps/registration.png)
-![alt-text](screencaps/dashboard.png)
-![alt-text](screencaps/chart.png)
 
 
 
