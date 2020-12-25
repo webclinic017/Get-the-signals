@@ -7,12 +7,14 @@
 </head>
 
 <body id="Table_page">
-  <h2>Available stocks</h2>
-
-  <p><strong>Test page</strong>. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse sit aliquid recusandae dignissimos dolorem
-    repellendus culpa ex rem cum error? Corrupti, earum. Rerum possimus consequuntur et ipsum amet dicta dolores?Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus maxime natus porro commodi provident quisquam iusto
-    ut ullam possimus nihil modi, dolore nulla debitis corrupti eos laboriosam est veniam eum?</p>
+  <h2>Signals</h2>
+  <h4><strong>Moving averages crossing + strong Aroon</strong></h4>
+  <p> Filter:
+<code>    df['doubleSignal'] = np.where(
+  (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
+  1,0)
+</code>
+  </p>
 
 
     <form class="form" autocomplete="off" spellcheck="false" method="POST">
@@ -25,7 +27,7 @@
         <div class="col">
           <input type="submit" class="btn  btn-dark" id="validate" value="Go!">
         </div>
-
+        <a href="/getCSV">Download CSV</a>
       </div>
     </form>
 

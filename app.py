@@ -129,6 +129,9 @@ def rtvs():
 
     return render_template('rtvs.html')
 
+
+
+
 @app.route('/table')
 @login_required
 def table():
@@ -142,6 +145,40 @@ def table_form():
     nRows = int(nRows)
     items = fetch(nRows)
     return render_template('table.html', items=items)
+
+
+def tuplesToCSV(Tuples):
+    """
+    To be used by Flask's Reponse class, to return a csv type
+    Transform tuples int a csv style sheet
+    :param 1: tuples
+    :returns: a long string that mimics a CSV
+    """
+    reReconstructedCSV = ""
+
+    for line in Tuples:
+        c1 = line[0]
+        c2 = line[1].strftime("%Y-%m-%d")
+        c3 = line[2].strftime("%Y-%m-%d")
+        c4 = str(line[3])
+        reReconstructedLine  = c1 + ',' + c2 + ','\
+             + c3 + ',' + c4 + '\n'
+        reReconstructedCSV = reReconstructedCSV + reReconstructedLine
+
+    return str(reReconstructedCSV)
+
+@app.route("/getCSV")
+@login_required
+def getCSV():
+    fetchedData = fetch()
+    reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
+    print(reReconstructedCSV)
+    return Response(
+        reReconstructedCSV,
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                 "attachment; filename=myplot.csv"})
+
 
 
 @app.route('/investInfra')
