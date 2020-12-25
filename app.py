@@ -80,12 +80,16 @@ def fetch(nRows=50):
 
     :param nRows: used to specify the number of rows to display in the /table page table
     :returns: the table
+    https://stackoverflow.com/questions/7219385/how-to-join-only-one-column
     """
-    qu = "SELECT * FROM Signals_aroon_crossing"
+    qu = "SELECT Signals_aroon_crossing.*, NASDAQ_TODAY.Close FROM Signals_aroon_crossing\
+         LEFT JOIN NASDAQ_TODAY\
+    ON Signals_aroon_crossing.ValidTick = NASDAQ_TODAY.Symbol"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
     dfitems = pd.DataFrame(items)
-    print(dfitems[0])
+
+    # Get prices for this specific list of stocks
     print(dfitems)
     return items
 

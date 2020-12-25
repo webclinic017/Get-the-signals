@@ -44,7 +44,9 @@
     <th scope="col">SignalDate</th>
     <th scope="col">ScanDate</th>
     <th scope="col">NScanDaysInterval</th>
-    <th scope="col">PriceEvolSinceSignal (Last Close US market)</th>
+    <th scope="col">PriceAtSignal</th>
+    <th scope="col">Last closing price</th>
+    <th scope="col">Price Evolution</th>
   </thead>
   {% for item in items %}
   <tr>
@@ -53,6 +55,8 @@
     <td>{{ item[2] }}</td>
     <td>{{ item[3] }}</td>
     <td>{{ item[4] }}</td>
+    <td>{{ item[5] }}</td>
+    <td>{{ item[6] }}</td>
   </tr>
   {% endfor %}
 </table>
