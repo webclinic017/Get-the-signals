@@ -21,7 +21,9 @@
   font-size: small;
 }
 
-
+.form{
+  padding-right: 15px;
+}
 
 h2 {
   color:rgba(0, 163, 212, 0.952) !important;

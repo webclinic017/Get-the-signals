@@ -84,7 +84,9 @@ def fetch(nRows=50):
     qu = "SELECT * FROM Signals_aroon_crossing"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
-
+    dfitems = pd.DataFrame(items)
+    print(dfitems[0])
+    print(dfitems)
     return items
 
 @app.route('/dashboard')
@@ -165,7 +167,7 @@ def tuplesToCSV(Tuples):
              + c3 + ',' + c4 + '\n'
         reReconstructedCSV = reReconstructedCSV + reReconstructedLine
 
-    return str(reReconstructedCSV)
+    return reReconstructedCSV
 
 @app.route("/getCSV")
 @login_required
@@ -177,7 +179,7 @@ def getCSV():
         reReconstructedCSV,
         mimetype="text/csv",
         headers={"Content-disposition":
-                 "attachment; filename=myplot.csv"})
+                 "attachment; filename=signals.csv"})
 
 
 

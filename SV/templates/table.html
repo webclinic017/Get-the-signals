@@ -26,8 +26,13 @@
         </div>
         <div class="col">
           <input type="submit" class="btn  btn-dark" id="validate" value="Go!">
+
         </div>
-        <a href="/getCSV">Download CSV</a>
+
+        <a href="/getCSV">
+          <img alt="dl icon" src="../static/download-icon.png" width="40" height="40" >
+        </a>
+
       </div>
     </form>
 
@@ -39,6 +44,7 @@
     <th scope="col">SignalDate</th>
     <th scope="col">ScanDate</th>
     <th scope="col">NScanDaysInterval</th>
+    <th scope="col">PriceEvolSinceSignal (Last Close US market)</th>
   </thead>
   {% for item in items %}
   <tr>
@@ -46,6 +52,7 @@
     <td>{{ item[1] }}</td>
     <td>{{ item[2] }}</td>
     <td>{{ item[3] }}</td>
+    <td>{{ item[4] }}</td>
   </tr>
   {% endfor %}
 </table>
