@@ -35,7 +35,19 @@
 
       </div>
     </form>
+<div>
+  <p style="text-align:center">
 
+    {%if average>0%}
+    <img alt="dl icon" src="../static/green-arrow.png" width="30" height="30" >
+    Average Return: {{average}} %
+
+    {%else%}
+    <img alt="dl icon" src="../static/red-arrow.png" width="30" height="30" >
+    {% endif %}
+  </p>
+
+</div>
 <div class="table-wrapper-scroll-y my-custom-scrollbar" >
 
 <table class="table table-bordered table-striped table-sm table-hover">

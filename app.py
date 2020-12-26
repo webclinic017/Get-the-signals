@@ -106,7 +106,7 @@ def fetch(nRows=200):
             l = list(tup)
             listofLists.append(l)
 
-    
+        # Calculate price evolutinds and append to list of Lists 
         dfitems = pd.DataFrame(items)
         PriceEvolution = (( (dfitems.iloc[:,5] - dfitems.iloc[:,4]) / dfitems.iloc[:,4] ) * 100).tolist()
         
@@ -119,7 +119,13 @@ def fetch(nRows=200):
 
         tupleOfTuples = tuple(tuple(x) for x in listofLists)
 
-        return tupleOfTuples
+        # Select only rows where Price Evolution != 0
+        # Calculate mean of price evolution
+
+        pricesNoZero = [x for x in PriceEvolution if x != 0.0]
+        averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
+
+        return round(averageOfReturns,2), tupleOfTuples
     else:
         return items
 
@@ -172,16 +178,16 @@ def rtvs():
 @app.route('/table')
 @login_required
 def table():
-    items = fetch()
-    return render_template('table.html', items=items)
+    average, items = fetch()
+    return render_template('table.html', average=average, items=items)
 
 @app.route('/table', methods=['POST'])
 @login_required
 def table_form():
     nRows = request.form['text']
     nRows = int(nRows)
-    items = fetch(nRows)
-    return render_template('table.html', items=items)
+    average, items = fetch(nRows)
+    return render_template('table.html', items=items, average=average)
 
 
 def tuplesToCSV(Tuples):
@@ -211,7 +217,7 @@ def tuplesToCSV(Tuples):
 @app.route("/getCSV")
 @login_required
 def getCSV():
-    fetchedData = fetch()
+    average, fetchedData = fetch()
     reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
     print(reReconstructedCSV)
     return Response(
@@ -265,5 +271,8 @@ def infraHealth():
 if __name__ == '__main__':
     db_acc_obj = std_db_acc_obj() 
     app.run(host='0.0.0.0', debug=True)
+
+
+
 
 
