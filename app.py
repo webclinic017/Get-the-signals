@@ -184,6 +184,7 @@ def table():
 
 # https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
 # https://plotly.com/python/figure-labels/   
+# https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     average, items = fetch()
 
     df = pd.DataFrame(list(items), columns=['ValidTick',

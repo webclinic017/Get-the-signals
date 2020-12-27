@@ -11,7 +11,7 @@
 
 <body id="Table_page">
   <h2>Signals</h2>
-  <h4><strong>Moving averages crossing + strong Aroon</strong></h4>
+  <h4><strong>Trend reversal detection</strong></h4>
   <p> Filter:
 <code>    df['doubleSignal'] = np.where(
   (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
