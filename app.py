@@ -95,9 +95,7 @@ def fetch(nRows=200):
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
     if items:
-
         # Transform tuple of tuples in list of lists for mutability
-        
         def tuplesToLists(tupleOfTuples):
             """
             Casts tuples of tuples in list of lsits
@@ -107,10 +105,8 @@ def fetch(nRows=200):
             for tup in listofTuples:
                 l = list(tup)
                 listofLists.append(l)
-            
             return listofLists
         
-
         # Calculate price evolutinds and append to list of Lists 
         dfitems = pd.DataFrame(items)
         PriceEvolution = dfitems.iloc[:,6].tolist()
@@ -118,7 +114,12 @@ def fetch(nRows=200):
         # Select only rows where Price Evolution != 0
         # Calculate mean of price evolution
         pricesNoZero = [x for x in PriceEvolution if x != 0.0]
-        averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
+
+        # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
+        if len(pricesNoZero)>1:
+            averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
+        else:
+            averageOfReturns = 0
 
         return round(averageOfReturns,2), items
     else:
