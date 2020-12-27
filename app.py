@@ -87,13 +87,7 @@ def fetch(nRows=200):
     1. Gets data from DB and joins to have last Close market prices 
     2. Calculates price evolution
     """
-    qu = "select distinct ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal, `Close` from\
-            (\
-            SELECT Signals_aroon_crossing.*, US_TODAY.Close FROM Signals_aroon_crossing\
-            LEFT JOIN US_TODAY\
-            ON Signals_aroon_crossing.ValidTick = US_TODAY.Symbol\
-            )t\
-            ORDER BY SignalDate DESC"
+    qu = "select * from signals.Signals_aroon_crossing"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
 
@@ -101,33 +95,32 @@ def fetch(nRows=200):
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
     if items:
+
         # Transform tuple of tuples in list of lists for mutability
-        listofTuples = list(items)
-        listofLists = []
-        for tup in listofTuples:
-            l = list(tup)
-            listofLists.append(l)
+        
+        def tuplesToLists(tupleOfTuples):
+            """
+            Casts tuples of tuples in list of lsits
+            """
+            listofTuples = list(items)
+            listofLists = []
+            for tup in listofTuples:
+                l = list(tup)
+                listofLists.append(l)
+            
+            return listofLists
+        
 
         # Calculate price evolutinds and append to list of Lists 
         dfitems = pd.DataFrame(items)
-        PriceEvolution = (( (dfitems.iloc[:,5] - dfitems.iloc[:,4]) / dfitems.iloc[:,4] ) * 100).tolist()
-        
-        count=0
-        for line in listofLists:
-            line.append(round(PriceEvolution[count],2))
-            count +=1
-        # re-cast to tuple of tuples for easier integration in HTML
-
-
-        tupleOfTuples = tuple(tuple(x) for x in listofLists)
+        PriceEvolution = dfitems.iloc[:,6].tolist()
 
         # Select only rows where Price Evolution != 0
         # Calculate mean of price evolution
-
         pricesNoZero = [x for x in PriceEvolution if x != 0.0]
         averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
 
-        return round(averageOfReturns,2), tupleOfTuples
+        return round(averageOfReturns,2), items
     else:
         return items
 
@@ -173,7 +166,6 @@ def create_lineChart(tick='PLUG'):
 @app.route('/rtvs')
 @login_required
 def rtvs():
-
     return render_template('rtvs.html')
 
 
@@ -186,7 +178,9 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     average, items = fetch()
+    #print(items)
 
+    
     df = pd.DataFrame(list(items), columns=['ValidTick',
         'SignalDate',
         'ScanDate',
@@ -194,26 +188,21 @@ def table():
         'PriceAtSignal',
         'LastClostingPrice',
         'PriceEvolution'])
-    print(df)
+    
+    df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    
+    dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
 
-    dfPivoted = pd.pivot_table(df, values='PriceEvolution',\
-         index=['SignalDate'], aggfunc=np.mean)
-    print(dfPivoted)
-    """
-    fig = go.Figure(
-        x=df['SignalDate'],
-        y=df['PriceEvolution'])
-    """
+    
     fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
     fig.update_layout(title='Price Evolution, per starting Signal Date',\
         xaxis_title="SignalDate",\
         yaxis_title="Avg. PriveEvolution",
-  
+    
     font=dict(size=10))
 
     #data = [fig]
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-
+    
     return render_template('table.html', average=average, items=items, plot=lineJSON)
 
 @app.route('/table', methods=['POST'])
