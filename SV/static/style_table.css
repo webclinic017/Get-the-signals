@@ -31,10 +31,3 @@ h2 {
   font-weight: bold;
 } 
 
-.dotGreen {
-  height: 25px;
-  width: 25px;
-  background-color: rgb(21, 255, 0);
-  border-radius: 50%;
-  display: inline-block;
-}

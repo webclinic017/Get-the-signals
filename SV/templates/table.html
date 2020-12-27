@@ -4,6 +4,9 @@
 <head>
   <link href="/static/style_table.css" rel="stylesheet" type="text/css">
   <title>GTS-Table</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
 </head>
 
 <body id="Table_page">
@@ -14,6 +17,19 @@
   (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
   1,0)
 </code>
+
+<div class="chart" id="line">
+  <script>
+    var graphs = {{plot | safe}};
+    Plotly.plot('line',graphs,{});
+  </script> 
+  <p>
+    The results are consistent with some previous analysis (not online) that showed that this strategy wins more on middle term.
+    The day after the signal is generally red. At the exact moment of this signal the stock goes up, then there is a shorting phenomenon.
+    Which is logical, as the signal occurs when there is also (not only, the strategy is more subtle) a surge in price. 
+    Then, the trand reversal continues as expected.
+  </p>
+</div>
   </p>
 
 
@@ -40,12 +56,22 @@
 
     {%if average>0%}
     <img alt="dl icon" src="../static/green-arrow.png" width="30" height="30" >
-    Average Return: {{average}} %
+    Average overall return: {{average}} %
 
     {%else%}
     <img alt="dl icon" src="../static/red-arrow.png" width="30" height="30" >
     {% endif %}
   </p>
+
+</div>
+
+
+
+</div>
+
+
+
+
 
 </div>
 <div class="table-wrapper-scroll-y my-custom-scrollbar" >
@@ -72,6 +98,7 @@
   </tr>
   {% endfor %}
 </table>
+
 
 </body>
 {% include "base_dashboard.html" %}

@@ -6,6 +6,8 @@ import pymysql
 import os
 import plotly
 import plotly.graph_objs as go
+import plotly.express as px
+import numpy as np
 import json
 import pandas as pd
 
@@ -162,6 +164,8 @@ def create_lineChart(tick='PLUG'):
         y=df['Close'])
     ]
 
+    print(df['Date'])
+
     lineJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
     return lineJSON
@@ -174,12 +178,42 @@ def rtvs():
 
 
 
-
 @app.route('/table')
 @login_required
 def table():
+
+# https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
+# https://plotly.com/python/figure-labels/   
     average, items = fetch()
-    return render_template('table.html', average=average, items=items)
+
+    df = pd.DataFrame(list(items), columns=['ValidTick',
+        'SignalDate',
+        'ScanDate',
+        'NScanDaysInterval',
+        'PriceAtSignal',
+        'LastClostingPrice',
+        'PriceEvolution'])
+    print(df)
+
+    dfPivoted = pd.pivot_table(df, values='PriceEvolution',\
+         index=['SignalDate'], aggfunc=np.mean)
+    print(dfPivoted)
+    """
+    fig = go.Figure(
+        x=df['SignalDate'],
+        y=df['PriceEvolution'])
+    """
+    fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
+    fig.update_layout(title='Price Evolution, per starting Signal Date',\
+        xaxis_title="SignalDate",\
+        yaxis_title="Avg. PriveEvolution",
+  
+    font=dict(size=10))
+
+    #data = [fig]
+    lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('table.html', average=average, items=items, plot=lineJSON)
 
 @app.route('/table', methods=['POST'])
 @login_required
