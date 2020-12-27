@@ -197,8 +197,7 @@ def table():
     fig.update_layout(title='Price Evolution, per starting Signal Date',\
         xaxis_title="SignalDate",\
         yaxis_title="Avg. PriveEvolution",
-    
-    font=dict(size=10))
+        font=dict(size=10))
 
     #data = [fig]
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
