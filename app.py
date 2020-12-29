@@ -95,18 +95,6 @@ def fetch(nRows=200):
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
     if items:
-        # Transform tuple of tuples in list of lists for mutability
-        def tuplesToLists(tupleOfTuples):
-            """
-            Casts tuples of tuples in list of lsits
-            """
-            listofTuples = list(items)
-            listofLists = []
-            for tup in listofTuples:
-                l = list(tup)
-                listofLists.append(l)
-            return listofLists
-        
         # Calculate price evolutinds and append to list of Lists 
         dfitems = pd.DataFrame(items)
         PriceEvolution = dfitems.iloc[:,6].tolist()
@@ -179,9 +167,7 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     average, items = fetch()
-    #print(items)
 
-    
     df = pd.DataFrame(list(items), columns=['ValidTick',
         'SignalDate',
         'ScanDate',
@@ -197,10 +183,9 @@ def table():
     fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
     fig.update_layout(title='Price Evolution, per starting Signal Date',\
         xaxis_title="SignalDate",\
-        yaxis_title="Avg. PriveEvolution",
+        yaxis_title="Avg. PriceEvolution",
         font=dict(size=10))
 
-    #data = [fig]
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     
     return render_template('table.html', average=average, items=items, plot=lineJSON)
