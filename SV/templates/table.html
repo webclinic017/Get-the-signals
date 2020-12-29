@@ -12,10 +12,6 @@
 <body id="Table_page">
   <h2>Signals</h2>
   <h4><strong>Trend reversal detection</strong></h4>
-  <p> Filter:
-<code>    df['doubleSignal'] = np.where(
-  (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
-  1,0)
 </code>
 
 <div class="chart" id="line">
@@ -32,13 +28,14 @@
 </div>
   </p>
 
-
     <form class="form" autocomplete="off" spellcheck="false" method="POST">
       <!-- <label for="name">Number of rows</label> -->
       <div class="row">
 
         <div class="col-2">
-          <input name = "text" type="text" class="form-control" placeholder="N° rows">
+          <!-- <input name = "nbRows" type="text" class="form-control" placeholder="N° rows"> -->
+            {{ form.nbRows(class="form-control")}}
+
         </div>
         <div class="col">
           <input type="submit" class="btn  btn-dark" id="validate" value="Go!">

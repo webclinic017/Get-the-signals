@@ -19,6 +19,7 @@ from utils.db_manage import QuRetType, std_db_acc_obj
 
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
+    nbRows = TextField('Enter n° rows', id='numberRows')
 
 
 @app.route('/_autocomplete', methods=['GET'])
@@ -158,15 +159,7 @@ def rtvs():
     return render_template('rtvs.html')
 
 
-
-@app.route('/table')
-@login_required
-def table():
-
-# https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
-# https://plotly.com/python/figure-labels/   
-# https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
-    average, items = fetch()
+def makeHistogram(items):
 
     df = pd.DataFrame(list(items), columns=['ValidTick',
         'SignalDate',
@@ -175,28 +168,43 @@ def table():
         'PriceAtSignal',
         'LastClostingPrice',
         'PriceEvolution'])
-    
+
     df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    
     dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
 
-    
     fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
     fig.update_layout(title='Price Evolution, per starting Signal Date',\
         xaxis_title="SignalDate",\
         yaxis_title="Avg. PriceEvolution",
         font=dict(size=10))
-
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return lineJSON
+
+@app.route('/table')
+@login_required
+def table():
+
+# https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
+# https://plotly.com/python/figure-labels/   
+# https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
+    form = SearchForm(request.form)
+    average, items = fetch()
+    lineJSON = makeHistogram(items)
     
-    return render_template('table.html', average=average, items=items, plot=lineJSON)
+    return render_template('table.html', average=average, form=form,items=items, plot=lineJSON)
 
 @app.route('/table', methods=['POST'])
 @login_required
 def table_form():
-    nRows = request.form['text']
+    form = SearchForm(request.form)
+
+    nRows = form.nbRows.data
     nRows = int(nRows)
+
     average, items = fetch(nRows)
-    return render_template('table.html', items=items, average=average)
+    lineJSON = makeHistogram(items)
+
+    return render_template('table.html', items=items, average=average, form=form, plot=lineJSON)
 
 
 def tuplesToCSV(Tuples):
@@ -236,12 +244,10 @@ def getCSV():
                  "attachment; filename=signals.csv"})
 
 
-
 @app.route('/investInfra')
 @login_required
 def investInfra():
     return render_template('investInfra.html')
-
 
 
 @app.route('/charts',methods=['GET', 'POST'])
