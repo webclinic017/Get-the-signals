@@ -180,7 +180,7 @@ def makeHistogram(items):
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
 
-@app.route('/table')
+@app.route('/table', methods=['POST'])
 @login_required
 def table():
 
@@ -188,23 +188,14 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     form = SearchForm(request.form)
+
+    nRows = form.nbRows.data #
+    nRows = int(nRows) #
+
     average, items = fetch()
     lineJSON = makeHistogram(items)
     
     return render_template('table.html', average=average, form=form,items=items, plot=lineJSON)
-
-@app.route('/table', methods=['POST'])
-@login_required
-def table_form():
-    form = SearchForm(request.form)
-
-    nRows = form.nbRows.data
-    nRows = int(nRows)
-
-    average, items = fetch(nRows)
-    lineJSON = makeHistogram(items)
-
-    return render_template('table.html', items=items, average=average, form=form, plot=lineJSON)
 
 
 def tuplesToCSV(Tuples):
