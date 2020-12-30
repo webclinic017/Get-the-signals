@@ -39,12 +39,11 @@ body {
 }
 
 #home-section .dark-overlay {
-  background: rgba(0, 0, 0, 0.479);
-
+  background: rgba(0, 0, 0, 0.336);
 }
 
 #explore-head-section .dark-overlay {
-  background: rgba(0, 0, 0, 0.479);
+  background: rgba(0, 0, 0, 0.336);
 }
 
 .birds_story{

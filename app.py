@@ -88,10 +88,12 @@ def fetch(nRows=200):
     1. Gets data from DB and joins to have last Close market prices 
     2. Calculates price evolution
     """
-    qu = "select * from signals.Signals_aroon_crossing"
+    qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
+        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
+        WHERE PriceAtSignal<5\
+        ORDER BY SignalDate DESC"
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
         retres=QuRetType.MANY, nRows=nRows)
-
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
@@ -180,7 +182,8 @@ def makeHistogram(items):
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
 
-@app.route('/table', methods=['POST'])
+
+@app.route('/table')
 @login_required
 def table():
 
@@ -188,14 +191,25 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     form = SearchForm(request.form)
-
-    nRows = form.nbRows.data #
-    nRows = int(nRows) #
-
     average, items = fetch()
     lineJSON = makeHistogram(items)
     
     return render_template('table.html', average=average, form=form,items=items, plot=lineJSON)
+
+
+@app.route('/table', methods=['POST'])
+@login_required
+def table_form():
+    form = SearchForm(request.form)
+
+    nRows = form.nbRows.data
+    nRows = int(nRows)
+
+    average, items = fetch(nRows)
+    lineJSON = makeHistogram(items)
+
+    return render_template('table.html', items=items, average=average, form=form, plot=lineJSON)
+
 
 
 def tuplesToCSV(Tuples):
