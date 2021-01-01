@@ -20,6 +20,7 @@ from utils.db_manage import QuRetType, std_db_acc_obj
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
     nbRows = TextField('Enter n° rows', id='numberRows')
+    date_input = TextField('Enter Signal Date', id='date_input')
 
 
 @app.route('/_autocomplete', methods=['GET'])
@@ -77,44 +78,6 @@ def login():
             return redirect(next)
     return render_template('login.html', form=form)
 
-def fetch(nRows=200):
-    """
-    Function is used in table function
-    :param nRows: used to specify the number of rows to display in the /table page table
-    :returns: the table
-    https://stackoverflow.com/questions/7219385/how-to-join-only-one-column
-    1. Gets data from DB and joins to have last Close market prices 
-    2. Calculates price evolution
-    """
-    qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
-        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE PriceAtSignal<5\
-        ORDER BY SignalDate DESC\
-        LIMIT {nRows}"
-
-    items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
-        retres=QuRetType.ALL)
-    # checking if sql query is empty before starting pandas manipulation.
-    # If empty we simply return items. No Bug.
-    # If we process below py calculations with an item the website is throw an error.
-    if items:
-        # Calculate price evolutinds and append to list of Lists 
-        dfitems = pd.DataFrame(items)
-        PriceEvolution = dfitems.iloc[:,6].tolist()
-
-        # Select only rows where Price Evolution != 0
-        # Calculate mean of price evolution
-        pricesNoZero = [x for x in PriceEvolution if x != 0.0]
-
-        # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
-        if len(pricesNoZero)>1:
-            averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
-        else:
-            averageOfReturns = 0
-
-        return round(averageOfReturns,2), items
-    else:
-        return items
 
 
 @app.route('/dashboard')
@@ -183,6 +146,55 @@ def makeHistogram(items):
     return lineJSON
 
 
+def fetch(**kwargs):
+    """
+    Function is used in table function
+    :param nRows: used to specify the number of rows to display in the /table page table
+    :returns: the table
+    https://stackoverflow.com/questions/7219385/how-to-join-only-one-column
+    1. Gets data from DB and joins to have last Close market prices 
+    2. Calculates price evolution
+    """
+
+
+    if 'dateInput' in kwargs:
+        sDate = str(kwargs['dateInput']) 
+        print("SDATE:", sDate)
+        qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
+        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
+        WHERE PriceAtSignal<5 AND SignalDate<'{sDate}'\
+        ORDER BY SignalDate DESC"
+    else:
+        qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
+        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
+        WHERE PriceAtSignal<5\
+        ORDER BY SignalDate DESC"
+
+
+    items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
+        retres=QuRetType.ALL)
+    # checking if sql query is empty before starting pandas manipulation.
+    # If empty we simply return items. No Bug.
+    # If we process below py calculations with an item the website is throw an error.
+    if items:
+        # Calculate price evolutinds and append to list of Lists 
+        dfitems = pd.DataFrame(items)
+        PriceEvolution = dfitems.iloc[:,6].tolist()
+
+        # Select only rows where Price Evolution != 0
+        # Calculate mean of price evolution
+        pricesNoZero = [x for x in PriceEvolution if x != 0.0]
+
+        # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
+        if len(pricesNoZero)>1:
+            averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
+        else:
+            averageOfReturns = 0
+
+        return round(averageOfReturns,2), items
+    else:
+        return items
+
 @app.route('/table')
 @login_required
 def table():
@@ -201,14 +213,15 @@ def table():
 @login_required
 def table_form():
     form = SearchForm(request.form)
+    dateInput = form.date_input.data
+    try:
+        average, items = fetch(dateInput=dateInput)
+        lineJSON = makeHistogram(items)
+        return render_template('table.html', items=items, average=average, form=form, plot=lineJSON)
+    except ValueError:
+        average = 0
+        return render_template('table.html', average=average, form=form)
 
-    nRows = form.nbRows.data
-    nRows = int(nRows)
-
-    average, items = fetch(nRows)
-    lineJSON = makeHistogram(items)
-
-    return render_template('table.html', items=items, average=average, form=form, plot=lineJSON)
 
 
 

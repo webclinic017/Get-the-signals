@@ -19,54 +19,47 @@
     var graphs = {{plot | safe}};
     Plotly.plot('line',graphs,{});
   </script> 
-  <p>
-    The results are consistent with some previous analysis (not online) that showed that this strategy wins more on middle term.
-    The day after the signal is generally red. At the exact moment of this signal the stock goes up, then there is a shorting phenomenon.
-    Which is logical, as the signal occurs when there is also (not only, the strategy is more subtle) a surge in price. 
-    Then, the trand reversal continues as expected.
-  </p>
+
 </div>
   </p>
 
     <form class="form" autocomplete="off" spellcheck="false" method="POST">
-      <!-- <label for="name">Number of rows</label> -->
-      <div class="row">
-
-        <div class="col-2">
-          <!-- <input name = "nbRows" type="text" class="form-control" placeholder="N° rows"> -->
-            {{ form.nbRows(class="form-control")}}
-
-        </div>
-        <div class="col">
-          <input type="submit" class="btn  btn-dark" id="validate" value="Go!">
-
-        </div>
-
-        <a href="/getCSV">
-          <img alt="dl icon" src="../static/download-icon.png" width="40" height="40" >
-        </a>
 
       </div>
+        <div class="row">
+            <label for="date_input" class="col-sm-2 col-form-label col-form-label-sm">Filter for Signal Date: </label>
+            <div class="col-sm-2">
+              {{ form.date_input(class="form-control form-control-sm", type="date", value="2020-12-30")}}
+            </div>
+            <div class="col">
+             <input type="submit" class="btn btn-dark " id="validate_date" value="Filter">
+            </div>
+            <a href="/getCSV">
+              <img alt="dl icon" src="../static/download-icon.png" width="40" height="40" >
+            </a>
+        </div>
+      </div>
+
     </form>
-<div>
-  <p style="text-align:center">
 
-    {%if average>0%}
-    <img alt="dl icon" src="../static/green-arrow.png" width="30" height="30" >
-    Average overall return: {{average}} %
-    {%elif average==0%}
-    Average overall return: 0 %
-    {%else%}
-    Average overall return: {{average}} %
-    <img alt="dl icon" src="../static/red-arrow.png" width="30" height="30" >
-    {% endif %}
-  </p>
+  <div>
+    <p style="text-align:center">
 
-</div>
+      {%if average>0%}
+      <img alt="dl icon" src="../static/green-arrow.png" width="30" height="30" >
+      Average overall return: {{average}} %
+      {%elif average==0%}
+      Average overall return: 0 %
+      {%else%}
+      Average overall return: {{average}} %
+      <img alt="dl icon" src="../static/red-arrow.png" width="30" height="30" >
+      {% endif %}
+    </p>
+
+  </div>
 
 
 
-</div>
 
 
 
