@@ -83,19 +83,14 @@ class DBManager:
          **kwargs):
         """
         opens a cursor, executes a query and returns the result depending on type
-
-
         :Param db_name: name of data base 
         :Param query: query to be executed
         :Param retres: return type (see :py:class:`db.db_manage.QuRetType`)
-
         :Param outpfile: full path to output file if retres is 
                     QuRetType.ALLASCSV or QuRetType.ALLASXLS
     
         :returns: data in format as specified by retres
         """
-        if kwargs.get('nRows')!=None:
-            self.nRows = kwargs['nRows']
 
         try:
             ret = None
@@ -113,7 +108,7 @@ class DBManager:
                     elif retres is QuRetType.ALL:
                         ret = c.fetchall()
                     elif retres is QuRetType.MANY:
-                        ret = c.fetchmany(self.nRows)
+                        ret = c.fetchmany()
                     else:
                         pass
 
@@ -127,7 +122,6 @@ def dfToRDS(df, table, db_name):
     """
     For an unknown reason, didn't succeed to send df to RDS with connection method above.
     So had to use sqlalchemy's create_engine function
-
     :param df: a dataframe to send to RDS
     :param table: the table in which we want to insert the data
     :param db_name: the initial db to which we want to connect (containing the target table)
@@ -173,4 +167,3 @@ Important:
 sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
 pip install mysqlclient
 """
-

@@ -80,20 +80,20 @@ def login():
 def fetch(nRows=200):
     """
     Function is used in table function
-
     :param nRows: used to specify the number of rows to display in the /table page table
     :returns: the table
     https://stackoverflow.com/questions/7219385/how-to-join-only-one-column
-
     1. Gets data from DB and joins to have last Close market prices 
     2. Calculates price evolution
     """
-    qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
+    qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
         WHERE PriceAtSignal<5\
-        ORDER BY SignalDate DESC"
+        ORDER BY SignalDate DESC\
+        LIMIT {nRows}"
+
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
-        retres=QuRetType.MANY, nRows=nRows)
+        retres=QuRetType.ALL)
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
@@ -291,8 +291,3 @@ def infraHealth():
 if __name__ == '__main__':
     db_acc_obj = std_db_acc_obj() 
     app.run(host='0.0.0.0', debug=True)
-
-
-
-
-
