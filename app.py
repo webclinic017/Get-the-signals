@@ -223,8 +223,6 @@ def table_form():
         return render_template('table.html', average=average, form=form)
 
 
-
-
 def tuplesToCSV(Tuples):
     """
     To be used by Flask's Reponse class, to return a csv type
