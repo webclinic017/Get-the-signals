@@ -278,12 +278,17 @@ def charts():
 @app.route('/submit', methods=['POST'])
 @login_required
 def getUserInput():
+    """
+    User input for charts table
+    """
     # text = request.form['stock_input']
     form = SearchForm(request.form)
     text = form.stock.data
     processed_text = ""
     processed_text = text.upper()
-    if not processed_text:
+    stocksList = list(pd.read_csv('utils/stocks_list.csv').iloc[:, 1])
+
+    if not processed_text or processed_text not in stocksList:
         print(type(processed_text))
         print(processed_text)
         empty = True
