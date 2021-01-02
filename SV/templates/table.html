@@ -28,18 +28,19 @@
     <form class="form" autocomplete="off" spellcheck="false" method="POST">
 
       </div>
-        <div class="row">
-            <label for="date_input" class="col-sm-2 col-form-label col-form-label-sm">Filter for Signal Date: </label>
+          <div class="row">
+            <label for="date_input" class="col-form-label col-form-label-sm">Signals untill: </label>
+            
             <div class="col-sm-2">
               {{ form.date_input(class="form-control form-control-sm", type="date", value="2020-12-30")}}
             </div>
-            <div class="col">
-             <input type="submit" class="btn btn-secondary btn-sm" id="validate_date" value="Filter">
+
+            
+              <div class="btn-toolbar">
+                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
+                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset">
+                <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
             </div>
-            <a href="/getCSV">
-              <img alt="dl icon" src="../static/download-icon.png" width="40" height="40" >
-            </a>
-        </div>
       </div>
 
     </form>

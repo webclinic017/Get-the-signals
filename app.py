@@ -21,6 +21,8 @@ class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
     nbRows = TextField('Enter n° rows', id='numberRows')
     date_input = TextField('Enter Signal Date', id='date_input')
+    reset = TextField('Reset', id='reset')
+    getcsv = TextField('Download', id='getcsv')
 
 
 @app.route('/_autocomplete', methods=['GET'])
@@ -101,7 +103,6 @@ def create_lineChart(tick='PLUG'):
     if tick in nasdaq:
         table_chart = 'NASDAQ_15'
     else:
-        print('nyse')
         table_chart = 'NYSE_15'
 
     qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}' and Date>'2018-01-01' "
@@ -112,7 +113,6 @@ def create_lineChart(tick='PLUG'):
         y=df['Close'])
     ]
 
-    print(df['Date'])
 
     lineJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -159,7 +159,6 @@ def fetch(**kwargs):
 
     if 'dateInput' in kwargs:
         sDate = str(kwargs['dateInput']) 
-        print("SDATE:", sDate)
         qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
         WHERE PriceAtSignal<5 AND SignalDate<'{sDate}'\
@@ -214,6 +213,8 @@ def table():
 def table_form():
     form = SearchForm(request.form)
     dateInput = form.date_input.data
+    reset = form.reset.data
+    getcsv = form.getcsv.data
     try:
         average, items = fetch(dateInput=dateInput)
         lineJSON = makeHistogram(items)
@@ -247,12 +248,11 @@ def tuplesToCSV(Tuples):
 
     return reReconstructedCSV
 
-@app.route("/getCSV")
+@app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
     average, fetchedData = fetch()
     reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
-    print(reReconstructedCSV)
     return Response(
         reReconstructedCSV,
         mimetype="text/csv",
@@ -289,8 +289,6 @@ def getUserInput():
     stocksList = list(pd.read_csv('utils/stocks_list.csv').iloc[:, 1])
 
     if not processed_text or processed_text not in stocksList:
-        print(type(processed_text))
-        print(processed_text)
         empty = True
         return render_template('charts.html', form=form, empty=empty)
     else:
