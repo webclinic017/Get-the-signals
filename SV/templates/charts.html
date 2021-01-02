@@ -14,9 +14,17 @@
 </head>
 
 <body id="Charts_page">
-  <h2>Charts</h2>
- <p>Not very useful for now. Only to train to plot with plotly and to set autocomplation with HTML/Jquery.</p>
+
+  {%if empty==True%}
+  <div class="alert alert-info" role="alert">
+     Please enter a valid symbol.
+  </div>
+  {% endif %}
   
+<h2>Charts</h2>
+ <p>Not very useful for now. Only to train to plot with plotly and to set autocomplation with HTML/Jquery.</p>
+ 
+
 
   <form class="form-inline" method="post" action="/submit">
     <div class="form-group mx-sm-3 mb-2">

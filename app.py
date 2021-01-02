@@ -281,13 +281,18 @@ def getUserInput():
     # text = request.form['stock_input']
     form = SearchForm(request.form)
     text = form.stock.data
+    processed_text = ""
     processed_text = text.upper()
-    print(processed_text)
-
-    line = create_lineChart(tick=processed_text)
-    return render_template('charts.html', form=form, plot=line,tick=processed_text)
-
-
+    if not processed_text:
+        print(type(processed_text))
+        print(processed_text)
+        empty = True
+        return render_template('charts.html', form=form, empty=empty)
+    else:
+        line = create_lineChart(tick=processed_text)
+        empty = False
+        return render_template('charts.html', form=form, plot=line,tick=processed_text)
+        
 @app.route('/infraHealth')
 @login_required
 def infraHealth():
