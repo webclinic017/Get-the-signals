@@ -16,6 +16,8 @@ To initiate db (cutover), run:
 <h4> To do: </h4>
 
 <ul>
+	<li>Option chains integration</li>
+	<li>Put/call ratio integration</li>
 	<li>Peers Seekingalpha</li>
     <li>RTVS detector + visualization of normality</lI>
     <li>Tooltips for infra. health: https://getbootstrap.com/docs/4.3/components/tooltips/ </li>
