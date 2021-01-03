@@ -226,7 +226,6 @@ def getCSV():
 @login_required
 def technicals():
     items = fetchTechnicals()
-
     return render_template('technicals.html', items=items)
     
 
