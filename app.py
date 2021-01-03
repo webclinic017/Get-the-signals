@@ -10,12 +10,17 @@ import plotly.express as px
 import numpy as np
 import json
 import pandas as pd
+from datetime import datetime, timedelta 
 
 from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 
+
+
+strToday = str(datetime.today().strftime('%Y-%m-%d'))
+print(strToday)
 
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
@@ -161,7 +166,7 @@ def fetch(**kwargs):
         sDate = str(kwargs['dateInput']) 
         qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE PriceAtSignal<5 AND SignalDate<'{sDate}'\
+        WHERE PriceAtSignal<5 AND SignalDate<='{sDate}'\
         ORDER BY SignalDate DESC"
     else:
         qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
@@ -194,6 +199,7 @@ def fetch(**kwargs):
     else:
         return items
 
+
 @app.route('/table')
 @login_required
 def table():
@@ -204,8 +210,8 @@ def table():
     form = SearchForm(request.form)
     average, items = fetch()
     lineJSON = makeHistogram(items)
-    
-    return render_template('table.html', average=average, form=form,items=items, plot=lineJSON)
+    print("HERE", type(strToday))
+    return render_template('table.html', average=average, form=form,items=items, plot=lineJSON, strToday=strToday)
 
 
 @app.route('/table', methods=['POST'])
@@ -218,10 +224,10 @@ def table_form():
     try:
         average, items = fetch(dateInput=dateInput)
         lineJSON = makeHistogram(items)
-        return render_template('table.html', items=items, average=average, form=form, plot=lineJSON)
+        return render_template('table.html', items=items, average=average, form=form, plot=lineJSON, strToday=strToday)
     except ValueError:
         average = 0
-        return render_template('table.html', average=average, form=form)
+        return render_template('table.html', average=average, form=form,strToday=strToday)
 
 
 def tuplesToCSV(Tuples):

@@ -1,8 +1,21 @@
-#investInfra_page{
-    padding-top: 100px;
-    padding-right: 260px;
-    padding-left: 260px;
+
+  @media only screen and (max-width: 600px) {
+    #investInfra_page{
+      padding-top: 100px;
+      padding-left: 0%;
+      padding-right: 0%;
+    }
   }
+  
+  
+  @media only screen and (max-width: 6000px) {
+    #investInfra_page{
+      padding-top: 100px;
+      padding-right: 11%;
+      padding-left: 11%;
+    }
+  }
+  
 
 h2 {
     color:rgba(0, 163, 212, 0.952);
