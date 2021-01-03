@@ -1,0 +1,65 @@
+{%extends "base.html"%}
+{%block content%}
+
+<head>
+  <link href="/static/style_technicals.css" rel="stylesheet" type="text/css">
+  <title>GTS-Table</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+</head>
+
+
+<body id="Technicals_page">
+    <h2>Technicals</h2>
+
+    <div class="table-wrapper-scroll-y my-custom-scrollbar" >
+
+        <table class="table table-dark table-bordered table-striped table-sm table-hover">
+          <thead class="thead-dark">
+            <th scope="col">No</th>
+            <th scope="col">Ticker</th>
+            <th scope="col">Beta</th>
+            <th scope="col">AverageTrueRange</th>
+            <th scope="col">SMA20Days</th>
+            <th scope="col">SMA50Days</th>
+            <th scope="col">SMA200Days</th>
+            <th scope="col">WeekHigh52</th>
+            <th scope="col">WeekLow52</th>
+            <th scope="col">RSI14</th>
+            <th scope="col">Price</th>
+            <th scope="col">Change</th>
+            <th scope="col">ChangeFromOpen</th>
+            <th scope="col">Gap</th>
+            <th scope="col">Volume</th>
+            <th scope="col">Date</th>
+          
+          </thead>
+          {% for item in items %}
+          <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>{{ item[7] }}</td>
+            <td>{{ item[8] }}</td>
+            <td>{{ item[9] }}</td>
+            <td>{{ item[10] }}</td>
+            <td>{{ item[11] }}</td>
+            <td>{{ item[12] }}</td>
+            <td>{{ item[13] }}</td>
+            <td>{{ item[14] }}</td>
+            <td>{{ item[15] }}</td>
+        
+          </tr>
+          {% endfor %}
+        </table>
+
+</body>
+
+{% include "base_dashboard.html" %}
+
+{%endblock%}

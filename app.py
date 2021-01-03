@@ -16,11 +16,10 @@ from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
-
+from utils.fetchData import fetchSignals, fetchTechnicals
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
-print(strToday)
 
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
@@ -151,53 +150,6 @@ def makeHistogram(items):
     return lineJSON
 
 
-def fetch(**kwargs):
-    """
-    Function is used in table function
-    :param nRows: used to specify the number of rows to display in the /table page table
-    :returns: the table
-    https://stackoverflow.com/questions/7219385/how-to-join-only-one-column
-    1. Gets data from DB and joins to have last Close market prices 
-    2. Calculates price evolution
-    """
-
-
-    if 'dateInput' in kwargs:
-        sDate = str(kwargs['dateInput']) 
-        qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
-        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE PriceAtSignal<5 AND SignalDate<='{sDate}'\
-        ORDER BY SignalDate DESC"
-    else:
-        qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
-        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE PriceAtSignal<5\
-        ORDER BY SignalDate DESC"
-
-
-    items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
-        retres=QuRetType.ALL)
-    # checking if sql query is empty before starting pandas manipulation.
-    # If empty we simply return items. No Bug.
-    # If we process below py calculations with an item the website is throw an error.
-    if items:
-        # Calculate price evolutinds and append to list of Lists 
-        dfitems = pd.DataFrame(items)
-        PriceEvolution = dfitems.iloc[:,6].tolist()
-
-        # Select only rows where Price Evolution != 0
-        # Calculate mean of price evolution
-        pricesNoZero = [x for x in PriceEvolution if x != 0.0]
-
-        # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
-        if len(pricesNoZero)>1:
-            averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
-        else:
-            averageOfReturns = 0
-
-        return round(averageOfReturns,2), items
-    else:
-        return items
 
 
 @app.route('/table')
@@ -208,10 +160,13 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     form = SearchForm(request.form)
-    average, items = fetch()
+    average, items, firstD, lastD = fetchSignals()
     lineJSON = makeHistogram(items)
-    print("HERE", type(strToday))
-    return render_template('table.html', average=average, form=form,items=items, plot=lineJSON, strToday=strToday)
+    return render_template('table.html', \
+        average=average, form=form,items=items, \
+            plot=lineJSON, strToday=strToday, firstD=firstD, lastD=lastD)
+
+
 
 
 @app.route('/table', methods=['POST'])
@@ -222,9 +177,10 @@ def table_form():
     reset = form.reset.data
     getcsv = form.getcsv.data
     try:
-        average, items = fetch(dateInput=dateInput)
+        average, items, firstD, lastD = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
-        return render_template('table.html', items=items, average=average, form=form, plot=lineJSON, strToday=strToday)
+        return render_template('table.html', firstD=firstD, lastD=lastD, \
+            items=items, average=average, form=form, plot=lineJSON, strToday=strToday)
     except ValueError:
         average = 0
         return render_template('table.html', average=average, form=form,strToday=strToday)
@@ -257,13 +213,22 @@ def tuplesToCSV(Tuples):
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
-    average, fetchedData = fetch()
+    average, fetchedData, firstD, lastD = fetchSignals()
     reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
     return Response(
         reReconstructedCSV,
         mimetype="text/csv",
         headers={"Content-disposition":
                  "attachment; filename=signals.csv"})
+
+
+@app.route('/technicals')
+@login_required
+def technicals():
+    items = fetchTechnicals()
+
+    return render_template('technicals.html', items=items)
+    
 
 
 @app.route('/investInfra')
