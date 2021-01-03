@@ -49,3 +49,14 @@ body {
 .birds_story{
 text-align:justify;
 }
+
+@font-face{
+  src: url(fonts/Roboto-Light.ttf);
+  font-family: Roboto;
+}
+
+
+html *
+{
+   font-family: Roboto !important;
+}

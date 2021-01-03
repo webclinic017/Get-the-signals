@@ -18,8 +18,18 @@
   }
 }
 
+@font-face{
+  src: url(fonts/Roboto-Light.ttf);
+  font-family: Roboto;
+}
+
+
 h2 {
-  color:rgba(17, 0, 255, 0.952) !important;
-  font-family: Arial !important;
-  font-weight: bold !important;
+  color:rgba(0, 132, 255, 0.952) !important;
+  font-family: Roboto;
 } 
+
+html *
+{
+   font-family: Roboto !important;
+}

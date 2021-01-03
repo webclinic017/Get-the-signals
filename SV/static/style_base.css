@@ -11,3 +11,16 @@ body {
 .navbar.navbar-expand-sm.bg-dark.navbar-dark.fixed-top li a{
   color: white !important;
 }
+
+
+
+@font-face{
+  src: url(fonts/Roboto-Light.ttf);
+  font-family: Roboto;
+}
+
+
+html *
+{
+   font-family: Roboto !important;
+}

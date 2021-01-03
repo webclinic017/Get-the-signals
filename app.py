@@ -225,8 +225,8 @@ def getCSV():
 @app.route('/technicals')
 @login_required
 def technicals():
-    items = fetchTechnicals()
-    return render_template('technicals.html', items=items)
+    items, strToday = fetchTechnicals()
+    return render_template('technicals.html', items=items, strToday=strToday)
     
 
 

@@ -7,3 +7,19 @@
   }
 
 
+
+  @font-face{
+    src: url(fonts/Roboto-Light.ttf);
+    font-family: Roboto;
+  }
+  
+
+html *
+{
+   font-family: Roboto !important;
+}
+  
+  h2 {
+    color:rgba(0, 132, 255, 0.952) !important;
+    font-family: Roboto;
+  } 

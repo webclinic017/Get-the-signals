@@ -19,28 +19,40 @@
 
 
 .my-custom-scrollbar {
-    margin-top: 4px;
-    position: relative;
-    height: 700px;
-    overflow: auto;
-    }
-    .table-wrapper-scroll-y {
-    display: block;
-    }
-  
-  
-  .table{
-    overflow-x: auto;
-    font-size: small;
+  margin-top: 4px;
+  position: relative;
+  height: 700px;
+  overflow: auto;
   }
-  
-  .form{
-    padding-right: 15px;
+  .table-wrapper-scroll-y {
+  display: block;
   }
-  
-  h2 {
-    color:rgba(17, 0, 255, 0.952) !important;
-    font-family: Arial;
-    font-weight: bold;
-  } 
-  
+
+
+.table{
+  overflow-x: auto;
+  font-size: small;
+}
+
+.form{
+  padding-right: 15px;
+}
+
+
+
+
+@font-face{
+  src: url(fonts/Roboto-Light.ttf);
+  font-family: Roboto;
+}
+
+
+html *
+{
+   font-family: Roboto !important;
+}
+
+h2 {
+  color:rgba(0, 132, 255, 0.952) !important;
+  font-family: Roboto;
+} 
