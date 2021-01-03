@@ -229,6 +229,13 @@ def technicals():
     return render_template('technicals.html', items=items, strToday=strToday)
     
 
+@app.route('/macroView')
+@login_required
+def macroView():
+    return render_template('macroView.html')
+    
+
+
 
 @app.route('/investInfra')
 @login_required
