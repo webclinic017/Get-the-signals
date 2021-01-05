@@ -52,14 +52,18 @@
       <strong>{{tick}}</strong>
     </p>
   </center>
-  
+
   <div class="chart" id="line">
     <script>
       var graphs = {{plot | safe}};
       Plotly.plot('line',graphs,{});
     </script>
   </div>
+
+
+  
 </body>
+
 
 
 {% include "base_dashboard.html" %}
