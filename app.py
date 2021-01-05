@@ -7,6 +7,10 @@ import os
 import plotly
 import plotly.graph_objs as go
 import plotly.express as px
+from plotly.subplots import make_subplots
+from plotly.graph_objs import *
+
+
 import numpy as np
 import json
 import pandas as pd
@@ -150,6 +154,61 @@ def makeHistogram(items):
     return lineJSON
 
 
+def makeLinesSignal():
+
+    qu = f"SELECT * FROM signals.Signals_details WHERE Symbol='AAPL'"
+    df = db_acc_obj.exc_query(db_name='signals', query=qu, \
+    retres=QuRetType.ALLASPD)
+
+    print(df)
+
+    fig = make_subplots(rows=3, cols=1,
+                        shared_xaxes=True,
+                        vertical_spacing=0.02,
+                        specs=[[{"rowspan":2}],
+                        [None],
+                        [{}]])
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Close'], name='Close', mode='lines'),
+                row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['long_mavg'], name='long_mvg',mode='lines',
+        line=dict(color='yellow')),
+                row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['short_mavg'], name='short_mvg',mode='lines',
+        line=dict(color='firebrick')),
+                row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date[df.positions==1], y=df.short_mavg[df.positions==1], 
+    name='signal',mode='markers', marker_symbol='triangle-up', marker_color='green'),
+                row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Aroon_Up'], name='Aroon Up', mode='lines',
+        line=dict(color='green')),
+                row=3, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Aroon_Down'], name='Aroon Down', mode='lines',\
+        line=dict(color='red')),
+                row=3, col=1)
+
+
+    layout = Layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    )
+
+    fig.update_traces(line_width=1)
+    fig.update_layout(
+    title='Trend Reversal Detection (AAPL)',
+    width=1400,
+    height=900)
+    
+
+    lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return lineJSON
+
+
 
 
 @app.route('/table')
@@ -162,9 +221,12 @@ def table():
     form = SearchForm(request.form)
     average, items, firstD, lastD = fetchSignals()
     lineJSON = makeHistogram(items)
+
+    test = makeLinesSignal()
+
     return render_template('table.html', \
         average=average, form=form,items=items, \
-            plot=lineJSON, strToday=strToday, firstD=firstD, lastD=lastD)
+            plot=lineJSON, strToday=strToday, firstD=firstD, lastD=lastD, test=test)
 
 
 
@@ -176,6 +238,7 @@ def table_form():
     dateInput = form.date_input.data
     reset = form.reset.data
     getcsv = form.getcsv.data
+
     try:
         average, items, firstD, lastD = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
@@ -248,7 +311,11 @@ def investInfra():
 def charts():
     form = SearchForm(request.form)
     line = create_lineChart()
-    return render_template('charts.html', form=form, plot=line, tick='PLUG')
+
+    test = makeLinesSignal()
+
+
+    return render_template('charts.html', form=form, plot=line, tick='PLUG', test=test)
     #return render_template('charts.html')
 
 
