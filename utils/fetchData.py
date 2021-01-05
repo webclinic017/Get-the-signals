@@ -23,12 +23,12 @@ def fetchSignals(**kwargs):
         sDate = str(kwargs['dateInput']) 
         qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE PriceAtSignal<80 AND SignalDate<='{sDate}'\
+        WHERE PriceAtSignal<15 AND SignalDate<='{sDate}'\
         ORDER BY SignalDate DESC"
     else:
         qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE PriceAtSignal<80\
+        WHERE PriceAtSignal<15\
         ORDER BY SignalDate DESC"
 
 
@@ -65,7 +65,7 @@ def fetchSignals(**kwargs):
 
 def fetchTechnicals():
 
-    qu = f"SELECT * FROM Technicals WHERE Date='{strToday}'"
+    qu = f"SELECT * FROM Technicals WHERE Date='{strToday}' LIMIT 100"
 
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
     retres=QuRetType.ALL)
