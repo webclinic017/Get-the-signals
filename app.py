@@ -108,7 +108,7 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     form = SearchForm(request.form)
-    average, items, firstD, lastD = fetchSignals()
+    average, items, firstD, lastD, SP500evol = fetchSignals()
     lineJSON = makeHistogram(items)
     
 
@@ -116,7 +116,8 @@ def table():
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
-            plot=lineJSON, strToday=strToday, firstD=firstD, lastD=lastD, test=test)
+            plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
+                firstD=firstD, lastD=lastD, test=test)
 
 
 
@@ -130,13 +131,15 @@ def table_form():
     getcsv = form.getcsv.data
 
     try:
-        average, items, firstD, lastD = fetchSignals(dateInput=dateInput)
+        average, items, firstD, lastD, SP500evol = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
-        return render_template('table.html', firstD=firstD, lastD=lastD, \
-            items=items, average=average, form=form, plot=lineJSON, strToday=strToday)
+        return render_template('table.html', SP500evol=SP500evol, firstD=firstD, \
+            lastD=lastD, items=items, average=average, form=form, plot=lineJSON, \
+                strToday=strToday)
     except ValueError:
         average = 0
-        return render_template('table.html', average=average, form=form,strToday=strToday)
+        return render_template('table.html', average=average, form=form, \
+            strToday=strToday)
 
 
 def tuplesToCSV(Tuples):

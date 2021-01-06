@@ -13,7 +13,6 @@
 
 
   <h3>Signals</h3>
-
   <div class="test" id="test">
     <script>
       var graphs = {{test | safe}};
@@ -56,13 +55,28 @@
 
       {%if average>0%}
       <img alt="dl icon" src="../static/green-arrow.png" width="30" height="30" >
-      Average overall return: {{average}} % (<strong>{{lastD}}</strong> to <strong>{{firstD}}</strong>)
+    </br>
+
+      Average overall return: <font color="green"><b>{{average}}</b></font> % 
       {%elif average==0%}
       Average overall return: 0 %
       {%else%}
-      Average overall return: {{average}} %
+      Average overall return: <font color="red"><b>{{average}}</b></font> %
       <img alt="dl icon" src="../static/red-arrow.png" width="30" height="30" >
       {% endif %}
+    </br>
+
+      {%if SP500evol>0%}
+      <b>SP 500</b> evol. over the same period : 
+      <font color="green"><b>{{SP500evol}}</b></font> % 
+      {%else%}
+      <b>SP 500</b> evol. over the same period : 
+      <font color="red"><b>{{SP500evol}}</b></font> % 
+      {% endif %}
+
+    </br>
+      (<strong>{{lastD}}</strong> to <strong>{{firstD}}</strong>)
+
     </p>
 
   </div>

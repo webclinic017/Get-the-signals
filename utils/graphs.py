@@ -44,23 +44,25 @@ def makeLinesSignal():
     fig = make_subplots(rows=3, cols=1,
                         shared_xaxes=True,
                         vertical_spacing=0.02,
+                        row_width=[0.3, 0.8, 0.2],
                         specs=[[{"rowspan":2}],
                         [None],
                         [{}]])
 
-    fig.add_trace(go.Scatter(x=df.Date, y=df['Close'], name='Close', mode='lines'),
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Close'], name='Close', mode='lines+markers',marker_size=4,
+    line=dict(color='royalblue')),
                 row=1, col=1)
 
-    fig.add_trace(go.Scatter(x=df.Date, y=df['long_mavg'], name='long_mvg',mode='lines',
-        line=dict(color='yellow')),
+    fig.add_trace(go.Scatter(x=df.Date, y=df['long_mavg'], name='long_mvg 50',mode='lines',
+        line=dict(color='orange',dash='dash')),
                 row=1, col=1)
 
-    fig.add_trace(go.Scatter(x=df.Date, y=df['short_mavg'], name='short_mvg',mode='lines',
+    fig.add_trace(go.Scatter(x=df.Date, y=df['short_mavg'], name='short_mvg 10',mode='lines',
         line=dict(color='firebrick')),
                 row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df.Date[df.positions==1], y=df.short_mavg[df.positions==1], 
-    name='signal',mode='markers', marker_symbol='triangle-up', marker_color='green'),
+    name='crossing',mode='markers', marker_symbol='triangle-up', marker_size=10, marker_color='green'),
                 row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df.Date, y=df['Aroon_Up'], name='Aroon Up', mode='lines',
@@ -72,16 +74,16 @@ def makeLinesSignal():
                 row=3, col=1)
 
 
-    layout = Layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
-
-    fig.update_traces(line_width=1)
+    fig.update_traces(line_width=1.5)
     fig.update_layout(
     title='Trend Reversal Detection (AAPL)',
     width=1400,
-    height=900)
+    height=900,
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    )
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
+
     
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
