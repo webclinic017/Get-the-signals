@@ -24,7 +24,7 @@ def makeHistogram(items):
     dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
 
     fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
-    fig.update_layout(title='Price Evolution, per starting Signal Date',\
+    fig.update_layout(title='Average return, per starting Signal Date (ex: "the stocks signaled on the 22nd December have an average return of 45% until today")',\
         xaxis_title="SignalDate",\
         yaxis_title="Avg. PriceEvolution",
         font=dict(size=10))
