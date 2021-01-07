@@ -39,9 +39,8 @@ def fetchSignals(**kwargs):
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
-    
+
     if items:
-        
         # Calculate price evolutinds and append to list of Lists 
         dfitems = pd.DataFrame(items)
         PriceEvolution = dfitems.iloc[:,6].tolist()
@@ -51,10 +50,8 @@ def fetchSignals(**kwargs):
         lastD = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
         # "lastD" == oldest
 
-
         quSP500beg = f"SELECT * FROM marketdata.sp500 WHERE Date='{lastD}'"
         quSP500end = f"SELECT * FROM marketdata.sp500 WHERE Date='{firstD}'"
-
 
         sp500beg = db_acc_obj.exc_query(db_name='marketdata', query=quSP500beg, \
         retres=QuRetType.ALLASPD)
@@ -64,8 +61,6 @@ def fetchSignals(**kwargs):
         sp500beg = sp500beg['Close'].to_list()[0]
         sp500end = sp500end['Close'].to_list()[0]
 
-        print("beg,", sp500beg, (quSP500beg))
-        print("end,",sp500end, (quSP500end))
 
         SP500evol = round(((sp500end-sp500beg)/sp500beg)*100,3)
 
@@ -92,3 +87,4 @@ def fetchTechnicals():
     retres=QuRetType.ALL)
 
     return items, strToday
+
