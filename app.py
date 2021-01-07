@@ -19,12 +19,15 @@ from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
 
+
+
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
     nbRows = TextField('Enter n° rows', id='numberRows')
     date_input = TextField('Enter Signal Date', id='date_input')
     reset = TextField('Reset', id='reset')
     getcsv = TextField('Download', id='getcsv')
+
 
 
 @app.route('/_autocomplete', methods=['GET'])
@@ -39,10 +42,12 @@ def home():
     return render_template('home.html')
 
 
+
 @app.route('/welcome')
 @login_required
 def welcome_user():
     return render_template('welcome_user.html')
+
 
 
 @app.route('/logout')
@@ -98,8 +103,6 @@ def rtvs():
 
 
 
-
-
 @app.route('/table')
 @login_required
 def table():
@@ -118,8 +121,6 @@ def table():
         average=average, form=form,items=items, \
             plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
                 firstD=firstD, lastD=lastD, test=test)
-
-
 
 
 @app.route('/table', methods=['POST'])
