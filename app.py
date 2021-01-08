@@ -19,7 +19,6 @@ from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
 magickey = os.environ.get('magickey')
-print(magickey)
 
 
 
@@ -30,7 +29,7 @@ class SearchForm(Form):
     reset = TextField('Reset', id='reset')
     getcsv = TextField('Download', id='getcsv')
     mW = TextField('mW', id='mW')
-
+    validChartSignal = TextField('validChartSignal', id='validChartSignal')
 
 
 @app.route('/_autocomplete', methods=['GET'])
@@ -49,8 +48,6 @@ def register():
     form = RegistrationForm()
     formW = SearchForm(request.form)
     magic = formW.mW.data
-    print('fr')
-    print(magickey)
     
     if form.validate_on_submit():
         if magic==magickey:
@@ -128,11 +125,17 @@ def rtvs():
     return render_template('rtvs.html')
 
 
+# TODO (decorator?)
+"""
+def tablePage_basic():
+    form = SearchForm(request.form)
+    average, items, firstD, lastD, SP500evol = fetchSignals()
+    lineJSON = makeHistogram(items)
+"""
 
 @app.route('/table')
 @login_required
 def table():
-
 # https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
@@ -141,12 +144,33 @@ def table():
     lineJSON = makeHistogram(items)
     
 
-    test = makeLinesSignal()
+    SignalChart = makeLinesSignal(tick='AAME')
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
             plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, test=test)
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart)    
+
+
+
+
+@app.route('/changeSignalChart', methods=['POST'])
+@login_required
+def changeSignalChart():
+    form = SearchForm(request.form)
+    average, items, firstD, lastD, SP500evol = fetchSignals()
+    lineJSON = makeHistogram(items)
+
+    validChartSignal = form.validChartSignal.data
+    validChartSignal = validChartSignal.replace(" ", "")
+
+    print(validChartSignal)
+    SignalChart = makeLinesSignal(tick=validChartSignal)
+
+    return render_template('table.html', \
+    average=average, form=form,items=items, \
+        plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
+            firstD=firstD, lastD=lastD, SignalChart=SignalChart)
 
 
 @app.route('/table', methods=['POST'])
@@ -232,10 +256,7 @@ def charts():
     form = SearchForm(request.form)
     line = create_lineChart()
 
-    test = makeLinesSignal()
-
-
-    return render_template('charts.html', form=form, plot=line, tick='PLUG', test=test)
+    return render_template('charts.html', form=form, plot=line, tick='PLUG')
     #return render_template('charts.html')
 
 

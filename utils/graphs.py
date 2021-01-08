@@ -56,9 +56,10 @@ def makeHistogram(items):
 
 
 
-def makeLinesSignal():
+def makeLinesSignal(tick):
 
-    qu = f"SELECT * FROM signals.Signals_details WHERE Symbol='AAPL'"
+    qu = f"SELECT * FROM signals.Signals_details WHERE Symbol='{tick}' \
+    ORDER BY Date"
     df = db_acc_obj.exc_query(db_name='signals', query=qu, \
     retres=QuRetType.ALLASPD)
 
@@ -66,7 +67,7 @@ def makeLinesSignal():
 
     fig = make_subplots(rows=3, cols=1,
                         shared_xaxes=True,
-                        vertical_spacing=0.02,
+                        vertical_spacing=0.12,
                         row_width=[0.3, 0.8, 0.2],
                         specs=[[{"rowspan":2}],
                         [None],
@@ -85,7 +86,11 @@ def makeLinesSignal():
                 row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df.Date[df.positions==1], y=df.short_mavg[df.positions==1], 
-    name='crossing',mode='markers', marker_symbol='triangle-up', marker_size=10, marker_color='green'),
+    name='MA crossing',mode='markers', marker_symbol='triangle-up', marker_size=10, marker_color='blue'),
+                row=1, col=1)
+    
+    fig.add_trace(go.Scatter(x=df.Date[df.doubleSignal==1], y=df.short_mavg[df.doubleSignal==1], 
+    name='Double Signal',mode='markers', marker_symbol='triangle-up', marker_size=15, marker_color='green'),
                 row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df.Date, y=df['Aroon_Up'], name='Aroon Up', mode='lines',
@@ -99,7 +104,7 @@ def makeLinesSignal():
 
     fig.update_traces(line_width=1.5)
     fig.update_layout(
-    title='Trend Reversal Detection (AAPL)',
+    title=f'Trend Reversal Detection ({tick})',
     width=1400,
     height=900,
     plot_bgcolor='rgba(0,0,0,0)',
@@ -155,7 +160,7 @@ def create_lineChart(tick='PLUG'):
 
     fig = make_subplots(rows=3, cols=1,
                         shared_xaxes=True,
-                        vertical_spacing=0.1,
+                        vertical_spacing=0.12,
                         row_width=[0.3, 0.8, 0.2],
                         specs=[[{"rowspan":2}],
                         [None],

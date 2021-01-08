@@ -12,16 +12,12 @@
 <body id="Table_page">
 
 
+
   <h3>Signals</h3>
-  <div class="test" id="test">
-    <script>
-      var graphs = {{test | safe}};
-      Plotly.plot('test',graphs,{});
-    </script>
-  </div>
-  
-</code>
-<hr>
+
+
+
+
 
 <div class="chart" id="line">
   <script>
@@ -114,7 +110,30 @@
   </tr>
   {% endfor %}
 </table>
+</div>
+</br>
+<hr>
+</br>
 
+<p>
+  You can type the Symbol present in the table above to visualize the Signals.
+  For now, only the stocks marked a signaled can be charted with the tool below.
+</p>
+<form class="form-inline" method="post" action="/changeSignalChart">
+  <div class="form-group mx-sm-3 mb-2">
+      {{ form.validChartSignal(class="form-control")}}
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+</form>
+
+<div class="SignalChart" id="SignalChart">
+  <script>
+    var graphs = {{SignalChart | safe}};
+    Plotly.plot('SignalChart',graphs,{});
+  </script>
+</div>
+
+</code>
 
 </body>
 {% include "base_dashboard.html" %}
