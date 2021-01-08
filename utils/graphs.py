@@ -26,7 +26,7 @@ def makeHistogram(items):
     fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
     fig.update_layout(title='Average return, per starting Signal Date (ex: "the stocks signaled on the 22nd December have an average return of 45% until today")',\
         xaxis_title="SignalDate",\
-        yaxis_title="Avg. PriceEvolution",
+        yaxis_title="Avg. Return",
         font=dict(size=10))
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
@@ -79,7 +79,6 @@ def makeLinesSignal():
     title='Trend Reversal Detection (AAPL)',
     width=1400,
     height=900,
-    paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
     )
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
@@ -113,13 +112,41 @@ def create_lineChart(tick='PLUG'):
     qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}' and Date>'2018-01-01' "
     df = db_acc_obj.exc_query(db_name='marketdata', query=qu,\
         retres=QuRetType.ALLASPD)
-    data = [go.Scatter(
-        x=df['Date'],
-        y=df['Close'])
-    ]
 
+    fig = go.Figure()
 
-    lineJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+    fig = make_subplots(rows=3, cols=1,
+                        shared_xaxes=True,
+                        vertical_spacing=0.1,
+                        row_width=[0.3, 0.8, 0.2],
+                        specs=[[{"rowspan":2}],
+                        [None],
+                        [{}]])
+
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], name='Close', mode='lines',
+    line=dict(color='royalblue')),row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Volume'], name='Volume', mode='lines',
+    line=dict(color='black')), row=3, col=1)
+
+    fig.update_layout(
+        plot_bgcolor='white',
+        width=1400,
+        height=800,
+        margin=dict(
+        autoexpand=False,
+        l=100,
+        r=20,
+        t=110,
+    )
+    )
+
+    fig['layout']['xaxis2']['title']='Date'
+    fig['layout']['yaxis']['title']='Close'
+    fig['layout']['yaxis2']['title']='Volume'
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
+
+    lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
     return lineJSON
 
