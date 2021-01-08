@@ -27,7 +27,30 @@ def makeHistogram(items):
     fig.update_layout(title='Average return, per starting Signal Date (ex: "the stocks signaled on the 22nd December have an average return of 45% until today")',\
         xaxis_title="SignalDate",\
         yaxis_title="Avg. Return",
-        font=dict(size=10))
+        font=dict(size=10),
+        width=1400,
+        height=390,
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(
+        autoexpand=False,
+        l=100,
+        r=20,
+        t=110,
+        ))
+
+    fig.add_shape(type='line',
+                    x0=dfPivoted.index.min(),
+                    y0=0,
+                    x1=dfPivoted.index.max(),
+                    y1=0,
+                    line=dict(color='rgba(192,192,192,0.5)',),
+                    xref='x',
+                    yref='y'
+    )
+
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
+
+
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
 
@@ -80,10 +103,25 @@ def makeLinesSignal():
     width=1400,
     height=900,
     plot_bgcolor='rgba(0,0,0,0)',
+    margin=dict(
+    autoexpand=False,
+    l=100,
+    r=20,
+    t=110,
+    ),
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+)
     )
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
-    
+    fig['layout']['xaxis2']['title']='Date'
+    fig['layout']['yaxis']['title']='Close'
+    fig['layout']['yaxis2']['title']='Aroon'
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
@@ -105,11 +143,11 @@ def create_lineChart(tick='PLUG'):
     nasdaq = list(pd.read_csv('utils/nasdaq_list.csv').iloc[:, 0])
 
     if tick in nasdaq:
-        table_chart = 'NASDAQ_15'
+        table_chart = 'NASDAQ_20'
     else:
-        table_chart = 'NYSE_15'
+        table_chart = 'NYSE_20'
 
-    qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}' and Date>'2018-01-01' "
+    qu=f"SELECT * FROM {table_chart} WHERE Symbol='{tick}'"
     df = db_acc_obj.exc_query(db_name='marketdata', query=qu,\
         retres=QuRetType.ALLASPD)
 

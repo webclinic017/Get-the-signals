@@ -18,6 +18,8 @@ from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
+magickey = os.environ.get('magickey')
+print(magickey)
 
 
 
@@ -27,6 +29,7 @@ class SearchForm(Form):
     date_input = TextField('Enter Signal Date', id='date_input')
     reset = TextField('Reset', id='reset')
     getcsv = TextField('Download', id='getcsv')
+    mW = TextField('mW', id='mW')
 
 
 
@@ -41,6 +44,29 @@ def autocomplete():
 def home():
     return render_template('home.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    formW = SearchForm(request.form)
+    magic = formW.mW.data
+    print('fr')
+    print(magickey)
+    
+    if form.validate_on_submit():
+        if magic==magickey:
+            user = User(email=form.email.data,
+                        username=form.username.data,
+                        password=form.password.data)
+
+            db.session.add(user)
+            db.session.commit()
+            flash('Thanks for registering! Now you can login!')
+            return redirect(url_for('login'))
+        else:
+            return render_template('register.html', form=form, formW=formW,magics=False)
+
+
+    return render_template('register.html', form=form, formW=formW, magics=True)
 
 
 @app.route('/welcome')
@@ -234,6 +260,7 @@ def getUserInput():
         empty = False
         return render_template('charts.html', form=form, plot=line,tick=processed_text)
         
+
 @app.route('/infraHealth')
 @login_required
 def infraHealth():
@@ -246,5 +273,5 @@ def infraHealth():
 
 #https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':
-    db_acc_obj = std_db_acc_obj() 
+    db_acc_obj = std_db_acc_obj()
     app.run(host='0.0.0.0', debug=True)

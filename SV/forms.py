@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
-from wtforms import ValidationError
+from wtforms import ValidationError, TextField
 from SV.models import User
 
 
@@ -18,6 +18,7 @@ class RegistrationForm(FlaskForm):
         'pass_confirm', message='Passwords Must Match!')])
     pass_confirm = PasswordField(
         'Confirm password', validators=[DataRequired()])
+
     submit = SubmitField('Register!')
 
     def validate_email(self, field):
@@ -30,5 +31,3 @@ class RegistrationForm(FlaskForm):
         # Check if not None for that username!
         if User.query.filter_by(username=field.data).first():
             print("username taken")
-            raise ValidationError('Sorry, that username is taken!')
-

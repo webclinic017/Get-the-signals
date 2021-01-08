@@ -12,7 +12,7 @@
     <body>
         <div class="row">
                 <div class="col-sm">
-                    <h3 class="display-4">Create your GTS account </h3>
+                    <h1>Create your GTS account </h1>
                 </div>
             <div class="col-sm">
                 <div class="card-body">
@@ -42,7 +42,22 @@
                         <div class="form-group">
                             {{ form.pass_confirm(class="form-control form-control-lg",placeholder="Confirm Password") }}
                         </div>
+                        {% if magics==True %}
+                        <div class="form-group">
+                            {{ formW.mW(class="form-control form-control-lg",placeholder="Magic word") }}
+                        </div>
+                        {% else %}
+                        {{ formW.mW(class="form-control is-invalid form-control-lg",placeholder="Magic word (provided by admin.)") }}
+                        <div class="invalid-feedback">
+                            Please provide a valid keyword.
+                          </div>
+                        {% endif %}
+
+                        
+                        <div class="form-group">
+
                         {{ form.submit(class="btn btn-outline-dark btn-block") }}
+                    </div>
 
                     </form>
                 </div>
