@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from utils.db_manage import QuRetType, std_db_acc_obj
 db_acc_obj = std_db_acc_obj() 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
-strToday = '2021-01-01'
 
 def fetchSignals(**kwargs):
     """
@@ -81,10 +80,15 @@ def fetchSignals(**kwargs):
 
 def fetchTechnicals():
 
-    qu = f"SELECT * FROM Technicals WHERE Date='{strToday}' LIMIT 100"
+    quLastDate = "SELECT * FROM Technicals ORDER BY `Date` DESC LIMIT 1"
+    qu = f"SELECT * FROM Technicals WHERE Date='2021-01-08' LIMIT 100"
 
     items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
     retres=QuRetType.ALL)
+    lastDate = db_acc_obj.exc_query(db_name='marketdata', query=quLastDate, \
+    retres=QuRetType.ALLASPD)
 
-    return items, strToday
+    lastDate = lastDate['Date'].to_list()[0]
+
+    return items, lastDate
 

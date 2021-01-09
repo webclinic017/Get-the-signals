@@ -115,9 +115,11 @@
 <hr>
 </br>
 
+<h3>Signals visualization</h3>
+
 <p>
-  You can type the Symbol present in the table above to visualize the Signals.
-  For now, only the stocks marked a signaled can be charted with the tool below.
+  You can enter one of the Symbols present in the table above to visualize the Signals.
+  For now, only the stocks marked as signaled can be charted with the tool below.
 </p>
 <form class="form-inline" method="post" action="/changeSignalChart">
   <div class="form-group mx-sm-3 mb-2">
@@ -133,6 +135,10 @@
   </script>
 </div>
 
+<p>
+<b>Assumption to test for the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
+
+</p>
 </code>
 
 </body>
