@@ -78,17 +78,28 @@ def fetchSignals(**kwargs):
         return items
 
 
-def fetchTechnicals():
+def fetchTechnicals(tick='AAPL'):
 
     quLastDate = "SELECT * FROM Technicals ORDER BY `Date` DESC LIMIT 1"
-    qu = f"SELECT * FROM Technicals WHERE Date='2021-01-08' LIMIT 100"
+    qu = "SELECT * FROM Technicals WHERE Date='2021-01-08' LIMIT 100"
+    quTick = f"select * from marketdata.Technicals where Ticker='{tick}'\
+    ORDER BY Date DESC"
 
-    items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
+    items = db_acc_obj.exc_query(db_name='marketdata', query=quTick, \
     retres=QuRetType.ALL)
+    """
     lastDate = db_acc_obj.exc_query(db_name='marketdata', query=quLastDate, \
     retres=QuRetType.ALLASPD)
-
     lastDate = lastDate['Date'].to_list()[0]
+    """
+    return items
 
-    return items, lastDate
+def fetchOwnership(tick='AAPL'):
 
+    quTick = f"select * from marketdata.Ownership where Ticker='{tick}'\
+    ORDER BY Date DESC"
+
+    items = db_acc_obj.exc_query(db_name='marketdata', query=quTick, \
+    retres=QuRetType.ALL)
+
+    return items

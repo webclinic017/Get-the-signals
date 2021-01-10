@@ -13,7 +13,7 @@ from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
-from utils.fetchData import fetchSignals, fetchTechnicals
+from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership
 from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart
 
 
@@ -232,9 +232,46 @@ def getCSV():
 @app.route('/technicals')
 @login_required
 def technicals():
-    items, strToday = fetchTechnicals()
-    return render_template('technicals.html', items=items, strToday=strToday)
+    form = SearchForm(request.form)
+    text = form.stock.data.upper()
+
+
+    items = fetchTechnicals()
+    return render_template('technicals.html',items=items, form=form)
     
+@app.route('/technicals', methods=['POST'])
+@login_required
+def submitTechnicals():
+    form = SearchForm(request.form)
+    text = form.stock.data.upper()
+    print(text)
+
+    items = fetchTechnicals(text)
+
+    return render_template('technicals.html', items=items,form=form, stock=text)
+
+
+@app.route('/ownership')
+@login_required
+def ownership():
+
+    form = SearchForm(request.form)
+    text = form.stock.data.upper()
+    items = fetchOwnership()
+    return render_template('ownership.html',items=items,form=form)
+    
+
+@app.route('/ownership', methods=['POST'])
+@login_required
+def submitOwnership():
+    form = SearchForm(request.form)
+    text = form.stock.data.upper()
+    print(text)
+
+    items = fetchOwnership(text)
+
+    return render_template('ownership.html', items=items,form=form, stock=text)
+
 
 @app.route('/macroView')
 @login_required
@@ -243,11 +280,6 @@ def macroView():
     
 
 
-@app.route('/ownership')
-@login_required
-def ownership():
-    return render_template('ownership.html')
-    
 
 @app.route('/investInfra')
 @login_required

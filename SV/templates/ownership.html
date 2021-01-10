@@ -2,21 +2,93 @@
 {%block content%}
 
 <head>
-  <link href="/static/style_ownership.css" rel="stylesheet" type="text/css">
-  <title>GTS-Ownership</title>
+  <link href="/static/style_technicals.css" rel="stylesheet" type="text/css">
+  <title>GTS-Table</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
 </head>
-<body id="ownership_page">
+
+
+<body id="Technicals_page">
 
     <h3>Ownership</h3>
 
     <hr>
+    <form class="form-inline" method="post">
+      <div class="form-group mx-sm-3 mb-2">
+          {{ form.stock(class="form-control")}}
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+    </form>
 
+    <script>
+      $(function () {
+          $.ajax({
+              url: '{{ url_for("autocomplete") }}'
+          }).done(function (data) {
+              $('#stock_autocomplete').autocomplete({
+                  source: data,
+                  minLength: 2
+              });
+          });
+      });
+    </script>
+
+<h5><b>{{stock}}</b></h5>
+
+
+    <div class="table-wrapper-scroll-y my-custom-scrollbar" >
+
+      <table class="table table-dark table-bordered table-striped table-sm table-hover">
+        <thead class="thead-dark">
+          <th scope="col">No</th>
+          <th scope="col">Ticker</th>
+          <th scope="col">MarketCap</th>
+          <th scope="col">SharesOutstanding</th>
+          <th scope="col">SharesFloat</th>
+          <th scope="col">InsiderOwnership</th>
+          <th scope="col">InsiderTransact.</th>
+          <th scope="col">Inst.Ownership</th>
+          <th scope="col">Inst.Transact.</th>
+          <th scope="col">FloatShort</th>
+          <th scope="col">ShortRatio</th>
+          <th scope="col">Avg.Volume</th>
+          <th scope="col">Price</th>
+          <th scope="col">Change</th>
+          <th scope="col">Volume</th>
+          <th scope="col">Date</th>
+        
+        </thead>
+        {% for item in items %}
+        <tr>
+          <td>{{ item[0] }}</td>
+          <td>{{ item[1] }}</td>
+          <td>{{ item[2] }}</td>
+          <td>{{ item[3] }}</td>
+          <td>{{ item[4] }}</td>
+          <td>{{ item[5] }}</td>
+          <td>{{ item[6] }}</td>
+          <td>{{ item[7] }}</td>
+          <td>{{ item[8] }}</td>
+          <td>{{ item[9] }}</td>
+          <td>{{ item[10] }}</td>
+          <td>{{ item[11] }}</td>
+          <td>{{ item[12] }}</td>
+          <td>{{ item[13] }}</td>
+          <td>{{ item[14] }}</td>
+          <td>{{ item[15] }}</td>
+      
+        </tr>
+        {% endfor %}
+      </table>
 
 </body>
+
 {% include "base_dashboard.html" %}
 
 {%endblock%}
-
