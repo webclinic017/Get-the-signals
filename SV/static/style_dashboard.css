@@ -40,6 +40,7 @@
   font-size:11px;
 }
 
+a { color: #fcfcfc; } 
 
 @font-face{
   src: url(fonts/Roboto-Light.ttf);

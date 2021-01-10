@@ -243,6 +243,11 @@ def macroView():
     
 
 
+@app.route('/ownership')
+@login_required
+def ownership():
+    return render_template('ownership.html')
+    
 
 @app.route('/investInfra')
 @login_required
