@@ -46,8 +46,10 @@ body {
   background: rgba(0, 0, 0, 0.336);
 }
 
-.birds_story{
-text-align:justify;
+
+#birds_story div{
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 @font-face{

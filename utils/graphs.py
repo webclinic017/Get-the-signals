@@ -25,7 +25,7 @@ def makeHistogram(items):
 
     fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
     fig.update_layout(title='Average return, per starting Signal Date (ex: "the stocks signaled on the 22nd December have an average return of 45% until today")',\
-        xaxis_title="SignalDate",\
+        xaxis_title="SignalDate",
         yaxis_title="Avg. Return",
         font=dict(size=10),
         width=1400,
@@ -38,17 +38,8 @@ def makeHistogram(items):
         t=110,
         ))
 
-    fig.add_shape(type='line',
-                    x0=dfPivoted.index.min(),
-                    y0=0,
-                    x1=dfPivoted.index.max(),
-                    y1=0,
-                    line=dict(color='rgba(192,192,192,0.5)',),
-                    xref='x',
-                    yref='y'
-    )
 
-    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)',zeroline=True,zerolinewidth=1,zerolinecolor='black')
 
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
@@ -171,6 +162,7 @@ def create_lineChart(tick='PLUG'):
 
     fig.add_trace(go.Scatter(x=df['Date'], y=df['Volume'], name='Volume', mode='lines',
     line=dict(color='black')), row=3, col=1)
+    fig.update_yaxes(showline=False,linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
     fig.update_layout(
         plot_bgcolor='white',
@@ -187,7 +179,6 @@ def create_lineChart(tick='PLUG'):
     fig['layout']['xaxis2']['title']='Date'
     fig['layout']['yaxis']['title']='Close'
     fig['layout']['yaxis2']['title']='Volume'
-    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
