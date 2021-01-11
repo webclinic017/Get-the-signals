@@ -18,6 +18,7 @@
 
 
 <body>
+    
     <div class="container margin-top-10">
         
 
@@ -34,7 +35,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url_for('investInfra') }}" class="nav-link">Dashboard</a>
+                            <a href="{{ url_for('search') }}" class="nav-link">Dashboard</a>
                         </li>
                         {% if current_user.is_authenticated %}
                         <li class="nav-item">

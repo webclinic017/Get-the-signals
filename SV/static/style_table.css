@@ -17,27 +17,36 @@
   }
 }
 
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+
+}
+
+
 .my-custom-scrollbar {
-  margin-top: 4px;
-  position: relative;
-  height: 700px;
-  overflow: auto;
-  }
-  .table-wrapper-scroll-y {
-  display: block;
-  }
+margin-top: 4px;
+position: relative;
+height: 700px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
 
 
 .table{
-  overflow-x: auto;
-  font-size: small;
+overflow-x: auto;
+font-size: small;
 }
 
 .form{
-  padding-right: 15px;
+padding-right: 15px;
 }
 
-  
+
 
 
 @font-face{

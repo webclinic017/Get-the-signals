@@ -7,7 +7,86 @@ import pandas as pd
 import numpy as np
 import json
 from utils.db_manage import QuRetType, std_db_acc_obj
+from utils.fetchData import fetchTechnicals, fetchOwnership
+
+
 db_acc_obj = std_db_acc_obj() 
+
+def makeOwnershipGraph(items, tick):
+
+    def TuplesToDF(items):
+        df = pd.DataFrame(list(items))
+        return df 
+
+    def renameCols(df):
+        '''
+        By index
+        '''
+        df.rename(columns={ df.columns[0]: "No",
+         df.columns[1]: "Ticker",
+         df.columns[2]: "MarketCap",
+         df.columns[3]: "SharesOutstanding",
+         df.columns[4]: "SharesFloat",
+         df.columns[5]: "InsiderOwnership",
+         df.columns[6]: "InsiderTransactions", 
+         df.columns[7]: "InstitutionalOwnership",         
+         df.columns[8]: "InstitutionalTransactions",
+         df.columns[9]: "FloatShort",
+         df.columns[10]: "ShortRatio",
+         df.columns[11]: "AverageVolume",
+         df.columns[12]: "Price",
+         df.columns[13]: "Change",
+         df.columns[14]: "Volume",
+         df.columns[15]: "Date"}, inplace = True)
+
+        return df
+    print('--------------')
+    df = TuplesToDF(items)
+    print(type(df))
+    print(df.index)
+
+    df = renameCols(df)
+    print(df)
+
+    # Create figure with secondary y-axis
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Price'],
+                    mode='lines+markers',
+                    name='Price'),secondary_y=True,)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['InstitutionalTransactions'], \
+        name='InstitutionalOwnership', mode='lines+markers',marker_size=4,
+    line=dict(color='firebrick')),secondary_y=False,)
+
+    fig.update_yaxes(title_text="<b> Price</b>", secondary_y=True)
+    fig.update_yaxes(title_text="<b> InstitutionalTransactions</b>", secondary_y=False)
+    fig.update_yaxes(showline=False, showgrid=False, secondary_y=False)
+
+
+    fig.update_traces(line_width=1.5)
+    fig.update_layout(
+    title=f'Ownership ({tick})',
+    plot_bgcolor='rgba(0,0,0,0)',
+    margin=dict(
+    autoexpand=False,
+    l=100,
+    r=20,
+    t=110,
+    ),
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+    )
+    )
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
+   
+    lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return lineJSON
 
 
 def makeHistogram(items):
@@ -28,8 +107,8 @@ def makeHistogram(items):
         xaxis_title="SignalDate",
         yaxis_title="Avg. Return",
         font=dict(size=10),
-        width=1400,
-        height=390,
+        #width=1400,
+        #height=390,
         plot_bgcolor='rgba(0,0,0,0)',
         margin=dict(
         autoexpand=False,
@@ -96,8 +175,8 @@ def makeLinesSignal(tick):
     fig.update_traces(line_width=1.5)
     fig.update_layout(
     title=f'Trend Reversal Detection ({tick})',
-    width=1400,
-    height=900,
+    #width=1400,
+    height=600,
     plot_bgcolor='rgba(0,0,0,0)',
     margin=dict(
     autoexpand=False,
@@ -166,7 +245,7 @@ def create_lineChart(tick='PLUG'):
 
     fig.update_layout(
         plot_bgcolor='white',
-        width=1400,
+        #width=1400,
         height=800,
         margin=dict(
         autoexpand=False,

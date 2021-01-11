@@ -39,7 +39,14 @@
       });
     </script>
 
-<h5><b>{{stock}}</b></h5>
+
+
+<div class="chart" id="plot">
+  <script>
+    var graphs = {{plot | safe}};
+    Plotly.plot('plot',graphs,{});
+  </script>
+</div>
 
 
     <div class="table-wrapper-scroll-y my-custom-scrollbar" >

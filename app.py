@@ -14,7 +14,7 @@ from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership
-from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart
+from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
@@ -258,7 +258,10 @@ def ownership():
     form = SearchForm(request.form)
     text = form.stock.data.upper()
     items = fetchOwnership()
-    return render_template('ownership.html',items=items,form=form)
+    print(items)
+    plot = makeOwnershipGraph(items, 'AAPL')
+
+    return render_template('ownership.html',items=items,form=form,plot=plot)
     
 
 @app.route('/ownership', methods=['POST'])
@@ -266,11 +269,10 @@ def ownership():
 def submitOwnership():
     form = SearchForm(request.form)
     text = form.stock.data.upper()
-    print(text)
-
     items = fetchOwnership(text)
+    plot = makeOwnershipGraph(items, text)
 
-    return render_template('ownership.html', items=items,form=form, stock=text)
+    return render_template('ownership.html', items=items,form=form, stock=text,plot=plot)
 
 
 @app.route('/macroView')
@@ -286,6 +288,13 @@ def macroView():
 def investInfra():
     return render_template('investInfra.html')
 
+
+@app.route('/search')
+@login_required
+def search():
+    form = SearchForm(request.form)
+    
+    return render_template('search.html', form=form)
 
 @app.route('/charts',methods=['GET', 'POST'])
 @login_required
