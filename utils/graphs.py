@@ -40,13 +40,9 @@ def makeOwnershipGraph(items, tick):
          df.columns[15]: "Date"}, inplace = True)
 
         return df
-    print('--------------')
-    df = TuplesToDF(items)
-    print(type(df))
-    print(df.index)
 
+    df = TuplesToDF(items)
     df = renameCols(df)
-    print(df)
 
     # Create figure with secondary y-axis
     fig = make_subplots(specs=[[{"secondary_y": True}]])

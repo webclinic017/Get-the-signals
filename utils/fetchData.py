@@ -95,7 +95,7 @@ def fetchTechnicals(tick='PLUG'):
     """
     return items
 
-def fetchOwnership(tick='PLUG'):
+def fetchOwnership(tick):
 
     quTick = f"select * from marketdata.Ownership where Ticker='{tick}'\
     ORDER BY Date DESC"

@@ -164,7 +164,6 @@ def changeSignalChart():
     validChartSignal = form.validChartSignal.data
     validChartSignal = validChartSignal.replace(" ", "")
 
-    print(validChartSignal)
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
     return render_template('table.html', \
@@ -244,7 +243,6 @@ def technicals():
 def submitTechnicals():
     form = SearchForm(request.form)
     text = form.stock.data.upper()
-    print(text)
 
     items = fetchTechnicals(text)
 
@@ -255,11 +253,11 @@ def submitTechnicals():
 @login_required
 def ownership():
 
+    tick= 'PLUG'
     form = SearchForm(request.form)
     text = form.stock.data.upper()
-    items = fetchOwnership()
-    print(items)
-    plot = makeOwnershipGraph(items, 'AAPL')
+    items = fetchOwnership(tick)
+    plot = makeOwnershipGraph(items, tick)
 
     return render_template('ownership.html',items=items,form=form,plot=plot)
     
