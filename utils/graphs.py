@@ -12,37 +12,47 @@ from utils.fetchData import fetchTechnicals, fetchOwnership
 
 db_acc_obj = std_db_acc_obj() 
 
+
+
+
+def renameCols(df,names):
+    '''
+    replaces df col names with list of names (by index)
+
+    :param 1: dataframe
+    :param 2: list column names
+    :returns: dataframe with new column names
+    '''
+    indices = list(range(len(list(df.columns))))
+    columns = []
+
+    for j in indices:
+        columns.append(j)
+    
+    for i in columns:
+        print(i)
+        print(names[i])
+        df.rename(columns={df.columns[i]: f"{names[i]}"}, inplace=True)
+
+    return df
+
+
+def TuplesToDF(items):
+    '''
+    Converts Tuple of Tuples to a dataframe
+    '''
+    df = pd.DataFrame(list(items))
+    return df 
+
 def makeOwnershipGraph(items, tick):
 
-    def TuplesToDF(items):
-        df = pd.DataFrame(list(items))
-        return df 
 
-    def renameCols(df):
-        '''
-        By index
-        '''
-        df.rename(columns={ df.columns[0]: "No",
-         df.columns[1]: "Ticker",
-         df.columns[2]: "MarketCap",
-         df.columns[3]: "SharesOutstanding",
-         df.columns[4]: "SharesFloat",
-         df.columns[5]: "InsiderOwnership",
-         df.columns[6]: "InsiderTransactions", 
-         df.columns[7]: "InstitutionalOwnership",         
-         df.columns[8]: "InstitutionalTransactions",
-         df.columns[9]: "FloatShort",
-         df.columns[10]: "ShortRatio",
-         df.columns[11]: "AverageVolume",
-         df.columns[12]: "Price",
-         df.columns[13]: "Change",
-         df.columns[14]: "Volume",
-         df.columns[15]: "Date"}, inplace = True)
-
-        return df
+    names = ["No","Ticker","MarketCap","SharesOutstanding","SharesFloat","InsiderOwnership",\
+        "InsiderTransactions","InstitutionalOwnership","InstitutionalTransactions","FloatShort",\
+            "ShortRatio","AverageVolume","Price","Change","Volume","Date"]
 
     df = TuplesToDF(items)
-    df = renameCols(df)
+    df = renameCols(df,names)
 
     # Create figure with secondary y-axis
     fig = make_subplots(specs=[[{"secondary_y": True}]])
