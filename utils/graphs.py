@@ -23,15 +23,10 @@ def renameCols(df,names):
     :param 2: list column names
     :returns: dataframe with new column names
     '''
+    # Get a list of indices corresponding to number of cols, starting from 0
     indices = list(range(len(list(df.columns))))
-    columns = []
 
-    for j in indices:
-        columns.append(j)
-    
-    for i in columns:
-        print(i)
-        print(names[i])
+    for i in indices:
         df.rename(columns={df.columns[i]: f"{names[i]}"}, inplace=True)
 
     return df
