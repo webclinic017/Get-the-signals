@@ -52,7 +52,7 @@ def makeOwnershipGraph(items, tick):
                     name='Price'),secondary_y=True,)
 
     fig.add_trace(go.Scatter(x=df.Date, y=df['InstitutionalTransactions'], \
-        name='InstitutionalOwnership', mode='lines+markers',marker_size=4,
+        name='InstitutionalTransactions', mode='lines+markers',marker_size=4,
     line=dict(color='firebrick')),secondary_y=False,)
 
     fig.update_yaxes(title_text="<b> Price</b>", secondary_y=True)
@@ -242,7 +242,7 @@ def create_lineChart(tick='PLUG'):
     fig.update_layout(
         plot_bgcolor='white',
         #width=1400,
-        height=800,
+        height=650,
         margin=dict(
         autoexpand=False,
         l=100,
