@@ -214,12 +214,14 @@ def tuplesToCSV(Tuples):
              + c3 + ',' + c4 + ',' + c5 + ',' + c6 + ',' + c7 + '\n'
         reReconstructedCSV = reReconstructedCSV + reReconstructedLine
 
+
     return reReconstructedCSV
+
 
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
-    average, fetchedData, firstD, lastD = fetchSignals()
+    average, fetchedData, firstD, lastD, SP500evol = fetchSignals()
     reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
     return Response(
         reReconstructedCSV,

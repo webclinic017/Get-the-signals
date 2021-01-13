@@ -55,8 +55,12 @@ def makeOwnershipGraph(items, tick):
         name='InstitutionalTransactions', mode='lines+markers',marker_size=4,
     line=dict(color='firebrick')),secondary_y=False,)
 
-    fig.update_yaxes(title_text="<b> Price</b>", secondary_y=True)
-    fig.update_yaxes(title_text="<b> InstitutionalTransactions</b>", secondary_y=False)
+    fig.add_trace(go.Scatter(x=df.Date, y=df['FloatShort'], \
+    name='FloatShort', mode='lines+markers',marker_size=4,
+    line=dict(color='#9467bd',dash='dash')),secondary_y=False,)
+
+    fig.update_yaxes(title_text="<b> Price ($) </b>", secondary_y=True)
+    fig.update_yaxes(title_text="<b> InstitutionalTransactions <br> & FloatShort (%)</b>", secondary_y=False)
     fig.update_yaxes(showline=False, showgrid=False, secondary_y=False)
 
 

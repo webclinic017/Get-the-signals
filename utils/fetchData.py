@@ -31,9 +31,8 @@ def fetchSignals(**kwargs):
         ORDER BY SignalDate DESC"
 
 
-    items = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
+    items = db_acc_obj.exc_query(db_name='signals', query=qu, \
         retres=QuRetType.ALL)
-
 
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
@@ -72,7 +71,6 @@ def fetchSignals(**kwargs):
             averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
         else:
             averageOfReturns = 0
-
         return round(averageOfReturns,2), items, firstD, lastD, SP500evol
     else:
         return items
