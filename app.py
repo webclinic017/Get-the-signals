@@ -336,9 +336,6 @@ def infraHealth():
 
 
 
-
-
-#https://stackoverflow.com/questions/55768789/how-to-read-in-user-input-on-a-webpage-in-flask
 if __name__ == '__main__':
     db_acc_obj = std_db_acc_obj()
     app.run(host='0.0.0.0', debug=True)
