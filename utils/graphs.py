@@ -218,7 +218,7 @@ def makeLinesSignal(tick):
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
 
-    fig['layout']['xaxis3']['title']='Date'
+    fig['layout']['xaxis4']['title']='Date'
     fig['layout']['yaxis']['title']='Price'
     fig['layout']['yaxis2']['title']='Aroon'
     fig['layout']['yaxis3']['title']='TR'
