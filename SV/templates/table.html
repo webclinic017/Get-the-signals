@@ -15,6 +15,7 @@
 
 
   <h3>Signals</h3>
+  <hr>
 
 
 
@@ -112,10 +113,10 @@
 </table>
 </div>
 </br>
-<hr>
 </br>
 
 <h3>Signals visualization</h3>
+<hr>
 
 <p>
   You can enter one of the Symbols present in the table above to visualize the Signals.
@@ -136,7 +137,42 @@
 </div>
 
 <p>
-<b>Assumption to test for the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
+  <br>
+  <br>
+
+<b>Assumption to test in the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
+<br>
+<br>
+
+</p>
+
+
+<h4>ATR integration in the strategy</h4>
+<hr>
+
+
+<p>
+  Average True Range denotes <b>>voltaility</b>, it doesn't denote trending. "Average" True Range is purely an exponential moving average of the true range.<br> 
+<br>
+
+Tje range of a day's trading is simply <i>high</i> - <i>low</i>. The <b>true range</b> extends it to yesterday's closing price
+if it was outside of today's range.<br>
+<br>
+<img src="/static/TR.svg" alt="TR" class="center">
+
+The <b>true range</b> is the largest of the:
+<ul>
+<li>Most recent period's high minus the most recent period's low</li>
+<li>Absolute value of the most recent period's high minus the previous close</li>
+<li>Absolute value of the most recent period's low minus the previous close</li>
+</ul>
+The ATR at the moment of time t is calculated using the following formula:
+
+  <img src="/static/ATR.svg" alt="first_ATR" class="center">
+  The first ATR value is calculated using the arithmetic mean formula:
+<br>
+  <img src="/static/first_ATR_formula.svg" alt="ATR" class="center">
+
 
 </p>
 </code>

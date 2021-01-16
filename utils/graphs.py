@@ -138,26 +138,33 @@ def makeLinesSignal(tick):
     df = db_acc_obj.exc_query(db_name='signals', query=qu, \
     retres=QuRetType.ALLASPD)
 
-    print(df)
 
-    fig = make_subplots(rows=3, cols=1,
+    fig = make_subplots(rows=5, cols=1,
                         shared_xaxes=True,
-                        vertical_spacing=0.12,
-                        row_width=[0.3, 0.8, 0.2],
+                        vertical_spacing=0.03,
+                        row_width=[0.25, 0.25, 0.1, 0.25,0.25],
                         specs=[[{"rowspan":2}],
                         [None],
-                        [{}]])
-
+                        [{}],
+                        [{}],
+                        [{}]
+                        ])
+    """
     fig.add_trace(go.Scatter(x=df.Date, y=df['Close'], name='Close', mode='lines+markers',marker_size=4,
     line=dict(color='royalblue')),
                 row=1, col=1)
+    """
+    fig.add_trace(go.Candlestick(x=df.Date,open=df.Open,close=df.Close,low=df.Low,high=df.High),
+                row=1, col=1)
 
+    fig.update_layout(xaxis_rangeslider_visible=False)
+    
     fig.add_trace(go.Scatter(x=df.Date, y=df['long_mavg'], name='long_mvg 50',mode='lines',
         line=dict(color='orange',dash='dash')),
                 row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df.Date, y=df['short_mavg'], name='short_mvg 10',mode='lines',
-        line=dict(color='firebrick')),
+        line=dict(color='royalblue')),
                 row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df.Date[df.positions==1], y=df.short_mavg[df.positions==1], 
@@ -176,12 +183,23 @@ def makeLinesSignal(tick):
         line=dict(color='red')),
                 row=3, col=1)
 
+    fig.add_trace(go.Scatter(x=df.Date, y=df['TR'], name='TR', mode='lines',\
+        line=dict(color='purple')),
+                row=4, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['ATR'], name='ATR', mode='lines',\
+        line=dict(color='blue')),
+                row=4, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Volume'], name='Volume', mode='lines',\
+        line=dict(color='purple')),
+                row=5, col=1)
 
     fig.update_traces(line_width=1.5)
     fig.update_layout(
     title=f'Trend Reversal Detection ({tick})',
     #width=1400,
-    height=600,
+    height=900,
     plot_bgcolor='rgba(0,0,0,0)',
     margin=dict(
     autoexpand=False,
@@ -199,9 +217,27 @@ def makeLinesSignal(tick):
     )
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
-    fig['layout']['xaxis2']['title']='Date'
-    fig['layout']['yaxis']['title']='Close'
+
+    fig['layout']['xaxis3']['title']='Date'
+    fig['layout']['yaxis']['title']='Price'
     fig['layout']['yaxis2']['title']='Aroon'
+    fig['layout']['yaxis3']['title']='TR'
+    fig['layout']['yaxis4']['title']='Volume'
+    
+    #fig.update_yaxes(type="log", row=4, col=1)
+
+    annotations = []
+
+    annotations.append(dict(xref='paper', yref='paper', x=0, y=-0.09,
+                              xanchor='left', yanchor='top',
+                              text='Log scale is used for vol. to have better grasp incoming vol on smaller caps',
+                              font=dict(family='Arial',
+                                        size=12,
+                                        color='rgb(150,150,150)'),
+                              showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+    
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
