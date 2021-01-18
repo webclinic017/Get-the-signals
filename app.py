@@ -14,7 +14,7 @@ from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership
-from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
+from utils.graphs import makeDonut, makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
@@ -133,24 +133,6 @@ def tablePage_basic():
     lineJSON = makeHistogram(items)
 """
 
-@app.route('/table')
-@login_required
-def table():
-# https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
-# https://plotly.com/python/figure-labels/   
-# https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
-    form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol = fetchSignals()
-    lineJSON = makeHistogram(items)
-    
-
-    SignalChart = makeLinesSignal(tick='AAME')
-
-    return render_template('table.html', \
-        average=average, form=form,items=items, \
-            plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart)    
-
 
 
 
@@ -172,6 +154,27 @@ def changeSignalChart():
             firstD=firstD, lastD=lastD, SignalChart=SignalChart)
 
 
+@app.route('/table')
+@login_required
+def table():
+# https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
+# https://plotly.com/python/figure-labels/   
+# https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
+    form = SearchForm(request.form)
+    average, items, firstD, lastD, SP500evol = fetchSignals()
+    print('--------------------')
+    lineJSON = makeHistogram(items)
+    
+
+    SignalChart = makeLinesSignal(tick='AAME')
+    Donut = makeDonut(items)
+
+    return render_template('table.html', \
+        average=average, form=form,items=items, \
+            plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart, \
+                    Donut=Donut)    
+
 @app.route('/table', methods=['POST'])
 @login_required
 def table_form():
@@ -183,9 +186,11 @@ def table_form():
     try:
         average, items, firstD, lastD, SP500evol = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
+        Donut = makeDonut(items)
+
         return render_template('table.html', SP500evol=SP500evol, firstD=firstD, \
             lastD=lastD, items=items, average=average, form=form, plot=lineJSON, \
-                strToday=strToday)
+                strToday=strToday,Donut=Donut)
     except ValueError:
         average = 0
         return render_template('table.html', average=average, form=form, \
