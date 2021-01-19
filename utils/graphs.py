@@ -109,48 +109,49 @@ def makeHistogram(items):
     df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    
     dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
 
-    fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
-    fig.update_layout(title='Average return, per starting Signal Date (ex: "the stocks signaled on the 22nd December have an average return of 45% until today")',\
+    dfMin = df[(df['LastClostingPrice'] < 15)]
+    dfMid = df[(df['LastClostingPrice'] >= 15) & (df['LastClostingPrice'] <= 60)]
+    dfMax = df[(df['LastClostingPrice'] > 60)]
+
+    dfPivotedMin = pd.pivot_table(dfMin, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
+    dfPivotedMid = pd.pivot_table(dfMid, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
+    dfPivotedMax = pd.pivot_table(dfMax, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
+
+    meanMin = round(dfPivotedMin.PriceEvolution.mean(),2)
+    meanMid = round(dfPivotedMid.PriceEvolution.mean(),2)
+    meanMax = round(dfPivotedMax.PriceEvolution.mean(),2)
+
+
+    #fig = go.Figure([go.Bar(x=dfPivoted.index, y=dfPivoted['PriceEvolution'])])
+    fig = go.Figure(data=[
+        go.Bar(name='<15$', x=dfPivoted.index, y = dfPivotedMin.PriceEvolution),
+        go.Bar(name='>=15$ & <=60$', x=dfPivoted.index, y = dfPivotedMid.PriceEvolution),
+        go.Bar(name='>60$', x=dfPivoted.index, y = dfPivotedMax.PriceEvolution)
+    ])
+    fig.update_layout(barmode='group')
+
+    fig.update_layout(title='Average return, per starting Signal Date \
+(ex: "the stocks signaled on the 22nd December have an average return of 45% until today") low price stocks.\
+<br><b>Stocks caracterized by lower prices yield significantly higher returns than other price intervals.<b>',\
         xaxis_title="SignalDate",
-        yaxis_title="Avg. Return",
+        yaxis_title="Avg. Return (%)",
         font=dict(size=10),
         #width=1400,
         #height=390,
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(
-        autoexpand=False,
-        l=100,
-        r=20,
-        t=110,
-        ))
+        plot_bgcolor='rgba(0,0,0,0)')
 
+    
+    fig.add_hline(y=dfPivotedMin["PriceEvolution"].mean(), annotation_text=f"{meanMin}%",line_dash="dot",\
+        line=dict( color="blue", width=1),annotation_font_color="blue")
+    fig.add_hline(y=dfPivotedMid["PriceEvolution"].mean(), annotation_text=f"{meanMid}%",line_dash="dot", \
+        line=dict( color="red", width=1),annotation_font_color="red")
+    fig.add_hline(y=dfPivotedMax["PriceEvolution"].mean(), annotation_text=f"{meanMax}%",line_dash="dot", \
+        annotation_font_color="green", annotation_position="bottom left", line=dict( color="green", width=1))
 
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)',zeroline=True,zerolinewidth=1,zerolinecolor='black')
 
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return lineJSON
-
-def makeDonut(items):
-    labels = ["US", "China", "European Union", "Russian Federation", "Brazil", "India",
-          "Rest of World"]
-    # Create subplots: use 'domain' type for Pie subplot
-    fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
-    fig.add_trace(go.Pie(labels=labels, values=[16, 15, 12, 6, 5, 4, 42], name="GHG Emissions"),
-                1, 1)
-    fig.add_trace(go.Pie(labels=labels, values=[27, 11, 25, 8, 1, 3, 25], name="CO2 Emissions"),
-                1, 2)
-
-    # Use `hole` to create a donut-like pie chart
-    fig.update_traces(hole=.4, hoverinfo="label+percent+name")
-
-    fig.update_layout(
-        title_text="Global Emissions 1990-2011",
-        # Add annotations in the center of the donut pies.
-        annotations=[dict(text='GHG', x=0.18, y=0.5, font_size=20, showarrow=False),
-                    dict(text='CO2', x=0.82, y=0.5, font_size=20, showarrow=False)])
-    lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    
     return lineJSON
 
 

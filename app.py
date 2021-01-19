@@ -14,7 +14,7 @@ from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership
-from utils.graphs import makeDonut, makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
+from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
@@ -152,8 +152,6 @@ def changeSignalChart():
     average=average, form=form,items=items, \
         plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
             firstD=firstD, lastD=lastD, SignalChart=SignalChart)
-
-
 @app.route('/table')
 @login_required
 def table():
@@ -167,13 +165,11 @@ def table():
     
 
     SignalChart = makeLinesSignal(tick='AAME')
-    Donut = makeDonut(items)
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
             plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart, \
-                    Donut=Donut)    
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart)    
 
 @app.route('/table', methods=['POST'])
 @login_required
@@ -186,11 +182,10 @@ def table_form():
     try:
         average, items, firstD, lastD, SP500evol = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
-        Donut = makeDonut(items)
 
         return render_template('table.html', SP500evol=SP500evol, firstD=firstD, \
             lastD=lastD, items=items, average=average, form=form, plot=lineJSON, \
-                strToday=strToday,Donut=Donut)
+                strToday=strToday)
     except ValueError:
         average = 0
         return render_template('table.html', average=average, form=form, \
