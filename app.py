@@ -160,7 +160,6 @@ def table():
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     form = SearchForm(request.form)
     average, items, firstD, lastD, SP500evol = fetchSignals()
-    print('--------------------')
     lineJSON = makeHistogram(items)
     
 
@@ -287,6 +286,13 @@ def macroView():
 @login_required
 def investInfra():
     return render_template('investInfra.html')
+
+
+@app.route('/about')
+@login_required
+def about():
+    return render_template('about.html')
+
 
 
 @app.route('/search')
