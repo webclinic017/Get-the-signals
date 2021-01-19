@@ -106,7 +106,11 @@ def makeHistogram(items):
         'LastClostingPrice',
         'PriceEvolution'])
 
+
     df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    
+    df = df[(df['PriceEvolution']!=0)]
+    print(df)
+    print('-------------', df.PriceEvolution.mean())
     dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
 
     dfMin = df[(df['LastClostingPrice'] < 15)]

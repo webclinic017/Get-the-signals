@@ -68,6 +68,8 @@ def fetchSignals(**kwargs):
         # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
         if len(pricesNoZero)>1:
             averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
+            print("PriceEvol: ", averageOfReturns)
+
         else:
             averageOfReturns = 0
         return round(averageOfReturns,2), items, firstD, lastD, SP500evol
