@@ -14,7 +14,13 @@
 
 <h3>Signals</h3>
 <hr>
+<p>
+  <b>  <font color="#32CD32">To be implemented:</font></b>
+</br>
+<b>A signal, by essence, should be idiosyncratic.</b> Hence, bullish markets will create more false signals in the casse of bullish signals.
+Therefore, the most convincing signals are those which are going to be contrarian relatively to the current market conditions (<i>i.e</i> bullish, bearish and sideways trends).
 
+</p>
 <div class="chart" id="line" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
   <script>
     var graphs = {{plot | safe}};
@@ -30,10 +36,13 @@
       </div>
 
 
+<p>
+  Stocks characterized by lower prices yield better returns probably because there is less <b>market depth</b>. Therefore, a same amount of liquidty injected overall (<b>systemic injection</b>) is going to affect more stocks
+  that are charactertized by little market depth. But not only this, the fact that some strategists also probably have this assumption in mind create an 
+  <b>self-reinforcing movement</b>, hence creating even more liquidty flow towards stocks characterized 
+  by little market depth.
 <hr>
-
   </p>
-
     <form class="form" autocomplete="off" spellcheck="false" method="POST">
 
       </div>
@@ -54,9 +63,10 @@
 
     </form>
   <div>
+
     <p style="text-align:center">
 
-      {%if average>0%}
+<!--       {%if average>0%}
       <img alt="dl icon" src="../static/green-arrow.png" width="30" height="30" >
     </br>
 
@@ -68,6 +78,7 @@
       <img alt="dl icon" src="../static/red-arrow.png" width="30" height="30" >
       {% endif %}
     </br>
+ -->
 
       {%if SP500evol>0%}
       <b>SP 500</b> evol. over the same period : 
@@ -175,6 +186,10 @@ The ATR at the moment of time t is calculated using the following formula:
   The first ATR value is calculated using the arithmetic mean formula:
 <br>
   <img src="/static/first_ATR_formula.svg" alt="ATR" class="center">
+
+
+
+<br>
 
 
 </p>
