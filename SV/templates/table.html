@@ -41,28 +41,7 @@ Therefore, the most convincing signals are those which are going to be contraria
   that are charactertized by little market depth. But not only this, the fact that some strategists also probably have this assumption in mind create an 
   <b>self-reinforcing movement</b>, hence creating even more liquidty flow towards stocks characterized 
   by little market depth.
-<hr>
-  </p>
-    <form class="form" autocomplete="off" spellcheck="false" method="POST">
 
-      </div>
-          <div class="row">
-            <label for="date_input" class="col-form-label col-form-label-sm">Signals untill: </label>
-            
-            <div class="col-sm-2">
-              {{ form.date_input(class="form-control form-control-sm", type="date", value=strToday | safe)}}
-            </div>
-
-            
-              <div class="btn-toolbar">
-                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
-                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset">
-                <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
-            </div>
-      </div>
-
-    </form>
-  <div>
 
     <p style="text-align:center">
 
@@ -93,10 +72,28 @@ Therefore, the most convincing signals are those which are going to be contraria
 
     </p>
 
+  <hr>
+  </p>
+    <form class="form" autocomplete="off" spellcheck="false" method="POST">
+
+      </div>
+          <div class="row">
+            <label for="date_input" class="col-form-label col-form-label-sm">Signals untill: </label>
+            
+            <div class="col-sm-2">
+              {{ form.date_input(class="form-control form-control-sm", type="date", value=strToday | safe)}}
+            </div>
+            
+              <div class="btn-toolbar">
+                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
+                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset">
+                <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
+              </div>
+      </div>
+
+    </form>
+
   </div>
-
-
-
 
 </div>
 
