@@ -83,12 +83,11 @@ Therefore, the most convincing signals are those which are going to be contraria
             <div class="col-sm-2">
               {{ form.date_input(class="form-control form-control-sm", type="date", value=strToday | safe)}}
             </div>
-            
-              <div class="btn-toolbar">
-                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
-                <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset">
+            <div class="btn-toolbar">
+              <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
+              <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset">
                 <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
-              </div>
+            </div>
       </div>
 
     </form>
@@ -97,7 +96,9 @@ Therefore, the most convincing signals are those which are going to be contraria
 
 </div>
 
-
+<p>
+  Number of signals:{{nSignals}}
+</p>
 <div class="table-wrapper-scroll-y my-custom-scrollbar" >
 
 <table class="table table-bordered table-striped table-sm table-hover" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">

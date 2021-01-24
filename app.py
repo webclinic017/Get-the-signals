@@ -168,7 +168,7 @@ def table():
     return render_template('table.html', \
         average=average, form=form,items=items, \
             plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart)    
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart,nSignals=nSignals)    
 
 @app.route('/table', methods=['POST'])
 @login_required

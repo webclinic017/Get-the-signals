@@ -23,11 +23,11 @@ def fetchSignals(**kwargs):
         qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
         WHERE SignalDate<='{sDate}'\
-        ORDER BY SignalDate DESC"
+        WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC"
     else:
         qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        ORDER BY SignalDate DESC"
+        WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC"
 
 
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
