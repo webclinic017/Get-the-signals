@@ -141,35 +141,30 @@ def tablePage_basic():
 def changeSignalChart():
     form = SearchForm(request.form)
     average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
-    lineJSON = makeHistogram(items)
+    plot = makeHistogram(items)
 
     validChartSignal = form.validChartSignal.data
     validChartSignal = validChartSignal.replace(" ", "")
 
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
-    return render_template('table.html', \
-    average=average, form=form,items=items, \
-        plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-            firstD=firstD, lastD=lastD, SignalChart=SignalChart)
+    return render_template('table.html', average=average, form=form,items=items, \
+        plot=plot, strToday=strToday, SP500evol=SP500evol, firstD=firstD, lastD=lastD, SignalChart=SignalChart)
+
 @app.route('/table')
 @login_required
 def table():
-# https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
-# https://plotly.com/python/figure-labels/   
-# https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
-
 
     form = SearchForm(request.form)
     average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
-    lineJSON = makeHistogram(items)
+    plot = makeHistogram(items)
     
     SignalChart = makeLinesSignal(tick='AAME')
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
-            plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals)    
+            plot=plot, strToday=strToday, SP500evol=SP500evol, \
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals)     
 
 @app.route('/table', methods=['POST'])
 @login_required
@@ -180,17 +175,14 @@ def table_form():
     getcsv = form.getcsv.data
 
     try:
-        print("HERE x")
         average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
-        lineJSON = makeHistogram(items)
+        plot = makeHistogram(items)
 
         return render_template('table.html', SP500evol=SP500evol, firstD=firstD, \
-            lastD=lastD, items=items, average=average, form=form, plot=lineJSON, \
-                strToday=strToday,nSignals=nSignals)
+            lastD=lastD, items=items, average=average, form=form, plot=plot, strToday=strToday, nSignals=nSignals)
     except ValueError:
         average = 0
-        return render_template('table.html', average=average, form=form, \
-            strToday=strToday)
+        return render_template('table.html', average=average, form=form, strToday=strToday)
 
 
 def tuplesToCSV(Tuples):
@@ -236,9 +228,8 @@ def getCSV():
 def technicals():
     form = SearchForm(request.form)
     text = form.stock.data.upper()
-
-
     items = fetchTechnicals()
+
     return render_template('technicals.html',items=items, form=form)
     
 @app.route('/technicals', methods=['POST'])
@@ -246,7 +237,6 @@ def technicals():
 def submitTechnicals():
     form = SearchForm(request.form)
     text = form.stock.data.upper()
-
     items = fetchTechnicals(text)
 
     return render_template('technicals.html', items=items,form=form, stock=text)
@@ -255,7 +245,6 @@ def submitTechnicals():
 @app.route('/ownership')
 @login_required
 def ownership():
-
     tick= 'PLUG'
     form = SearchForm(request.form)
     text = form.stock.data.upper()
@@ -321,7 +310,6 @@ def getUserInput():
     """
     User input for charts table
     """
-    # text = request.form['stock_input']
     form = SearchForm(request.form)
     text = form.stock.data
     processed_text = ""
