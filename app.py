@@ -158,17 +158,18 @@ def table():
 # https://stackoverflow.com/questions/57502469/plotly-how-to-plot-grouped-results-on-multiple-lines
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
+
+
     form = SearchForm(request.form)
     average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
     lineJSON = makeHistogram(items)
     
-
     SignalChart = makeLinesSignal(tick='AAME')
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
             plot=lineJSON, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart,nSignals=nSignals)    
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals)    
 
 @app.route('/table', methods=['POST'])
 @login_required
@@ -179,6 +180,7 @@ def table_form():
     getcsv = form.getcsv.data
 
     try:
+        print("HERE x")
         average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
 

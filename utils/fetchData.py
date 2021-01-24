@@ -22,8 +22,8 @@ def fetchSignals(**kwargs):
         sDate = str(kwargs['dateInput']) 
         qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE SignalDate<='{sDate}'\
-        WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC"
+        WHERE SignalDate BETWEEN '2020-12-15' AND '{sDate}' \
+        ORDER BY SignalDate DESC"
     else:
         qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
         LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
