@@ -109,8 +109,6 @@ def makeHistogram(items):
 
     df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    
     df = df[(df['PriceEvolution']!=0)]
-    print(df)
-    print('-------------', df.PriceEvolution.mean())
     dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
 
     dfMin = df[(df['LastClostingPrice'] < 15)]
@@ -252,7 +250,6 @@ def makeLinesSignal(tick):
     fig['layout']['yaxis3']['title']='TR'
     fig['layout']['yaxis4']['title']='Volume'
     
-    #fig.update_yaxes(type="log", row=4, col=1)
 
     annotations = []
 

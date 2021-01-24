@@ -38,10 +38,15 @@ def fetchSignals(**kwargs):
     # If we process below py calculations with an item the website is throw an error.
 
     if items:
-        # Calculate price evolutinds and append to list of Lists 
+        # Calculate price evolutions and append to list of Lists 
         dfitems = pd.DataFrame(items)
         PriceEvolution = dfitems.iloc[:,6].tolist()
-        
+
+        # Calculate nbSignals
+        nSignalsDF = dfitems.iloc[:, 0:2]
+        nSignalsDF = nSignalsDF.drop_duplicates()
+        nSignals = len(nSignalsDF)
+
         # Getting first date and last date corresponding to filter (/table)
         firstD = list(dfitems.iloc[0])[1].strftime("%Y-%m-%d")
         lastD = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
@@ -68,11 +73,10 @@ def fetchSignals(**kwargs):
         # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
         if len(pricesNoZero)>1:
             averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
-            print("PriceEvol: ", averageOfReturns)
 
         else:
             averageOfReturns = 0
-        return round(averageOfReturns,2), items, firstD, lastD, SP500evol
+        return round(averageOfReturns,2), items, firstD, lastD, SP500evol, nSignals
     else:
         return items
 

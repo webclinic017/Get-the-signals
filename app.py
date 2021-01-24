@@ -140,7 +140,7 @@ def tablePage_basic():
 @login_required
 def changeSignalChart():
     form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol = fetchSignals()
+    average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
     lineJSON = makeHistogram(items)
 
     validChartSignal = form.validChartSignal.data
@@ -159,7 +159,7 @@ def table():
 # https://plotly.com/python/figure-labels/   
 # https://code.tutsplus.com/tutorials/charting-using-plotly-in-python--cms-30286 
     form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol = fetchSignals()
+    average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
     lineJSON = makeHistogram(items)
     
 
@@ -179,12 +179,12 @@ def table_form():
     getcsv = form.getcsv.data
 
     try:
-        average, items, firstD, lastD, SP500evol = fetchSignals(dateInput=dateInput)
+        average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
         lineJSON = makeHistogram(items)
 
         return render_template('table.html', SP500evol=SP500evol, firstD=firstD, \
             lastD=lastD, items=items, average=average, form=form, plot=lineJSON, \
-                strToday=strToday)
+                strToday=strToday,nSignals=nSignals)
     except ValueError:
         average = 0
         return render_template('table.html', average=average, form=form, \
@@ -220,7 +220,7 @@ def tuplesToCSV(Tuples):
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
-    average, fetchedData, firstD, lastD, SP500evol = fetchSignals()
+    average, fetchedData, firstD, lastD, SP500evol, nSignals = fetchSignals()
     reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
     return Response(
         reReconstructedCSV,
@@ -302,6 +302,8 @@ def search():
     
     return render_template('search.html', form=form)
 
+
+
 @app.route('/charts',methods=['GET', 'POST'])
 @login_required
 def charts():
@@ -309,7 +311,6 @@ def charts():
     line = create_lineChart()
 
     return render_template('charts.html', form=form, plot=line, tick='PLUG')
-    #return render_template('charts.html')
 
 
 @app.route('/submit', methods=['POST'])
@@ -334,11 +335,12 @@ def getUserInput():
         return render_template('charts.html', form=form, plot=line,tick=processed_text)
         
 
+
+
 @app.route('/infraHealth')
 @login_required
 def infraHealth():
     return render_template('infraHealth.html', health=True)
-
 
 
 
