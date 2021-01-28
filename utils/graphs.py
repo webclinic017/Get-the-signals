@@ -104,7 +104,10 @@ def makeHistogram(items):
         'NScanDaysInterval',
         'PriceAtSignal',
         'LastClostingPrice',
-        'PriceEvolution'])
+        'PriceEvolution',
+        'Company',
+        'Sector',
+        'Industry'])
 
 
     df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    

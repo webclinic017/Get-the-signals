@@ -20,19 +20,22 @@ def fetchSignals(**kwargs):
 
     if 'dateInput' in kwargs:
         sDate = str(kwargs['dateInput']) 
-        qu = f"SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
-        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
+        qu = f"SELECT * FROM \
+        (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
+        LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+        )t\
         WHERE SignalDate BETWEEN '2020-12-15' AND '{sDate}' \
         ORDER BY SignalDate DESC"
     else:
-        qu = "SELECT DISTINCT ValidTick, SignalDate, ScanDate, NScanDaysInterval, PriceAtSignal,\
-        LastClosingPrice, PriceEvolution FROM signals.Signals_aroon_crossing_evol\
-        WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC"
+        qu = "SELECT * FROM\
+        (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
+        LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+        )t\
+        WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC;"
 
 
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
         retres=QuRetType.ALL)
-
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
@@ -40,6 +43,7 @@ def fetchSignals(**kwargs):
     if items:
         # Calculate price evolutions and append to list of Lists 
         dfitems = pd.DataFrame(items)
+        print(dfitems)
         PriceEvolution = dfitems.iloc[:,6].tolist()
 
         # Calculate nbSignals
