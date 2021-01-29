@@ -162,18 +162,24 @@ def makeHistogram(items):
 
 def makeLinesSignal(tick):
 
-    qu = f"SELECT * FROM signals.Signals_details WHERE Symbol='{tick}' \
-    ORDER BY Date"
+    qu = f"SELECT t.*,t2.Gap FROM\
+    (SELECT * FROM signals.Signals_details\
+    WHERE Symbol=f'{tick}')t\
+    LEFT JOIN \
+    (SELECT * FROM marketdata.Technicals WHERE Ticker='{tick}')t2\
+    ON t2.Date = t.Date;"
+
     df = db_acc_obj.exc_query(db_name='signals', query=qu, \
     retres=QuRetType.ALLASPD)
+    print(df)
 
-
-    fig = make_subplots(rows=5, cols=1,
+    fig = make_subplots(rows=6, cols=1,
                         shared_xaxes=True,
                         vertical_spacing=0.03,
-                        row_width=[0.25, 0.25, 0.1, 0.25,0.25],
+                        row_width=[0.15, 0.15, 0.15, 0.15,0.15,0.30],
                         specs=[[{"rowspan":2}],
                         [None],
+                        [{}],
                         [{}],
                         [{}],
                         [{}]
@@ -224,11 +230,15 @@ def makeLinesSignal(tick):
         line=dict(color='purple')),
                 row=5, col=1)
 
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Gap'], name='Gap', mode='lines',\
+        line=dict(color='red')),
+                row=6, col=1)
+
     fig.update_traces(line_width=1.5)
     fig.update_layout(
     title=f'Trend Reversal Detection ({tick})',
     #width=1400,
-    height=900,
+    height=1100,
     plot_bgcolor='rgba(0,0,0,0)',
     margin=dict(
     autoexpand=False,
@@ -247,18 +257,19 @@ def makeLinesSignal(tick):
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
 
-    fig['layout']['xaxis4']['title']='Date'
+    fig['layout']['xaxis5']['title']='Date'
     fig['layout']['yaxis']['title']='Price'
     fig['layout']['yaxis2']['title']='Aroon'
     fig['layout']['yaxis3']['title']='TR'
     fig['layout']['yaxis4']['title']='Volume'
-    
+    fig['layout']['yaxis5']['title']='Gaps'
+
 
     annotations = []
 
     annotations.append(dict(xref='paper', yref='paper', x=0, y=-0.09,
                               xanchor='left', yanchor='top',
-                              text='Log scale is used for vol. to have better grasp incoming vol on smaller caps',
+                              #text='Log scale is used for vol. to have better grasp incoming vol on smaller caps',
                               font=dict(family='Arial',
                                         size=12,
                                         color='rgb(150,150,150)'),
