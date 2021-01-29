@@ -164,7 +164,7 @@ def makeLinesSignal(tick):
 
     qu = f"SELECT t.*,t2.Gap FROM\
     (SELECT * FROM signals.Signals_details\
-    WHERE Symbol=f'{tick}')t\
+    WHERE Symbol='{tick}')t\
     LEFT JOIN \
     (SELECT * FROM marketdata.Technicals WHERE Ticker='{tick}')t2\
     ON t2.Date = t.Date;"
