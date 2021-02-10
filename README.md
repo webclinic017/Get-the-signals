@@ -26,9 +26,9 @@ To initiate db (cutover), run:
 
 
 <h4> Infrastructure </h4>
-![alt text](https://github.com/alexnesov/[reponame]/blob/master/SV/static/DataFlow.jpg?raw=true)
+![alt text](http://SV/static/DataFlow.jpg)
 
-
+master/SV/static/DataFlow.jpg
 
 <h4>(Windows)Personnal issues encountered and turnaroud:</h4>
 
