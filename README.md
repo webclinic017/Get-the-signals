@@ -26,9 +26,8 @@ To initiate db (cutover), run:
 
 
 <h4> Infrastructure </h4>
-![Alt text](blob/master/SV/static/DataFlow.jpg?raw=true "Title")
+![Alt text](/master/SV/static/DataFlow.jpg?raw=true "Title")
 
-master/SV/static/DataFlow.jpg
 
 <h4>(Windows)Personnal issues encountered and turnaroud:</h4>
 
