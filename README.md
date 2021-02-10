@@ -26,7 +26,7 @@ To initiate db (cutover), run:
 
 
 <h4> Infrastructure </h4>
-![alt text](http://SV/static/DataFlow.jpg)
+![Alt text](blob/master/SV/static/DataFlow.jpg?raw=true "Title")
 
 master/SV/static/DataFlow.jpg
 
