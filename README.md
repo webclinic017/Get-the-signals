@@ -26,7 +26,7 @@ To initiate db (cutover), run:
 
 
 <h4> Infrastructure </h4>
-![alt text](https://github.com/alexnesov/Stock-Versus-web-app/blob/master/SV/static/DataFlow.jpg)
+![alt text](https://github.com/alexnesov/[reponame]/blob/master/SV/static/DataFlow.jpg?raw=true)
 
 
 
