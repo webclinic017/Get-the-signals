@@ -12,6 +12,8 @@ source .sversus/bin/activate
 To initiate db (cutover), run:
 
 ```python3 db_create.py```
+<h4> Infrastructure </h4>
+
 ![alt text](SV/static/DataFlow.jpg)
 
 <h4> To do: </h4>
@@ -26,7 +28,6 @@ To initiate db (cutover), run:
 </ul>
 
 
-<h4> Infrastructure </h4>
 
 
 
