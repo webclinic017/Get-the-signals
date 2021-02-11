@@ -171,7 +171,6 @@ def makeLinesSignal(tick):
 
     df = db_acc_obj.exc_query(db_name='signals', query=qu, \
     retres=QuRetType.ALLASPD)
-    print(df)
 
     fig = make_subplots(rows=6, cols=1,
                         shared_xaxes=True,

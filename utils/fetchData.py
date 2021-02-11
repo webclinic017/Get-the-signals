@@ -33,9 +33,10 @@ def fetchSignals(**kwargs):
         )t\
         WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC;"
 
-
+    
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
         retres=QuRetType.ALL)
+    print(items)
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
