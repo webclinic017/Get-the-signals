@@ -185,6 +185,21 @@ def table_form():
         return render_template('table.html', average=average, form=form, strToday=strToday)
 
 
+
+@app.route('/filtered_signals')
+@login_required
+def filtered_signals():
+
+    form = SearchForm(request.form)
+    average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
+    
+    SignalChart = makeLinesSignal(tick='AAME')
+
+    return render_template('filtered_signals.html', \
+        average=average, form=form,items=items, strToday=strToday, SP500evol=SP500evol, \
+                firstD=firstD, lastD=lastD, nSignals=nSignals, SignalChart=SignalChart)     
+
+
 def tuplesToCSV(Tuples):
     """
     To be used by Flask's Reponse class, to return a csv type
