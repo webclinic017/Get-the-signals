@@ -112,3 +112,32 @@ def fetchOwnership(tick):
     retres=QuRetType.ALL)
 
     return items
+
+def evolNasdaq15dols():
+    qu = "select Symbol, Close from marketdata.NASDAQ_20 where Date = '2020-12-16' \
+        AND Close < 15"
+
+    qu2 = "select Symbol, Close from marketdata.NASDAQ_20 where Date = '2021-02-19' \
+        AND Close < 15"
+
+    df1 = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
+    retres=QuRetType.ALLASPD)
+
+    df2 = db_acc_obj.exc_query(db_name='marketdata', query=qu2, \
+    retres=QuRetType.ALLASPD)
+
+    print("df1: ", df1)
+    print("df2: ", df2)
+
+    dfMerged = df1.merge(df2, how='left', on='Symbol')
+    print("dfMerged: ", dfMerged)
+    dfMerged['Evolution'] = (dfMerged['Close_y'] - dfMerged['Close_x'])\
+        /dfMerged['Close_x']
+    meanEvol = dfMerged['Evolution'].mean()
+    print(dfMerged['Evolution'])
+    print(meanEvol)
+
+
+
+
+

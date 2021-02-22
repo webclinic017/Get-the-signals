@@ -60,12 +60,16 @@ Therefore, the most convincing signals are those which are going to be contraria
  -->
 
       {%if SP500evol>0%}
-      <b>SP 500</b> evol. over the same period : 
+      <b>SP 500</b> evol. over the same period: 
       <font color="green"><b>{{SP500evol}}</b></font> % 
       {%else%}
-      <b>SP 500</b> evol. over the same period : 
+      <b>SP 500</b> evol. over the same period: 
       <font color="red"><b>{{SP500evol}}</b></font> % 
       {% endif %}
+    </br>
+
+      <b>NASDAQ &lt 15$ </b> evol. over the same period: 
+
     </br>
 
     (<strong>{{lastD}}</strong> to <strong>{{firstD}}</strong>)
