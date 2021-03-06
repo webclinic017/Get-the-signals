@@ -25,6 +25,7 @@ To initiate db (cutover), run:
     	<li>RTVS detector + visualization of normality</lI>
     	<li>API connection w. EC2 to check infra. health</li>
 	<li>Macro sector & industry cycles in macro pages</li>
+	<li>In the Signals page, create large graph with evolution of average of signals, per sectors and/or industry</li>
 </ul>
 
 
