@@ -7,6 +7,30 @@ from utils.db_manage import QuRetType, std_db_acc_obj
 db_acc_obj = std_db_acc_obj() 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
 
+
+def fetchSignalSectorsEvol():
+    qu = "SELECT Date, AVG(Close), Sector FROM\
+    (\
+    SELECT * FROM\
+            (\
+            SELECT Symbol, Date, Close, Volume\
+            FROM marketdata.NASDAQ_20\
+            WHERE Symbol IN\
+            (SELECT DISTINCT ValidTick FROM signals.Signals_aroon_crossing)\
+            AND Date>'2020-12-16'\
+            )t\
+        LEFT JOIN marketdata.sectors\
+        ON t.Symbol = sectors.Ticker\
+    )t2\
+    GROUP BY Date, Sector"
+
+    df = db_acc_obj.exc_query(db_name='signals', query=qu, \
+    retres=QuRetType.ALLASPD)
+    print(df)
+
+    return df
+
+
 def fetchSignals(**kwargs):
     """
     Function is used in table function
@@ -21,22 +45,21 @@ def fetchSignals(**kwargs):
     if 'dateInput' in kwargs:
         sDate = str(kwargs['dateInput']) 
         qu = f"SELECT * FROM \
-        (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
-        LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
-        )t\
+            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
+            LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+            )t\
         WHERE SignalDate BETWEEN '2020-12-15' AND '{sDate}' \
         ORDER BY SignalDate DESC"
     else:
         qu = "SELECT * FROM\
-        (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
-        LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
-        )t\
+            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
+            LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+            )t\
         WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC;"
 
     
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
         retres=QuRetType.ALL)
-    print(items)
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
@@ -44,7 +67,6 @@ def fetchSignals(**kwargs):
     if items:
         # Calculate price evolutions and append to list of Lists 
         dfitems = pd.DataFrame(items)
-        print(dfitems)
         PriceEvolution = dfitems.iloc[:,6].tolist()
 
         # Calculate nbSignals
@@ -126,16 +148,10 @@ def evolNasdaq15dols():
     df2 = db_acc_obj.exc_query(db_name='marketdata', query=qu2, \
     retres=QuRetType.ALLASPD)
 
-    print("df1: ", df1)
-    print("df2: ", df2)
-
     dfMerged = df1.merge(df2, how='left', on='Symbol')
-    print("dfMerged: ", dfMerged)
     dfMerged['Evolution'] = (dfMerged['Close_y'] - dfMerged['Close_x'])\
         /dfMerged['Close_x']
     meanEvol = dfMerged['Evolution'].mean()
-    print(dfMerged['Evolution'])
-    print(meanEvol)
 
 
 

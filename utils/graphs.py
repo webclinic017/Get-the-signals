@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import json
 from utils.db_manage import QuRetType, std_db_acc_obj
-from utils.fetchData import fetchTechnicals, fetchOwnership
+from utils.fetchData import fetchTechnicals, fetchOwnership, fetchSignalSectorsEvol
 
 
 db_acc_obj = std_db_acc_obj() 
@@ -38,6 +38,12 @@ def TuplesToDF(items):
     '''
     df = pd.DataFrame(list(items))
     return df 
+
+
+def makeSignalSectorEvol(df):
+    pass
+
+    
 
 def makeOwnershipGraph(items, tick):
 
@@ -113,7 +119,6 @@ def makeHistogram(items):
     df['PriceEvolution'] = pd.to_numeric(df['PriceEvolution'])    
     df = df[(df['PriceEvolution']!=0)]
     dfPivoted = pd.pivot_table(df, values='PriceEvolution',index=['SignalDate'], aggfunc=np.mean)
-
     dfMin = df[(df['LastClostingPrice'] < 15)]
     dfMid = df[(df['LastClostingPrice'] >= 15) & (df['LastClostingPrice'] <= 60)]
     dfMax = df[(df['LastClostingPrice'] > 60)]

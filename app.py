@@ -13,7 +13,7 @@ from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
-from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, evolNasdaq15dols
+from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, evolNasdaq15dols, fetchSignalSectorsEvol
 from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
 
 
@@ -162,6 +162,8 @@ def table():
     SignalChart = makeLinesSignal(tick='AAME')
 
     test = evolNasdaq15dols()
+
+    fetchSignalSectorsEvol()
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
