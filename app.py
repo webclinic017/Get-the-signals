@@ -14,7 +14,7 @@ from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
 from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, evolNasdaq15dols, fetchSignalSectorsEvol
-from utils.graphs import makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
+from utils.graphs import makeSignalSectorEvol, makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
@@ -161,14 +161,17 @@ def table():
     
     SignalChart = makeLinesSignal(tick='AAME')
 
-    test = evolNasdaq15dols()
+    dfEvols = fetchSignalSectorsEvol()
+    signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
+
 
     fetchSignalSectorsEvol()
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
             plot=plot, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals)     
+                firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals, \
+                    signalSectorEvolChart = signalSectorEvolChart)     
 
 @app.route('/table', methods=['POST'])
 @login_required

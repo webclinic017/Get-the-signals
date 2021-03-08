@@ -21,6 +21,14 @@
 Therefore, the most convincing signals are those which are going to be contrarian relatively to the current market conditions (<i>i.e</i> bullish, bearish and sideways trends).
 
 </p>
+
+<div class="signalEvolsChart" id="signalEvolsChart" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
+  <script>
+    var graphs = {{signalSectorEvolChart | safe}};
+    Plotly.plot('signalEvolsChart',graphs,{});
+  </script> 
+</div>
+
 <div class="chart" id="line" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
   <script>
     var graphs = {{plot | safe}};
@@ -28,12 +36,6 @@ Therefore, the most convincing signals are those which are going to be contraria
   </script> 
 </div>
 
-      <div class="Donut" id="Donut" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
-        <script>
-          var graphs = {{Donut | safe}};
-          Plotly.plot('Donut',graphs,{});
-        </script> 
-      </div>
 
 
 <p>

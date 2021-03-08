@@ -22,10 +22,18 @@ def fetchSignalSectorsEvol():
         LEFT JOIN marketdata.sectors\
         ON t.Symbol = sectors.Ticker\
     )t2\
-    GROUP BY Date, Sector"
+    GROUP BY Date, Sector\
+    ORDER BY Date DESC"
 
     df = db_acc_obj.exc_query(db_name='signals', query=qu, \
     retres=QuRetType.ALLASPD)
+    
+    df = df.pivot(index='Date',
+                    columns='Sector',
+                    values='AVG(Close)').reset_index()
+
+
+
     print(df)
 
     return df

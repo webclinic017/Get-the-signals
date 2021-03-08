@@ -41,7 +41,16 @@ def TuplesToDF(items):
 
 
 def makeSignalSectorEvol(df):
-    pass
+
+    newdf = df.reset_index().iloc[:,4:]
+    newdf = newdf / newdf.iloc[0] * 100
+
+    fig = px.line(newdf, x=df.Date, y=newdf.columns,
+              title='Evolution of average prices of Signals, per Sector')
+
+    lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return lineJSON
 
     
 
