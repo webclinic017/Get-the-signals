@@ -22,9 +22,10 @@ To initiate db (cutover), run:
 	<li>Option chains integration</li>
 	<li>Put/call ratio integration</li>
 	<li>Peers Seekingalpha</li>
-    <li>RTVS detector + visualization of normality</lI>
-    <li>Tooltips for infra. health: https://getbootstrap.com/docs/4.3/components/tooltips/ </li>
-    <li>API connection w. EC2 to check infra. health</li>
+    	<li>RTVS detector + visualization of normality</lI>
+    	<li>API connection w. EC2 to check infra. health</li>
+	<li>Macro sector & industry cycles in macro pages</li>
+	<li>In the Signals page, create large graph with evolution of average of signals, per sectors and/or industry</li>
 </ul>
 
 
