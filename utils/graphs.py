@@ -45,8 +45,16 @@ def makeSignalSectorEvol(df):
     newdf = df.reset_index().iloc[:,4:]
     newdf = newdf / newdf.iloc[0] * 100
 
-    fig = px.line(newdf, x=df.Date, y=newdf.columns,
-              title='Evolution of average prices of Signals, per Sector')
+    fig = px.line(newdf, x=df.Date, y=newdf.columns,log_y=True)
+    fig.update_layout(title='Evolution of average prices of Signals, per Sector',\
+        xaxis_title="Date",
+        yaxis_title="Normalized (log)",
+        font=dict(size=10),
+        #width=1400,
+        #height=390,
+        plot_bgcolor='rgba(0,0,0,0)')
+
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)',zeroline=True,zerolinewidth=1,zerolinecolor='black')
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
