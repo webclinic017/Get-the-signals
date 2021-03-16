@@ -60,10 +60,12 @@ def register():
             flash('Thanks for registering! Now you can login!')
             return redirect(url_for('login'))
         else:
-            return render_template('register.html', form=form, formW=formW,magics=False)
+            return render_template('register.html', form=form, \
+            formW=formW,magics=False)
 
 
-    return render_template('register.html', form=form, formW=formW, magics=True)
+    return render_template('register.html', form=form, \
+    formW=formW, magics=True)
 
 
 @app.route('/welcome')
@@ -125,15 +127,6 @@ def rtvs():
     return render_template('rtvs.html')
 
 
-# TODO (decorator?)
-"""
-def tablePage_basic():
-    form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol = fetchSignals()
-    lineJSON = makeHistogram(items)
-"""
-
-
 
 
 @app.route('/changeSignalChart', methods=['POST'])
@@ -148,8 +141,11 @@ def changeSignalChart():
 
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
-    return render_template('table.html', average=average, form=form,items=items, \
-        plot=plot, strToday=strToday, SP500evol=SP500evol, firstD=firstD, lastD=lastD, SignalChart=SignalChart)
+    return render_template('table.html', average=average, form=form,\
+    items=items, plot=plot, \
+    strToday=strToday, SP500evol=SP500evol, \
+    firstD=firstD, lastD=lastD, \
+    SignalChart=SignalChart)
 
 
 
@@ -178,8 +174,8 @@ def table():
     return render_template('table.html', \
         average=average, form=form,items=items, \
         plot=plot, strToday=strToday, SP500evol=SP500evol, \
-        firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals, \
-        signalSectorEvolChart = signalSectorEvolChart)     
+        firstD=firstD, lastD=lastD, SignalChart=SignalChart, \
+        nSignals=nSignals, signalSectorEvolChart = signalSectorEvolChart)     
 
 
 
