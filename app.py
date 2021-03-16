@@ -151,6 +151,14 @@ def changeSignalChart():
     return render_template('table.html', average=average, form=form,items=items, \
         plot=plot, strToday=strToday, SP500evol=SP500evol, firstD=firstD, lastD=lastD, SignalChart=SignalChart)
 
+
+
+
+def generateDashboard():
+    form = SearchForm(request.form)
+
+
+
 @app.route('/table')
 @login_required
 def table():
@@ -169,9 +177,11 @@ def table():
 
     return render_template('table.html', \
         average=average, form=form,items=items, \
-            plot=plot, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals, \
-                    signalSectorEvolChart = signalSectorEvolChart)     
+        plot=plot, strToday=strToday, SP500evol=SP500evol, \
+        firstD=firstD, lastD=lastD, SignalChart=SignalChart, nSignals=nSignals, \
+        signalSectorEvolChart = signalSectorEvolChart)     
+
+
 
 @app.route('/table', methods=['POST'])
 @login_required
@@ -185,11 +195,16 @@ def table_form():
         average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
         plot = makeHistogram(items)
 
-        return render_template('table.html', SP500evol=SP500evol, firstD=firstD, \
-            lastD=lastD, items=items, average=average, form=form, plot=plot, strToday=strToday, nSignals=nSignals)
+        return render_template('table.html', \
+        SP500evol=SP500evol, firstD=firstD, \
+        lastD=lastD, items=items, \
+        average=average, form=form, \
+        lot=plot, strToday=strToday, \
+        nSignals=nSignals)
     except ValueError:
         average = 0
-        return render_template('table.html', average=average, form=form, strToday=strToday)
+        return render_template('table.html', average=average, \
+        form=form, strToday=strToday)
 
 
 
@@ -203,8 +218,10 @@ def filtered_signals():
     SignalChart = makeLinesSignal(tick='AAME')
 
     return render_template('filtered_signals.html', \
-        average=average, form=form,items=items, strToday=strToday, SP500evol=SP500evol, \
-                firstD=firstD, lastD=lastD, nSignals=nSignals, SignalChart=SignalChart)     
+        average=average, form=form,items=items, \
+        strToday=strToday, SP500evol=SP500evol, \
+        firstD=firstD, lastD=lastD, \
+        nSignals=nSignals, SignalChart=SignalChart)     
 
 
 def tuplesToCSV(Tuples):
@@ -261,7 +278,10 @@ def submitTechnicals():
     text = form.stock.data.upper()
     items = fetchTechnicals(text)
 
-    return render_template('technicals.html', items=items,form=form, stock=text)
+    return render_template('technicals.html', 
+    items=items,
+    form=form, 
+    stock=text)
 
 
 @app.route('/ownership')
@@ -273,7 +293,10 @@ def ownership():
     items = fetchOwnership(tick)
     plot = makeOwnershipGraph(items, tick)
 
-    return render_template('ownership.html',items=items,form=form,plot=plot)
+    return render_template('ownership.html',
+    items=items,
+    form=form,
+    plot=plot)
     
 
 @app.route('/ownership', methods=['POST'])
@@ -284,7 +307,8 @@ def submitOwnership():
     items = fetchOwnership(text)
     plot = makeOwnershipGraph(items, text)
 
-    return render_template('ownership.html', items=items,form=form, stock=text,plot=plot)
+    return render_template('ownership.html', items=items,\
+    form=form, stock=text,plot=plot)
 
 
 @app.route('/macroView')
@@ -344,7 +368,8 @@ def getUserInput():
     else:
         line = create_lineChart(tick=processed_text)
         empty = False
-        return render_template('charts.html', form=form, plot=line,tick=processed_text)
+        return render_template('charts.html', form=form, \
+        plot=line,tick=processed_text)
         
 
 
