@@ -127,6 +127,8 @@ def rtvs():
     return render_template('rtvs.html')
 
 
+
+####------Standard functions and arguments for the table page------#
 average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
 plot = makeHistogram(items)
 dfEvols = fetchSignalSectorsEvol()
@@ -144,6 +146,7 @@ standard_args_table_page = dict(
     SP500evol = SP500evol,
     nSignals = nSignals
     )
+####------Standard functions and arguments for the table page------#
 
 
 
