@@ -131,15 +131,18 @@ average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
 plot = makeHistogram(items)
 
 
-args_table = dict(
+# This is the standard set of arguments used in every route page
+standard_args_table_page = dict(
     average = average,
     items = items,
     plot = plot,
     strToday = strToday,
-    firstD=firstD,
-    lastD=lastD,
-    SP500evol=SP500evol
+    firstD = firstD,
+    lastD = lastD,
+    SP500evol = SP500evol,
+    nSignals = nSignals
     )
+
 
 
 
@@ -154,7 +157,7 @@ def changeSignalChart():
 
     return render_template('table.html', 
     SignalChart=SignalChart, form=form,
-    **args_table)
+    **standard_args_table_page)
 
 
 
@@ -170,13 +173,12 @@ def table():
 
     return render_template('table.html', 
     SignalChart=SignalChart, 
-    nSignals=nSignals, 
     signalSectorEvolChart = signalSectorEvolChart, 
     form=form, 
-    **args_table)     
+    **standard_args_table_page)     
 
 
-
+"""
 @app.route('/table', methods=['POST'])
 @login_required
 def table_form():
@@ -198,7 +200,7 @@ def table_form():
         average=average, 
         form=form, 
         strToday=strToday)
-
+"""
 
 
 @app.route('/filtered_signals')
@@ -208,8 +210,6 @@ def filtered_signals():
     """
 
     form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
-    
     SignalChart = makeLinesSignal(tick='AAME')
 
     return render_template('filtered_signals.html', 
@@ -220,7 +220,6 @@ def filtered_signals():
         SP500evol=SP500evol, 
         firstD=firstD, 
         lastD=lastD, 
-        nSignals=nSignals, 
         SignalChart=SignalChart)     
 
 
@@ -253,7 +252,6 @@ def tuplesToCSV(Tuples):
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
-    average, fetchedData, firstD, lastD, SP500evol, nSignals = fetchSignals()
     reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
     return Response(
         reReconstructedCSV,
