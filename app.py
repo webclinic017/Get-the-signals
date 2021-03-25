@@ -127,31 +127,33 @@ def rtvs():
     return render_template('rtvs.html')
 
 
+average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
+plot = makeHistogram(items)
+
+
+args_table = dict(
+    average = average,
+    items = items,
+    plot = plot,
+    strToday = strToday,
+    firstD=firstD,
+    lastD=lastD,
+    SP500evol=SP500evol
+    )
+
 
 
 @app.route('/changeSignalChart', methods=['POST'])
 @login_required
 def changeSignalChart():
-    form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
-    plot = makeHistogram(items)
 
     validChartSignal = form.validChartSignal.data
     validChartSignal = validChartSignal.replace(" ", "")
-
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
-    return render_template('table.html', average=average, form=form,\
-    items=items, plot=plot, \
-    strToday=strToday, SP500evol=SP500evol, \
-    firstD=firstD, lastD=lastD, \
-    SignalChart=SignalChart)
-
-
-
-
-def generateDashboard():
-    form = SearchForm(request.form)
+    return render_template('table.html', 
+    SignalChart=SignalChart, 
+    **args_table)
 
 
 
@@ -160,22 +162,17 @@ def generateDashboard():
 def table():
 
     form = SearchForm(request.form)
-    average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
-    plot = makeHistogram(items)
-    
     SignalChart = makeLinesSignal(tick='AAME')
-
     dfEvols = fetchSignalSectorsEvol()
     signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
-
-
     fetchSignalSectorsEvol()
 
-    return render_template('table.html', \
-        average=average, form=form,items=items, \
-        plot=plot, strToday=strToday, SP500evol=SP500evol, \
-        firstD=firstD, lastD=lastD, SignalChart=SignalChart, \
-        nSignals=nSignals, signalSectorEvolChart = signalSectorEvolChart)     
+    return render_template('table.html', 
+    SignalChart=SignalChart, 
+    nSignals=nSignals, 
+    signalSectorEvolChart = signalSectorEvolChart, 
+    form=form, 
+    **args_table)     
 
 
 
@@ -189,18 +186,17 @@ def table_form():
 
     try:
         average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
-        plot = makeHistogram(items)
-
-        return render_template('table.html', \
-        SP500evol=SP500evol, firstD=firstD, \
-        lastD=lastD, items=items, \
-        average=average, form=form, \
-        lot=plot, strToday=strToday, \
-        nSignals=nSignals)
+        return render_template('table.html', 
+        SP500evol=SP500evol, 
+        form=form,
+        nSignals=nSignals, 
+        **args_table)
     except ValueError:
         average = 0
-        return render_template('table.html', average=average, \
-        form=form, strToday=strToday)
+        return render_template('table.html', 
+        average=average, 
+        form=form, 
+        strToday=strToday)
 
 
 
@@ -213,11 +209,16 @@ def filtered_signals():
     
     SignalChart = makeLinesSignal(tick='AAME')
 
-    return render_template('filtered_signals.html', \
-        average=average, form=form,items=items, \
-        strToday=strToday, SP500evol=SP500evol, \
-        firstD=firstD, lastD=lastD, \
-        nSignals=nSignals, SignalChart=SignalChart)     
+    return render_template('filtered_signals.html', 
+        average=average, 
+        form=form,
+        items=items, 
+        strToday=strToday, 
+        SP500evol=SP500evol, 
+        firstD=firstD, 
+        lastD=lastD, 
+        nSignals=nSignals, 
+        SignalChart=SignalChart)     
 
 
 def tuplesToCSV(Tuples):
