@@ -147,12 +147,13 @@ args_table = dict(
 @login_required
 def changeSignalChart():
 
+    form = SearchForm(request.form)
     validChartSignal = form.validChartSignal.data
     validChartSignal = validChartSignal.replace(" ", "")
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
     return render_template('table.html', 
-    SignalChart=SignalChart, 
+    SignalChart=SignalChart, form=form,
     **args_table)
 
 
@@ -203,6 +204,8 @@ def table_form():
 @app.route('/filtered_signals')
 @login_required
 def filtered_signals():
+    """
+    """
 
     form = SearchForm(request.form)
     average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
