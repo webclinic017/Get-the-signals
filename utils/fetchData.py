@@ -34,7 +34,6 @@ def fetchSignalSectorsEvol():
 
 
 
-    print(df)
 
     return df
 
