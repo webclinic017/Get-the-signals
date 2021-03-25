@@ -129,6 +129,8 @@ def rtvs():
 
 average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
 plot = makeHistogram(items)
+dfEvols = fetchSignalSectorsEvol()
+signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
 
 
 # This is the standard set of arguments used in every route page
@@ -145,18 +147,23 @@ standard_args_table_page = dict(
 
 
 
-
 @app.route('/changeSignalChart', methods=['POST'])
 @login_required
 def changeSignalChart():
+    """
+    Function called when "Confirm" buttin trigerred in "Signal Visualization" section
+    """
 
     form = SearchForm(request.form)
     validChartSignal = form.validChartSignal.data
     validChartSignal = validChartSignal.replace(" ", "")
+
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
     return render_template('table.html', 
-    SignalChart=SignalChart, form=form,
+    SignalChart=SignalChart, 
+    signalSectorEvolChart = signalSectorEvolChart, 
+    form=form,
     **standard_args_table_page)
 
 
@@ -167,9 +174,6 @@ def table():
 
     form = SearchForm(request.form)
     SignalChart = makeLinesSignal(tick='AAME')
-    dfEvols = fetchSignalSectorsEvol()
-    signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
-    fetchSignalSectorsEvol()
 
     return render_template('table.html', 
     SignalChart=SignalChart, 
@@ -177,30 +181,6 @@ def table():
     form=form, 
     **standard_args_table_page)     
 
-
-"""
-@app.route('/table', methods=['POST'])
-@login_required
-def table_form():
-    form = SearchForm(request.form)
-    dateInput = form.date_input.data
-    reset = form.reset.data
-    getcsv = form.getcsv.data
-
-    try:
-        average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
-        return render_template('table.html', 
-        SP500evol=SP500evol, 
-        form=form,
-        nSignals=nSignals, 
-        **args_table)
-    except ValueError:
-        average = 0
-        return render_template('table.html', 
-        average=average, 
-        form=form, 
-        strToday=strToday)
-"""
 
 
 @app.route('/filtered_signals')
@@ -221,6 +201,32 @@ def filtered_signals():
         firstD=firstD, 
         lastD=lastD, 
         SignalChart=SignalChart)     
+
+
+"""
+@app.route('/table', methods=['POST'])
+@login_required
+def table_form():
+    #Change date button
+    form = SearchForm(request.form)
+    dateInput = form.date_input.data
+    reset = form.reset.data
+    getcsv = form.getcsv.data
+
+    try:
+        average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
+        return render_template('table.html', 
+        SP500evol=SP500evol, 
+        form=form,
+        nSignals=nSignals, 
+        **args_table)
+    except ValueError:
+        average = 0
+        return render_template('table.html', 
+        average=average, 
+        form=form, 
+        strToday=strToday)
+"""
 
 
 def tuplesToCSV(Tuples):
