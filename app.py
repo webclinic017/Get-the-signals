@@ -261,7 +261,8 @@ def tuplesToCSV(Tuples):
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
-    reReconstructedCSV = tuplesToCSV(Tuples=fetchedData)
+
+    reReconstructedCSV = tuplesToCSV(Tuples=items)
     return Response(
         reReconstructedCSV,
         mimetype="text/csv",
