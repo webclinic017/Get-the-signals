@@ -17,7 +17,7 @@ To initiate db (cutover), run:
 ![alt text](SV/static/DataFlow.jpg)
 
 
-![alt text](SV/static/Structuring_Code.jpg)
+![alt text](SV/static/Structuring_Code.png)
 
 
 <h4> To do: </h4>
