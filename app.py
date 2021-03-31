@@ -127,6 +127,12 @@ def rtvs():
     return render_template('rtvs.html')
 
 
+@app.route('/portfolios')
+@login_required
+def portfolios():
+    return render_template('portfolios.html')
+
+
 
 ####------Standard functions and arguments for the table page------#
 average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
