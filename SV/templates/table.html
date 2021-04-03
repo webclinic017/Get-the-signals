@@ -177,40 +177,7 @@ df['positions'] = df['signal'].diff()
 
 </p>
 
-
-<h4>ATR integration in the strategy</h4>
-<hr>
-
-
-<p>
-  Average True Range denotes <b>>voltaility</b>, it doesn't denote trending. "Average" True Range is purely an exponential moving average of the true range.<br> 
-<br>
-
-Tje range of a day's trading is simply <i>high</i> - <i>low</i>. The <b>true range</b> extends it to yesterday's closing price
-if it was outside of today's range.<br>
-<br>
-<img src="/static/TR.svg" alt="TR" class="center">
-
-The <b>true range</b> is the largest of the:
-<ul>
-<li>Most recent period's high minus the most recent period's low</li>
-<li>Absolute value of the most recent period's high minus the previous close</li>
-<li>Absolute value of the most recent period's low minus the previous close</li>
-</ul>
-The ATR at the moment of time t is calculated using the following formula:
-
-  <img src="/static/ATR.svg" alt="first_ATR" class="center">
-  The first ATR value is calculated using the arithmetic mean formula:
-<br>
-  <img src="/static/first_ATR_formula.svg" alt="ATR" class="center">
-
-
-
-<br>
-
-
-</p>
-</code>
+<h4>What is the optimal number of holding days?</h4>
 
 </body>
 {% include "base_dashboard.html" %}
