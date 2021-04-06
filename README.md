@@ -23,13 +23,13 @@ To initiate db (cutover), run:
 <h4> To do: </h4>
 
 <ul>
+	<li>Portfolio builder, also have evol for a set of tickers for a given holding period</li>
 	<li>Option chains integration</li>
 	<li>Put/call ratio integration</li>
 	<li>Peers Seekingalpha</li>
     	<li>RTVS detector + visualization of normality</lI>
     	<li>API connection w. EC2 to check infra. health</li>
 	<li>Macro sector & industry cycles in macro pages</li>
-	<li>In the Signals page, create large graph with evolution of average of signals, per sectors and/or industry</li>
 	<li>Implement a more granular scale than the current price tri-partition in /table page</li>
 </ul>
 
