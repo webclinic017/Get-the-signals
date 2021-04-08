@@ -39,8 +39,8 @@ def sp500evol(spSTART, spEND):
     """
     This functions serves to calculate the evolution of the sp500 for a given timeframe
 
-    :param spSTART: oldest date
-    :param spEND: most recent date
+    :param spSTART: oldest date (STRING, format: '%Y-%m-%d')
+    :param spEND: most recent date (STRING, format: '%Y-%m-%d')
 
     :returns: evol of SP500 for this given timeframe --> float, rounded 3 nb after decimal
     """
@@ -58,6 +58,7 @@ def sp500evol(spSTART, spEND):
     SP500evol = round(((sp500END_FLOAT-sp500START_FLOAT)/sp500START_FLOAT)*100,3)
    
     return SP500evol
+
 
 def fetchSignals(**kwargs):
     """
@@ -88,11 +89,11 @@ def fetchSignals(**kwargs):
     
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
         retres=QuRetType.ALL)
+
     # checking if sql query is empty before starting pandas manipulation.
     # If empty we simply return items. No Bug.
     # If we process below py calculations with an item the website is throw an error.
-
-    if items:
+    if items and 'ALL' in kwargs:
         # Calculate price evolutions and append to list of Lists 
         dfitems = pd.DataFrame(items)
         PriceEvolution = dfitems.iloc[:,6].tolist()
@@ -114,7 +115,6 @@ def fetchSignals(**kwargs):
         # part below useful otherwise if rows as input user returns 0 row having positive Price Evol, it will throw error
         if len(pricesNoZero)>1:
             averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
-
         else:
             averageOfReturns = 0
         return round(averageOfReturns,2), items, spSTART, spEND, SP500evol, nSignals

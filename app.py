@@ -135,10 +135,11 @@ def portfolios():
 
 ####------Standard functions and arguments for the table page------#
 def STD_FUNC_TABLE_PAGE():
-    average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals()
+    average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals(ALL=True)
     plot = makeHistogram(items)
     dfEvols = fetchSignalSectorsEvol()
     signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
+    form = SearchForm(request.form)
 
 
     # This is the standard set of arguments used in every route page
@@ -151,11 +152,27 @@ def STD_FUNC_TABLE_PAGE():
         spEND = spEND,
         SP500evol = SP500evol,
         nSignals = nSignals,
-        signalSectorEvolChart = signalSectorEvolChart
+        signalSectorEvolChart = signalSectorEvolChart,
+        form = form
         )
 
     return standard_args_table_page
 ####------Standard functions and arguments for the table page------#
+
+
+@app.route('/table')
+@login_required
+def table():
+    """
+    Standard view for the "table" page
+    """
+
+    standard_args_table_page = STD_FUNC_TABLE_PAGE()
+    SignalChart = makeLinesSignal(tick='AAME')
+
+    return render_template('table.html', 
+    SignalChart=SignalChart,
+    **standard_args_table_page)
 
 
 @app.route('/changeSignalChart', methods=['POST'])
@@ -165,49 +182,16 @@ def changeSignalChart():
     Function called when "Confirm" buttin trigerred in "Signal Visualization" section
     """
 
-    form = SearchForm(request.form)
+    standard_args_table_page = STD_FUNC_TABLE_PAGE()
     validChartSignal = form.validChartSignal.data
     validChartSignal = validChartSignal.replace(" ", "")
 
     SignalChart = makeLinesSignal(tick=validChartSignal)
-    standard_args_table_page = STD_FUNC_TABLE_PAGE()
 
     return render_template('table.html', 
-    SignalChart=SignalChart, 
-    form=form,
+    SignalChart=SignalChart,
     **standard_args_table_page)
 
-
-@app.route('/table')
-@login_required
-def table():
-
-    form = SearchForm(request.form)
-    SignalChart = makeLinesSignal(tick='AAME')
-    standard_args_table_page = STD_FUNC_TABLE_PAGE()
-
-    return render_template('table.html', 
-    SignalChart=SignalChart, 
-    form=form, 
-    **standard_args_table_page)
-
-
-@app.route('/filtered_signals')
-@login_required
-def filtered_signals():
-
-    form = SearchForm(request.form)
-    SignalChart = makeLinesSignal(tick='AAME')
-
-    return render_template('filtered_signals.html', 
-        average=average, 
-        form=form,
-        items=items, 
-        strToday=strToday, 
-        SP500evol=SP500evol, 
-        spSTART=spSTART, 
-        spEND=spEND, 
-        SignalChart=SignalChart)     
 
 
 def tuplesToCSV(Tuples):
@@ -239,7 +223,7 @@ def tuplesToCSV(Tuples):
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():
-
+    items = fetchSignals()
     reReconstructedCSV = tuplesToCSV(Tuples=items)
     return Response(
         reReconstructedCSV,
