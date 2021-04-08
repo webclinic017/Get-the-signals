@@ -134,7 +134,7 @@ def portfolios():
 
 
 ####------Standard functions and arguments for the table page------#
-def STD_FUNC_TABLE_PAGE(func):
+def STD_FUNC_TABLE_PAGE():
     average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals()
     plot = makeHistogram(items)
     dfEvols = fetchSignalSectorsEvol()
