@@ -13,7 +13,7 @@ from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import QuRetType, std_db_acc_obj
-from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, evolNasdaq15dols, fetchSignalSectorsEvol
+from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, fetchSignalSectorsEvol
 from utils.graphs import makeSignalSectorEvol, makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
 
 
@@ -133,27 +133,29 @@ def portfolios():
     return render_template('portfolios.html')
 
 
-
 ####------Standard functions and arguments for the table page------#
-average, items, firstD, lastD, SP500evol, nSignals = fetchSignals()
-plot = makeHistogram(items)
-dfEvols = fetchSignalSectorsEvol()
-signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
+def STD_FUNC_TABLE_PAGE(func):
+    average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals()
+    plot = makeHistogram(items)
+    dfEvols = fetchSignalSectorsEvol()
+    signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
 
 
-# This is the standard set of arguments used in every route page
-standard_args_table_page = dict(
-    average = average,
-    items = items,
-    plot = plot,
-    strToday = strToday,
-    firstD = firstD,
-    lastD = lastD,
-    SP500evol = SP500evol,
-    nSignals = nSignals
-    )
+    # This is the standard set of arguments used in every route page
+    standard_args_table_page = dict(
+        average = average,
+        items = items,
+        plot = plot,
+        strToday = strToday,
+        spSTART = spSTART,
+        spEND = spEND,
+        SP500evol = SP500evol,
+        nSignals = nSignals,
+        signalSectorEvolChart = signalSectorEvolChart
+        )
+
+    return standard_args_table_page
 ####------Standard functions and arguments for the table page------#
-
 
 
 @app.route('/changeSignalChart', methods=['POST'])
@@ -168,13 +170,12 @@ def changeSignalChart():
     validChartSignal = validChartSignal.replace(" ", "")
 
     SignalChart = makeLinesSignal(tick=validChartSignal)
+    standard_args_table_page = STD_FUNC_TABLE_PAGE()
 
     return render_template('table.html', 
     SignalChart=SignalChart, 
-    signalSectorEvolChart = signalSectorEvolChart, 
     form=form,
     **standard_args_table_page)
-
 
 
 @app.route('/table')
@@ -183,20 +184,17 @@ def table():
 
     form = SearchForm(request.form)
     SignalChart = makeLinesSignal(tick='AAME')
+    standard_args_table_page = STD_FUNC_TABLE_PAGE()
 
     return render_template('table.html', 
     SignalChart=SignalChart, 
-    signalSectorEvolChart = signalSectorEvolChart, 
     form=form, 
-    **standard_args_table_page)     
-
+    **standard_args_table_page)
 
 
 @app.route('/filtered_signals')
 @login_required
 def filtered_signals():
-    """
-    """
 
     form = SearchForm(request.form)
     SignalChart = makeLinesSignal(tick='AAME')
@@ -207,35 +205,9 @@ def filtered_signals():
         items=items, 
         strToday=strToday, 
         SP500evol=SP500evol, 
-        firstD=firstD, 
-        lastD=lastD, 
+        spSTART=spSTART, 
+        spEND=spEND, 
         SignalChart=SignalChart)     
-
-
-"""
-@app.route('/table', methods=['POST'])
-@login_required
-def table_form():
-    #Change date button
-    form = SearchForm(request.form)
-    dateInput = form.date_input.data
-    reset = form.reset.data
-    getcsv = form.getcsv.data
-
-    try:
-        average, items, firstD, lastD, SP500evol, nSignals = fetchSignals(dateInput=dateInput)
-        return render_template('table.html', 
-        SP500evol=SP500evol, 
-        form=form,
-        nSignals=nSignals, 
-        **args_table)
-    except ValueError:
-        average = 0
-        return render_template('table.html', 
-        average=average, 
-        form=form, 
-        strToday=strToday)
-"""
 
 
 def tuplesToCSV(Tuples):

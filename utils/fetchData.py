@@ -32,11 +32,32 @@ def fetchSignalSectorsEvol():
                     columns='Sector',
                     values='AVG(Close)').reset_index()
 
-
-
-
     return df
 
+
+def sp500evol(spSTART, spEND):
+    """
+    This functions serves to calculate the evolution of the sp500 for a given timeframe
+
+    :param spSTART: oldest date
+    :param spEND: most recent date
+
+    :returns: evol of SP500 for this given timeframe --> float, rounded 3 nb after decimal
+    """
+    quSP500START = f"SELECT * FROM marketdata.sp500 WHERE Date='{spSTART}' LIMIT 1"
+    quSP500END = f"SELECT * FROM marketdata.sp500 WHERE Date='{spEND}' LIMIT 1"
+
+    sp500START_df = db_acc_obj.exc_query(db_name='marketdata', query=quSP500START, \
+    retres=QuRetType.ALLASPD)
+    sp500END_df = db_acc_obj.exc_query(db_name='marketdata', query=quSP500END, \
+    retres=QuRetType.ALLASPD)
+
+    sp500START_FLOAT = sp500START_df['Close'].to_list()[0]
+    sp500END_FLOAT = sp500END_df['Close'].to_list()[0]
+
+    SP500evol = round(((sp500END_FLOAT-sp500START_FLOAT)/sp500START_FLOAT)*100,3)
+   
+    return SP500evol
 
 def fetchSignals(**kwargs):
     """
@@ -81,24 +102,10 @@ def fetchSignals(**kwargs):
         nSignalsDF = nSignalsDF.drop_duplicates()
         nSignals = len(nSignalsDF)
 
-        # Getting first date and last date corresponding to filter (/table)
-        firstD = list(dfitems.iloc[0])[1].strftime("%Y-%m-%d")
-        lastD = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
-        # "lastD" == oldest
-
-        quSP500beg = f"SELECT * FROM marketdata.sp500 WHERE Date='{lastD}'"
-        quSP500end = f"SELECT * FROM marketdata.sp500 WHERE Date='{firstD}'"
-
-        sp500beg = db_acc_obj.exc_query(db_name='marketdata', query=quSP500beg, \
-        retres=QuRetType.ALLASPD)
-        sp500end = db_acc_obj.exc_query(db_name='marketdata', query=quSP500end, \
-        retres=QuRetType.ALLASPD)
-
-        sp500beg = sp500beg['Close'].to_list()[0]
-        sp500end = sp500end['Close'].to_list()[0]
-
-
-        SP500evol = round(((sp500end-sp500beg)/sp500beg)*100,3)
+        # Getting first date and last date corresponding to filter (in /table page)
+        spSTART = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
+        spEND = list(dfitems.iloc[0])[1].strftime("%Y-%m-%d")
+        SP500evol = sp500evol(spSTART,spEND)
 
         # Select only rows where Price Evolution != 0
         # Calculate mean of price evolution
@@ -110,7 +117,7 @@ def fetchSignals(**kwargs):
 
         else:
             averageOfReturns = 0
-        return round(averageOfReturns,2), items, firstD, lastD, SP500evol, nSignals
+        return round(averageOfReturns,2), items, spSTART, spEND, SP500evol, nSignals
     else:
         return items
 
@@ -125,11 +132,6 @@ def fetchTechnicals(tick='PLUG'):
     items = db_acc_obj.exc_query(db_name='marketdata', query=quTick, \
     retres=QuRetType.ALL)
 
-    """
-    lastDate = db_acc_obj.exc_query(db_name='marketdata', query=quLastDate, \
-    retres=QuRetType.ALLASPD)
-    lastDate = lastDate['Date'].to_list()[0]
-    """
     return items
 
 def fetchOwnership(tick):

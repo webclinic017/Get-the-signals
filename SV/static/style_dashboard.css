@@ -26,8 +26,8 @@
 }
 #sidebar .toggle-btn span {
   display:block;
-  width:30px;
-  height:5px;
+  width:20px;
+  height: 2px;
   background:#151719;
   margin:5px 0px;
   cursor:pointer;
