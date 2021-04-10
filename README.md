@@ -23,6 +23,8 @@ To initiate db (cutover), run:
 <h4> To do: </h4>
 
 <ul>
+	<li>Create table  containing every cron job and it's description</li>
+	<li>Redesign infra diagram</li>
 	<li>Portfolio builder, also have evol for a set of tickers for a given holding period</li>
 	<li>Option chains integration</li>
 	<li>Put/call ratio integration</li>

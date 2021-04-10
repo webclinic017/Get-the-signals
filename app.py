@@ -141,7 +141,6 @@ def STD_FUNC_TABLE_PAGE():
     signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
     form = SearchForm(request.form)
 
-
     # This is the standard set of arguments used in every route page
     standard_args_table_page = dict(
         average = average,
@@ -215,7 +214,6 @@ def tuplesToCSV(Tuples):
         reReconstructedLine  = c1 + ',' + c2 + ','\
              + c3 + ',' + c4 + ',' + c5 + ',' + c6 + ',' + c7 + '\n'
         reReconstructedCSV = reReconstructedCSV + reReconstructedLine
-
 
     return reReconstructedCSV
 
