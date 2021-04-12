@@ -218,6 +218,12 @@ def tuplesToCSV(Tuples):
     return reReconstructedCSV
 
 
+@login_required
+@app.route("/sigAnalysis", methods=['GET'])
+def sigAnalysis():
+
+    return render_template('sigAnalysis.html')
+
 @app.route("/getCSV", methods=['GET'])
 @login_required
 def getCSV():

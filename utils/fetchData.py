@@ -106,6 +106,9 @@ def fetchSignals(**kwargs):
         # Getting first date and last date corresponding to filter (in /table page)
         spSTART = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
         spEND = list(dfitems.iloc[0])[1].strftime("%Y-%m-%d")
+        print(spSTART)
+        print(spEND)
+
         SP500evol = sp500evol(spSTART,spEND)
 
         # Select only rows where Price Evolution != 0
