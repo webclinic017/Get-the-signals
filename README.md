@@ -14,7 +14,7 @@ To initiate db (cutover), run:
 ```python3 db_create.py```
 <h4> Infrastructure </h4>
 
-![alt text](SV/static/DataFlow.jpg)
+![alt text](SV/static/DataFlow.png)
 
 
 ![alt text](SV/static/Structuring_Code.png)
