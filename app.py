@@ -136,6 +136,9 @@ def portfolios():
 ####------Standard functions and arguments for the table page------#
 def STD_FUNC_TABLE_PAGE():
     average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals(ALL=True)
+
+    for item in items:
+        print(item[0])
     plot = makeHistogram(items)
     dfEvols = fetchSignalSectorsEvol()
     signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
@@ -158,6 +161,11 @@ def STD_FUNC_TABLE_PAGE():
     return standard_args_table_page
 ####------Standard functions and arguments for the table page------#
 
+colNames = ['ValidTick','SignalDate',
+'ScanDate','NScanDaysInterval', 
+'PriceAtSignal', 'Last closing price',
+'Price Evolution', 'Company',
+'Sector','Industry']
 
 @app.route('/table')
 @login_required
@@ -171,6 +179,8 @@ def table():
 
     return render_template('table.html', 
     SignalChart=SignalChart,
+    colNames=colNames,
+    widthDF=len(colNames),
     **standard_args_table_page)
 
 

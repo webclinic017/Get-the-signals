@@ -74,17 +74,22 @@ def fetchSignals(**kwargs):
     if 'dateInput' in kwargs:
         sDate = str(kwargs['dateInput']) 
         qu = f"SELECT * FROM \
-            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
-            LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  \
+            FROM signals.Signals_aroon_crossing_evol\
+            LEFT JOIN marketdata.sectors \
+            ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
             )t\
         WHERE SignalDate BETWEEN '2020-12-15' AND '{sDate}' \
         ORDER BY SignalDate DESC"
     else:
         qu = "SELECT * FROM\
-            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  FROM signals.Signals_aroon_crossing_evol\
-            LEFT JOIN marketdata.sectors ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  \
+            FROM signals.Signals_aroon_crossing_evol\
+            LEFT JOIN marketdata.sectors \
+            ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
             )t\
-        WHERE SignalDate>'2020-12-15' ORDER BY SignalDate DESC;"
+        WHERE SignalDate>'2020-12-15' \
+        ORDER BY SignalDate DESC;"
 
     
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
@@ -96,18 +101,30 @@ def fetchSignals(**kwargs):
     if items and 'ALL' in kwargs:
         # Calculate price evolutions and append to list of Lists 
         dfitems = pd.DataFrame(items)
-        PriceEvolution = dfitems.iloc[:,6].tolist()
+
+        colNames = {0:"ValidTick",
+                    1:"SignalDate",
+                    2:"ScanDate",
+                    3:"NSanDaysInterval",
+                    4:"PriceAtSignal",
+                    5:"LastClosingPrice",
+                    6:"PriceEvolution",
+                    7:"Company",
+                    8:"Sector",
+                    9:"Industry"}
+
+        dfitems = dfitems.rename(columns=colNames)
+        PriceEvolution = dfitems['PriceEvolution'].tolist()
 
         # Calculate nbSignals
-        nSignalsDF = dfitems.iloc[:, 0:2]
+        nSignalsDF = dfitems[['ValidTick','SignalDate']]
+        # or, in terms of index, same as: nSignalsDF = dfitems.iloc[:, 0:2]
         nSignalsDF = nSignalsDF.drop_duplicates()
         nSignals = len(nSignalsDF)
 
         # Getting first date and last date corresponding to filter (in /table page)
         spSTART = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
         spEND = list(dfitems.iloc[0])[1].strftime("%Y-%m-%d")
-        print(spSTART)
-        print(spEND)
 
         SP500evol = sp500evol(spSTART,spEND)
 
