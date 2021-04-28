@@ -14,10 +14,8 @@
   height: calc(100% - 58px);
   background: #000000;
   opacity: 0.95;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;  list-style: none;
+  transition: all 300ms linear;
+
 }
 #sidebar.active {
   left:0px;
@@ -41,11 +39,16 @@
   display: block;
   padding:15px 10px;
   color:#ffffff;
-  text-transform:uppercase;
-  font-size:11px;
+  font-size:12px;
   text-decoration: none;
   
 }
+
+a { color: #ffffff; 
+  display: block;
+  padding:15px 10px;
+  text-decoration: none;
+} 
 
 #sidebar div.list div.item:hover {
     text-decoration: none;
@@ -53,9 +56,7 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-a { color: #ffffff; 
-  text-decoration: none;
-} 
+
 
 @font-face{
   src: url(fonts/Roboto-Regular.ttf);
@@ -63,7 +64,3 @@ a { color: #ffffff;
 }
 
 
-html *
-{
-   font-family: Roboto !important;
-}
