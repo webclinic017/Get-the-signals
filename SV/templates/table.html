@@ -123,8 +123,11 @@ df['positions'] = df['signal'].diff()
   <tr>
     {% for w in widthDF %}
     <td>{{ item[w] }}</td>
+  {% endfor %}
+
   </tr>
   {% endfor %}
+
 </table>
 
 
@@ -171,4 +174,3 @@ df['positions'] = df['signal'].diff()
 {% include "base_dashboard.html" %}
 
 {%endblock%}
-

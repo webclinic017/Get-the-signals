@@ -180,7 +180,7 @@ def table():
     return render_template('table.html', 
     SignalChart=SignalChart,
     colNames=colNames,
-    widthDF=len(colNames),
+    widthDF=list(range(len(colNames))),
     **standard_args_table_page)
 
 
