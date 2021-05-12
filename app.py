@@ -134,6 +134,15 @@ def portfolios():
 
 
 ####------Standard functions and arguments for the table page------#
+
+
+colNames = ['ValidTick','SignalDate',
+'ScanDate','NScanDaysInterval', 
+'PriceAtSignal', 'Last closing price',
+'Price Evolution', 'Company',
+'Sector','Industry']
+
+
 def STD_FUNC_TABLE_PAGE():
     average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals(ALL=True)
 
@@ -155,17 +164,14 @@ def STD_FUNC_TABLE_PAGE():
         SP500evol = SP500evol,
         nSignals = nSignals,
         signalSectorEvolChart = signalSectorEvolChart,
-        form = form
+        form = form,
+        colNames = colNames,
+        widthDF = list(range(len(colNames)))
         )
 
     return standard_args_table_page
 ####------Standard functions and arguments for the table page------#
 
-colNames = ['ValidTick','SignalDate',
-'ScanDate','NScanDaysInterval', 
-'PriceAtSignal', 'Last closing price',
-'Price Evolution', 'Company',
-'Sector','Industry']
 
 @app.route('/table')
 @login_required
@@ -179,8 +185,6 @@ def table():
 
     return render_template('table.html', 
     SignalChart=SignalChart,
-    colNames=colNames,
-    widthDF=list(range(len(colNames))),
     **standard_args_table_page)
 
 
@@ -190,6 +194,7 @@ def changeSignalChart():
     """
     Function called when "Confirm" buttin trigerred in "Signal Visualization" section
     """
+    form = SearchForm(request.form)
 
     standard_args_table_page = STD_FUNC_TABLE_PAGE()
     validChartSignal = form.validChartSignal.data
