@@ -134,39 +134,47 @@ df['positions'] = df['signal'].diff()
 </br>
 </br>
 
-<h3>Signals visualization</h3>
-<hr>
 
-<p>
-  You can enter one of the Symbols present in the table above to visualize the Signals.
-  For now, only the stocks marked as signaled can be charted with the tool below.
-</p>
-<form class="form-inline" method="post" action="/changeSignalChart">
-  <div class="form-group mx-sm-3 mb-2">
-      {{ form.validChartSignal(class="form-control")}}
-  </div>
-  <button type="submit" class="btn btn-primary mb-2">Confirm</button>
-</form>
+    <h3 id="signal_chart_section">Signals visualization</h3>
+    <hr>
 
-<div class="SignalChart" id="SignalChart">
-  <script>
-    var graphs = {{SignalChart | safe}};
-    Plotly.plot('SignalChart',graphs,{});
-  </script>
-</div>
+    <p>
+    You can enter one of the Symbols present in the table above to visualize the Signals.
+    For now, only the stocks marked as signaled can be charted with the tool below.
+    </p>
+    <form class="form-inline" method="post" action="/changeSignalChart">
+    <div class="form-group mx-sm-3 mb-2">
+        {{ form.validChartSignal(class="form-control")}}
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+    </form>
 
+    <div class="SignalChart" id="SignalChart">
+    <script>
+      var graphs = {{SignalChart | safe}};
+      Plotly.plot('SignalChart',graphs,{});
+    </script>
+    </div>
+
+</section>
 <p>
   <br>
   <br>
-
-<b>Assumption to test in the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
-<br>
-<br>
-
+  <b>Assumption to test in the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
+  <br>
+  <br>
 </p>
+
 
 
 </body>
+
+{%if changeSig%}
+
+<script type="text/javascript" src="../static/JS/table.js"></script>
+{%else%}
+{% endif %}
+
 {% include "base_dashboard.html" %}
 
 {%endblock%}

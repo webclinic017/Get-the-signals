@@ -202,8 +202,10 @@ def changeSignalChart():
 
     SignalChart = makeLinesSignal(tick=validChartSignal)
 
-    return render_template('table.html', 
+    print('Changing signal chart.')
+    return render_template('table.html',
     SignalChart=SignalChart,
+    changeSig=True,
     **standard_args_table_page)
 
 
