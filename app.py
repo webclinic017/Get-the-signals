@@ -146,9 +146,7 @@ colNames = ['ValidTick','SignalDate',
 def STD_FUNC_TABLE_PAGE():
     average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals(ALL=True)
 
-    for item in items:
-        print(item[0])
-    plot = makeHistogram(items)
+    #plot = makeHistogram(items)
     dfEvols = fetchSignalSectorsEvol()
     signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
     form = SearchForm(request.form)
@@ -157,7 +155,7 @@ def STD_FUNC_TABLE_PAGE():
     standard_args_table_page = dict(
         average = average,
         items = items,
-        plot = plot,
+        #plot = plot,
         strToday = strToday,
         spSTART = spSTART,
         spEND = spEND,
@@ -170,6 +168,7 @@ def STD_FUNC_TABLE_PAGE():
         )
 
     return standard_args_table_page
+    
 ####------Standard functions and arguments for the table page------#
 
 
