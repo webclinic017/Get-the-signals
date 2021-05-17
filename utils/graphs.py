@@ -194,12 +194,13 @@ def makeLinesSignal(tick):
     df = db_acc_obj.exc_query(db_name='signals', query=qu, \
     retres=QuRetType.ALLASPD)
 
-    fig = make_subplots(rows=6, cols=1,
+    fig = make_subplots(rows=7, cols=1,
                         shared_xaxes=True,
                         vertical_spacing=0.03,
-                        row_width=[0.15, 0.15, 0.15, 0.15,0.15,0.30],
+                        row_width=[0.15, 0.15, 0.15, 0.15, 0.15,0.15,0.30],
                         specs=[[{"rowspan":2}],
                         [None],
+                        [{}],
                         [{}],
                         [{}],
                         [{}],
@@ -239,21 +240,32 @@ def makeLinesSignal(tick):
         line=dict(color='red')),
                 row=3, col=1)
 
-    fig.add_trace(go.Scatter(x=df.Date, y=df['TR'], name='TR', mode='lines',\
+    fig.add_trace(go.Scatter(x=df.Date, y=df['Volume'], name='Volume', mode='lines',\
         line=dict(color='purple')),
                 row=4, col=1)
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['diff_stock_bench'], name='diff_stock_bench', mode='lines',\
+        line=dict(color='purple')),
+                row=5, col=1)
+
+
+    fig.add_trace(go.Scatter(x=df.Date, y=df['rolling_mean_35'], name='rolling_mean_35', mode='lines',\
+        line=dict(color='red')),
+                row=6, col=1)
+    
+    fig.add_trace(go.Scatter(x=df.Date, y=df['RSI'], name='RSI', mode='lines',\
+        line=dict(color='Orange')),
+                row=7, col=1)
+
+    fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)',zeroline=True,zerolinewidth=1,zerolinecolor='black')
+
+    """
 
     fig.add_trace(go.Scatter(x=df.Date, y=df['ATR'], name='ATR', mode='lines',\
         line=dict(color='blue')),
                 row=4, col=1)
 
-    fig.add_trace(go.Scatter(x=df.Date, y=df['Volume'], name='Volume', mode='lines',\
-        line=dict(color='purple')),
-                row=5, col=1)
-
-    fig.add_trace(go.Scatter(x=df.Date, y=df['Gap'], name='Gap', mode='lines',\
-        line=dict(color='red')),
-                row=6, col=1)
+    """
 
     fig.update_traces(line_width=1.5)
     fig.update_layout(
@@ -278,13 +290,26 @@ def makeLinesSignal(tick):
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
 
 
-    fig['layout']['xaxis5']['title']='Date'
+    fig['layout']['xaxis6']['title']='Date'
     fig['layout']['yaxis']['title']='Price'
     fig['layout']['yaxis2']['title']='Aroon'
-    fig['layout']['yaxis3']['title']='TR'
-    fig['layout']['yaxis4']['title']='Volume'
-    fig['layout']['yaxis5']['title']='Gaps'
+    fig['layout']['yaxis3']['title']='Volume'
+    fig['layout']['yaxis4']['title']='diff_stock_bench'
+    fig['layout']['yaxis5']['title']='rolling_mean_35'
+    fig['layout']['yaxis6']['title']='RSI'
 
+
+    """
+    fig.add_shape(type='line',
+                x0=0,
+                y0=40,
+                x1=8,
+                y1=40,
+                line=dict(color='Red',),
+                xref='x',
+                yref='y'
+    )
+    """
 
     annotations = []
 
@@ -295,7 +320,7 @@ def makeLinesSignal(tick):
                                         size=12,
                                         color='rgb(150,150,150)'),
                               showarrow=False))
-
+    
     fig.update_layout(annotations=annotations)
     
 
