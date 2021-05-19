@@ -8,32 +8,6 @@ db_acc_obj = std_db_acc_obj()
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
 
 
-def fetchSignalSectorsEvol():
-    qu = "SELECT Date, AVG(Close), Sector FROM\
-    (\
-    SELECT * FROM\
-            (\
-            SELECT Symbol, Date, Close, Volume\
-            FROM marketdata.NASDAQ_20\
-            WHERE Symbol IN\
-            (SELECT DISTINCT ValidTick FROM signals.Signals_aroon_crossing)\
-            AND Date>'2020-12-16'\
-            )t\
-        LEFT JOIN marketdata.sectors\
-        ON t.Symbol = sectors.Ticker\
-    )t2\
-    GROUP BY Date, Sector\
-    ORDER BY Date DESC"
-
-    df = db_acc_obj.exc_query(db_name='signals', query=qu, \
-    retres=QuRetType.ALLASPD)
-    
-    df = df.pivot(index='Date',
-                    columns='Sector',
-                    values='AVG(Close)').reset_index()
-
-    return df
-
 
 def sp500evol(spSTART, spEND):
     """
@@ -137,7 +111,7 @@ def fetchSignals(**kwargs):
             averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
         else:
             averageOfReturns = 0
-        return round(averageOfReturns,2), items, spSTART, spEND, SP500evol, nSignals
+        return round(averageOfReturns,2), items, spSTART, spEND, SP500evol, nSignals, dfitems
     else:
         return items
 

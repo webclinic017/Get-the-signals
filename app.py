@@ -1,20 +1,17 @@
-from flask import Flask, render_template, Response, redirect, request, url_for, flash, abort
+from flask import render_template, Response, redirect, request, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import TextField, Form
-import pymysql
 import os
-import numpy as np
 import json
 import pandas as pd
-from datetime import datetime, timedelta 
+from datetime import datetime 
 
 from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
-from utils.db_manage import QuRetType, std_db_acc_obj
-from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, fetchSignalSectorsEvol
-from utils.graphs import makeSignalSectorEvol, makeLinesSignal, makeHistogram, create_lineChart, makeOwnershipGraph
+from utils.db_manage import std_db_acc_obj
+from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership
+from utils.graphs import makeLinesSignal, makeOwnershipGraph, lineNBSignals
 
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
@@ -144,24 +141,23 @@ colNames = ['ValidTick','SignalDate',
 
 
 def STD_FUNC_TABLE_PAGE():
-    average, items, spSTART, spEND, SP500evol, nSignals = fetchSignals(ALL=True)
-
-    #plot = makeHistogram(items)
-    dfEvols = fetchSignalSectorsEvol()
-    signalSectorEvolChart = makeSignalSectorEvol(dfEvols)
+    average, items, spSTART, spEND, SP500evol, nSignals, dfitems = fetchSignals(ALL=True)
+    #lineNBSignals(dfitems)
     form = SearchForm(request.form)
 
+    dfitems =  dfitems[['SignalDate','ValidTick']].\
+        groupby('SignalDate').agg(['count']).droplevel(0, axis=1)
+    NbSigchart = lineNBSignals(dfitems)
     # This is the standard set of arguments used in every route page
     standard_args_table_page = dict(
         average = average,
         items = items,
-        #plot = plot,
         strToday = strToday,
         spSTART = spSTART,
         spEND = spEND,
         SP500evol = SP500evol,
         nSignals = nSignals,
-        signalSectorEvolChart = signalSectorEvolChart,
+        NbSigchart=NbSigchart,
         form = form,
         colNames = colNames,
         widthDF = list(range(len(colNames)))

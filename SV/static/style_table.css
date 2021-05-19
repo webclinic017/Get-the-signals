@@ -40,7 +40,7 @@ display: block;
 
 .table{
 overflow-x: auto;
-font-size: small;
+font-size: 11px;
 }
 
 .form{
@@ -54,6 +54,7 @@ padding-right: 15px;
   src: url(fonts/Roboto-Light.ttf);
   font-family: Roboto;
 }
+
 
 
 h3 {

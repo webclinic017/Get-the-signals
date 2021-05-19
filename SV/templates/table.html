@@ -10,36 +10,22 @@
 
 </head>
 
-<body id="Table_page">
+<body id="Table_page" style="margin: 20px">
 
 <h3>Signals</h3>
 <hr>
 <p>
-  <b>  <font color="#32CD32">To be implemented:</font></b>
-</br>
-<b>A signal, by essence, should be idiosyncratic.</b> Hence, bullish markets will create more false signals in the casse of bullish signals.
-Therefore, the most convincing signals are those which are going to be contrarian relatively to the current market conditions (<i>i.e</i> bullish, bearish and sideways trends).
 
 </p>
 
-<div class="signalEvolsChart" id="signalEvolsChart" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
-  <script>
-    var graphs = {{signalSectorEvolChart | safe}};
-    Plotly.plot('signalEvolsChart',graphs,{});
-  </script> 
-</div>
+
 
 <div class="chart" id="line" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
   <script>
-    var graphs = {{plot | safe}};
+    var graphs = {{NbSigchart | safe}};
     Plotly.plot('line',graphs,{});
   </script> 
 </div>
-
-
-
-
-
 
     <p style="text-align:center">
 
@@ -63,53 +49,47 @@ Therefore, the most convincing signals are those which are going to be contraria
 
   <hr>
   </p>
-    <form class="form" autocomplete="off" spellcheck="false" method="POST">
 
-      </div>
-          <div class="row">
-<!--             <label for="date_input" class="col-form-label col-form-label-sm">Signals untill: </label>
-            
-            <div class="col-sm-2">
-              {{ form.date_input(class="form-control form-control-sm", type="date", value=strToday | safe)}}
-            </div> -->
-            <div class="btn-toolbar">
-<!--               <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
-              <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset"> -->
-                <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
-            </div>
-      </div>
 
-    </form>
-
-  </div>
 
 </div>
 
-<p>
-<b>Number of signals:</b> {{nSignals}}
-</br>
+<div class="row">
 
-<code>
-# When 'Aroon Up' crosses 'Aroon Down' from below </br>
-df["signal"][short_window:] =np.where(df['short_mavg'][short_window:] > df['long_mavg'][short_window:], 1,0)</br>
-df['positions'] = df['signal'].diff()
-</code>
+    <div class="col-sm">
+        <p class="alignleft">
 
-</br>
-<code>
-  df['doubleSignal'] = np.where(
-    (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
-    1,0)
-</code>
-</br>
-<p>
+                <b>Number of signals:</b> {{nSignals}}
+                </br>
+                <code>
+                # When 'Aroon Up' crosses 'Aroon Down' from below </br>
+                df["signal"][short_window:] =np.where(df['short_mavg'][short_window:] > df['long_mavg'][short_window:], 1,0)</br>
+                df['positions'] = df['signal'].diff()
+                </code>
+                </br>
+                <code>
+                  df['doubleSignal'] = np.where(
+                    (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
+                    1,0)
+                </code>
+        </p>
+    </div>
 
+ 
+</div>
 
-</p>
-</p>
+<form class="form" autocomplete="off" spellcheck="false" method="POST">
+  <div class="btn-toolbar">
+      <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
+  </div>
+</form>
+
 <div class="table-wrapper-scroll-y my-custom-scrollbar" >
 
-<table class="table table-bordered table-striped table-sm table-hover" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
+<table class="table table-bordered table-striped table-sm table-hover" 
+style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 
+auto;display:block;" marginheight="0" marginwidth="0">
+
   <thead class="thead-dark">
     {% for col in colNames %}
     <th scope="col">{{ col }}</th>
@@ -120,7 +100,6 @@ df['positions'] = df['signal'].diff()
     {% for w in widthDF %}
     <td>{{ item[w] }}</td>
   {% endfor %}
-
   </tr>
   {% endfor %}
 
@@ -157,6 +136,9 @@ df['positions'] = df['signal'].diff()
 
 </section>
 <p>
+  <b>A signal, by essence, should be idiosyncratic.</b> Hence, bullish markets will create more false signals in the casse of bullish signals.
+Therefore, the most convincing signals are those which are going to be contrarian relatively to the current market conditions (<i>i.e</i> bullish, bearish and sideways trends).
+
   <br>
   <br>
   <b>Assumption to test in the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
