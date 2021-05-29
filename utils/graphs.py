@@ -3,7 +3,6 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 from plotly.graph_objs import *
 import pandas as pd
-import numpy as np
 import json
 from utils.db_manage import QuRetType, std_db_acc_obj
 
@@ -56,7 +55,7 @@ def lineNBSignals(dfitems):
 
 
 
-##### TABLE PAGE #######
+##### TABLE PAGE START #######
 def makeLinesSignal(tick):
 
     qu = f"SELECT t.*,t2.Gap FROM\
@@ -178,6 +177,7 @@ def makeLinesSignal(tick):
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return lineJSON
 
+##### TABLE PAGE  END #######
 
 
 
