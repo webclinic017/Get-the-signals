@@ -1,6 +1,4 @@
 import pandas as pd
-import os
-import numpy as np
 from datetime import datetime, timedelta 
 
 from utils.db_manage import QuRetType, std_db_acc_obj
@@ -9,29 +7,32 @@ strToday = str(datetime.today().strftime('%Y-%m-%d'))
 
 
 
-def sp500evol(spSTART, spEND):
+class sp500evol:
     """
-    This functions serves to calculate the evolution of the sp500 for a given timeframe
+    This class serves to calculate & provide the evolution of the sp500 for a given timeframe
 
     :param spSTART: oldest date (STRING, format: '%Y-%m-%d')
     :param spEND: most recent date (STRING, format: '%Y-%m-%d')
 
-    :returns: evol of SP500 for this given timeframe --> float, rounded 3 nb after decimal
     """
-    quSP500START = f"SELECT * FROM marketdata.sp500 WHERE Date='{spSTART}' LIMIT 1"
-    quSP500END = f"SELECT * FROM marketdata.sp500 WHERE Date='{spEND}' LIMIT 1"
 
-    sp500START_df = db_acc_obj.exc_query(db_name='marketdata', query=quSP500START, \
-    retres=QuRetType.ALLASPD)
-    sp500END_df = db_acc_obj.exc_query(db_name='marketdata', query=quSP500END, \
-    retres=QuRetType.ALLASPD)
+    def __init__(self, spSTART, spEND):
+        
+        self.spSTART = spSTART
+        self.spEND = spEND
+    
+        self.quSP500Data = f"SELECT Date, Close FROM marketdata.sp500 \
+        WHERE Date >='{self.spSTART}' \
+        AND Date <='{self.spEND}'"
 
-    sp500START_FLOAT = sp500START_df['Close'].to_list()[0]
-    sp500END_FLOAT = sp500END_df['Close'].to_list()[0]
+        self.sp500Data = db_acc_obj.exc_query(db_name='marketdata', query=self.quSP500Data, \
+        retres=QuRetType.ALLASPD)
+        
+        self.sp500START_FLOAT = self.sp500Data.Close.head(1)[0]
+        self.sp500END_FLOAT = float(self.sp500Data.Close.tail(1))
 
-    SP500evol = round(((sp500END_FLOAT-sp500START_FLOAT)/sp500START_FLOAT)*100,3)
+        self.SP500evolFLOAT = round(((self.sp500END_FLOAT-self.sp500START_FLOAT)/self.sp500START_FLOAT)*100,3)
    
-    return SP500evol
 
 
 def fetchSignals(**kwargs):
@@ -100,7 +101,6 @@ def fetchSignals(**kwargs):
         spSTART = list(dfitems.iloc[-1])[1].strftime("%Y-%m-%d")
         spEND = list(dfitems.iloc[0])[1].strftime("%Y-%m-%d")
 
-        SP500evol = sp500evol(spSTART,spEND)
 
         # Select only rows where Price Evolution != 0
         # Calculate mean of price evolution
@@ -111,7 +111,7 @@ def fetchSignals(**kwargs):
             averageOfReturns = sum(pricesNoZero)/len(pricesNoZero)
         else:
             averageOfReturns = 0
-        return round(averageOfReturns,2), items, spSTART, spEND, SP500evol, nSignals, dfitems
+        return round(averageOfReturns,2), items, spSTART, spEND, nSignals, dfitems
     else:
         return items
 

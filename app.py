@@ -10,7 +10,7 @@ from SV import app, db
 from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import std_db_acc_obj
-from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership
+from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, sp500evol
 from utils.graphs import makeLinesSignal, makeOwnershipGraph, lineNBSignals
 
 
@@ -140,22 +140,28 @@ colNames = ['ValidTick','SignalDate',
 'Sector','Industry']
 
 
+
+
+
 def STD_FUNC_TABLE_PAGE():
-    average, items, spSTART, spEND, SP500evol, nSignals, dfitems = fetchSignals(ALL=True)
-    #lineNBSignals(dfitems)
+    average, items, spSTART, spEND, nSignals, dfSignals = fetchSignals(ALL=True)
+
+    std_sp = sp500evol(spSTART,spEND)
     form = SearchForm(request.form)
 
-    dfitems =  dfitems[['SignalDate','ValidTick']].\
+    dfSignals =  dfSignals[['SignalDate','ValidTick']].\
         groupby('SignalDate').agg(['count']).droplevel(0, axis=1)
-    NbSigchart = lineNBSignals(dfitems)
+
+    NbSigchart = lineNBSignals(dfSignals)
     # This is the standard set of arguments used in every route page
     standard_args_table_page = dict(
         average = average,
         items = items,
         strToday = strToday,
         spSTART = spSTART,
-        spEND = spEND,
-        SP500evol = SP500evol,
+        spEND = std_sp.spEND,
+        SP500evolFLOAT = std_sp.SP500evolFLOAT,
+        sp500Data = std_sp.sp500Data,
         nSignals = nSignals,
         NbSigchart=NbSigchart,
         form = form,

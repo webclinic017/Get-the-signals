@@ -39,12 +39,19 @@ def TuplesToDF(items):
 
 
 def lineNBSignals(dfitems):
-    fig = go.Figure(data=go.Scatter(x=dfitems.index, y=dfitems.iloc[:, 0]))
 
+    fig = make_subplots()
+
+    fig.add_trace(go.Scatter(x=dfitems.index, y=dfitems.iloc[:, 0],
+                    name='Price'))
+    """
+    fig.add_trace(go.Scatter(x=dfitems.index, y=dfitems.iloc[:, 0],
+                    name='Price'))
+    """
+    
     fig.update_traces(line_width=1.5)
     fig.update_layout(
     title=f'Evolution of the number of signals over time',
-    #width=1400,
     plot_bgcolor='rgba(0,0,0,0)',
     )
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
