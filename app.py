@@ -154,7 +154,8 @@ def STD_FUNC_TABLE_PAGE():
     dfSignals =  dfSignals[['SignalDate','ValidTick']].\
         groupby('SignalDate').agg(['count']).droplevel(0, axis=1)
 
-    NbSigchart = lineNBSignals(dfSignals)
+    NbSigchart = lineNBSignals(dfSignals,std_sp.sp500Data)
+    print(std_sp.sp500Data)
     # This is the standard set of arguments used in every route page
     standard_args_table_page = dict(
         average = average,
@@ -162,7 +163,6 @@ def STD_FUNC_TABLE_PAGE():
         strToday = strToday,
         spSTART = spSTART,
         spEND = std_sp.spEND,
-        sp500Data = std_sp.sp500Data,
         SP500evolFLOAT = std_sp.fetchSPEvol(),
         nSignals = nSignals,
         NbSigchart=NbSigchart,

@@ -1,3 +1,4 @@
+from flask import app
 import plotly
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
@@ -5,7 +6,6 @@ from plotly.graph_objs import *
 import pandas as pd
 import json
 from utils.db_manage import QuRetType, std_db_acc_obj
-
 
 db_acc_obj = std_db_acc_obj() 
 
@@ -37,24 +37,30 @@ def TuplesToDF(items):
 
 
 
+def lineNBSignals(dfitems, spData):
 
-def lineNBSignals(dfitems):
-
-    fig = make_subplots()
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     fig.add_trace(go.Scatter(x=dfitems.index, y=dfitems.iloc[:, 0],
-                    name='Price'))
-    """
-    fig.add_trace(go.Scatter(x=dfitems.index, y=dfitems.iloc[:, 0],
-                    name='Price'))
-    """
-    
+                    name='Number of signals'), secondary_y=False,
+                    )
+
+    fig.add_trace(go.Scatter(x=spData.Date, y=spData.Close,
+                    name='sp500'), secondary_y=True
+                    )
+
     fig.update_traces(line_width=1.5)
     fig.update_layout(
     title=f'Evolution of the number of signals over time',
     plot_bgcolor='rgba(0,0,0,0)',
     )
+
     fig.update_yaxes(showline=False, linewidth=1,gridwidth=0.2, linecolor='grey', gridcolor='rgba(192,192,192,0.5)')
+    fig['layout']['yaxis2']['showgrid'] = False
+
+    # Set y-axes titles
+    fig.update_yaxes(title_text="N° of signals", secondary_y=False)
+    fig.update_yaxes(title_text="SP 500", secondary_y=True)
 
     lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 

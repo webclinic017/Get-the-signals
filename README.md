@@ -16,6 +16,7 @@ To initiate db (cutover), run:
 
 ![alt text](SV/static/signal_flow_na.png)
 
+![alt text](SV/static/dash.png)
 
 ![alt text](SV/static/Structuring_Code.png)
 
