@@ -16,22 +16,21 @@ class sp500evol:
 
     """
 
+    
     def __init__(self, spSTART, spEND):
-        
         self.spSTART = spSTART
         self.spEND = spEND
-    
         self.quSP500Data = f"SELECT Date, Close FROM marketdata.sp500 \
         WHERE Date >='{self.spSTART}' \
         AND Date <='{self.spEND}'"
-
         self.sp500Data = db_acc_obj.exc_query(db_name='marketdata', query=self.quSP500Data, \
         retres=QuRetType.ALLASPD)
         
-        self.sp500START_FLOAT = self.sp500Data.Close.head(1)[0]
-        self.sp500END_FLOAT = float(self.sp500Data.Close.tail(1))
-
-        self.SP500evolFLOAT = round(((self.sp500END_FLOAT-self.sp500START_FLOAT)/self.sp500START_FLOAT)*100,3)
+    
+    def fetchSPEvol(self):
+        sp500START_FLOAT = self.sp500Data.Close.head(1)[0]
+        sp500END_FLOAT = float(self.sp500Data.Close.tail(1))
+        return round(((sp500END_FLOAT-sp500START_FLOAT)/sp500START_FLOAT)*100,3)
    
 
 

@@ -1,5 +1,6 @@
 from flask import render_template, Response, redirect, request, url_for, flash
 from flask_login import login_user, login_required, logout_user
+from numpy.core.fromnumeric import std
 from wtforms import TextField, Form
 import os
 import json
@@ -144,9 +145,10 @@ colNames = ['ValidTick','SignalDate',
 
 
 def STD_FUNC_TABLE_PAGE():
-    average, items, spSTART, spEND, nSignals, dfSignals = fetchSignals(ALL=True)
 
+    average, items, spSTART, spEND, nSignals, dfSignals = fetchSignals(ALL=True)
     std_sp = sp500evol(spSTART,spEND)
+
     form = SearchForm(request.form)
 
     dfSignals =  dfSignals[['SignalDate','ValidTick']].\
@@ -160,8 +162,8 @@ def STD_FUNC_TABLE_PAGE():
         strToday = strToday,
         spSTART = spSTART,
         spEND = std_sp.spEND,
-        SP500evolFLOAT = std_sp.SP500evolFLOAT,
         sp500Data = std_sp.sp500Data,
+        SP500evolFLOAT = std_sp.fetchSPEvol(),
         nSignals = nSignals,
         NbSigchart=NbSigchart,
         form = form,
