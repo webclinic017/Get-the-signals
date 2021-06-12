@@ -44,26 +44,14 @@ def fetchSignals(**kwargs):
     2. Calculates price evolution
     """
 
-
-    if 'dateInput' in kwargs:
-        sDate = str(kwargs['dateInput']) 
-        qu = f"SELECT * FROM \
-            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  \
-            FROM signals.Signals_aroon_crossing_evol\
-            LEFT JOIN marketdata.sectors \
-            ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
-            )t\
-        WHERE SignalDate BETWEEN '2020-12-15' AND '{sDate}' \
-        ORDER BY SignalDate DESC"
-    else:
-        qu = "SELECT * FROM\
-            (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  \
-            FROM signals.Signals_aroon_crossing_evol\
-            LEFT JOIN marketdata.sectors \
-            ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
-            )t\
-        WHERE SignalDate>'2020-12-15' \
-        ORDER BY SignalDate DESC;"
+    qu = "SELECT * FROM\
+        (SELECT Signals_aroon_crossing_evol.*, sectors.Company, sectors.Sector, sectors.Industry  \
+        FROM signals.Signals_aroon_crossing_evol\
+        LEFT JOIN marketdata.sectors \
+        ON sectors.Ticker = Signals_aroon_crossing_evol.ValidTick\
+        )t\
+    WHERE SignalDate>'2020-12-15' \
+    ORDER BY SignalDate DESC;"
 
     
     items = db_acc_obj.exc_query(db_name='signals', query=qu, \
@@ -88,6 +76,8 @@ def fetchSignals(**kwargs):
                     9:"Industry"}
 
         dfitems = dfitems.rename(columns=colNames)
+
+
         PriceEvolution = dfitems['PriceEvolution'].tolist()
 
         # Calculate nbSignals
@@ -111,6 +101,16 @@ def fetchSignals(**kwargs):
         else:
             averageOfReturns = 0
         return round(averageOfReturns,2), items, spSTART, spEND, nSignals, dfitems
+
+
+        # qu20 = "select * from marketdata"
+        # After 20 days
+        #" test = db_acc_obj.exc_query(db_name='marketdata', query=qu, \
+        # retres=QuRetType.ALLASPD)
+
+        D20 = []
+
+
     else:
         return items
 
