@@ -1,0 +1,64 @@
+body {
+  background: #333;
+  color: #fff;
+}
+
+.navbar {
+    border-bottom:aqua 2px solid;
+    opacity: 0.8;
+  }
+
+.navbar.navbar-expand-sm.bg-dark.navbar-dark.fixed-top li a{
+    color: white !important;
+}
+
+
+.col-sm {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
+
+#home-section {
+  background: url(back.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  min-height: 700px;
+}
+
+
+#explore-head-section {
+  background: url(birds.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#home-section .dark-overlay {
+  background: rgba(0, 0, 0, 0.336);
+}
+
+#explore-head-section .dark-overlay {
+  background: rgba(0, 0, 0, 0.336);
+}
+
+
+#birds_story div{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+@font-face{
+  src: url(../fonts/Roboto-Light.ttf);
+  font-family: Roboto;
+}
+
+
+html *
+{
+   font-family: Roboto !important;
+}

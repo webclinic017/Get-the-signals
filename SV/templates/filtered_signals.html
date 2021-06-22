@@ -1,0 +1,182 @@
+{%extends "base.html"%}
+{%block content%}
+
+<head>
+  <link href="/static/css/style_filtered_signals.css" rel="stylesheet" type="text/css">
+  <title>GTS-Table</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+
+</head>
+
+<body id="Table_page">
+
+<h3>Signals</h3>
+<hr>
+<p>
+  <b>  <font color="#32CD32">To be implemented:</font></b>
+</br>
+<b>A signal, by essence, should be idiosyncratic.</b> Hence, bullish markets will create more false signals in the casse of bullish signals.
+Therefore, the most convincing signals are those which are going to be contrarian relatively to the current market conditions (<i>i.e</i> bullish, bearish and sideways trends).
+
+</p>
+
+
+<p>
+  Stocks characterized by lower prices yield better returns probably because there is less <b>market depth</b>. Therefore, a same amount of liquidty injected overall (<b>systemic injection</b>) is going to affect more stocks
+  that are charactertized by little market depth. But not only this, the fact that some strategists also probably have this assumption in mind create an 
+  <b>self-reinforcing movement</b>, hence creating even more liquidty flow towards stocks characterized 
+  by little market depth.
+
+
+    <p style="text-align:center">
+
+
+      {%if SP500evol>0%}
+      <b>SP 500</b> evol. over the same period : 
+      <font color="green"><b>{{SP500evol}}</b></font> % 
+      {%else%}
+      <b>SP 500</b> evol. over the same period : 
+      <font color="red"><b>{{SP500evol}}</b></font> % 
+      {% endif %}
+    </br>
+
+    (<strong>{{lastD}}</strong> to <strong>{{firstD}}</strong>)
+
+    </p>
+
+  <hr>
+  </p>
+    <form class="form" autocomplete="off" spellcheck="false" method="POST">
+
+      </div>
+          <div class="row">
+            <label for="date_input" class="col-form-label col-form-label-sm">Signals untill: </label>
+            
+            <div class="col-sm-2">
+              {{ form.date_input(class="form-control form-control-sm", type="date", value=strToday | safe)}}
+            </div>
+            <div class="btn-toolbar">
+              <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="validate_date" value="Filter">
+              <input type="submit" class="btn btn-secondary btn-sm mr-2 mb-2" id="reset" value="Reset">
+                <a href="/getCSV" input class="btn btn-success btn-sm mr-2 mb-2" id="getcsv">Download</a>
+            </div>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<p>
+<b>Number of signals:</b> {{nSignals}}
+</p>
+<div class="table-wrapper-scroll-y my-custom-scrollbar" >
+
+<table class="table table-bordered table-striped table-sm table-hover" style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 auto;display:block;" marginheight="0" marginwidth="0">
+  <thead class="thead-dark">
+    <th scope="col">ValidTick</th>
+    <th scope="col">SignalDate</th>
+    <th scope="col">ScanDate</th>
+    <th scope="col">NScanDaysInterval</th>
+    <th scope="col">PriceAtSignal</th>
+    <th scope="col">Last closing price</th>
+    <th scope="col">Price Evolution</th>
+    <th scope="col">Company</th>
+    <th scope="col">Sector</th>
+    <th scope="col">Industry</th>
+
+  </thead>
+  {% for item in items %}
+  <tr>
+    <td>{{ item[0] }}</td>
+    <td>{{ item[1] }}</td>
+    <td>{{ item[2] }}</td>
+    <td>{{ item[3] }}</td>
+    <td>{{ item[4] }}</td>
+    <td>{{ item[5] }}</td>
+    <td>{{ item[6] }}</td>
+    <td>{{ item[7] }}</td>
+    <td>{{ item[8] }}</td>
+    <td>{{ item[9] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+</br>
+</br>
+
+
+<h3>Signals visualization</h3>
+<hr>
+
+<p>
+  You can enter one of the Symbols present in the table above to visualize the Signals.
+  For now, only the stocks marked as signaled can be charted with the tool below.
+</p>
+<form class="form-inline" method="post" action="/changeSignalChart">
+  <div class="form-group mx-sm-3 mb-2">
+      {{ form.validChartSignal(class="form-control")}}
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+</form>
+
+<div class="SignalChart" id="SignalChart">
+  <script>
+    var graphs = {{SignalChart | safe}};
+    Plotly.plot('SignalChart',graphs,{});
+  </script>
+</div>
+
+<p>
+  <br>
+  <br>
+
+<b>Assumption to test in the future:</b> Taking a longer <i>long_mvg</i> (50&ltmvg<=200) will reduce the number of false positives.
+<br>
+<br>
+
+</p>
+
+
+<h4>ATR integration in the strategy</h4>
+<hr>
+
+
+<p>
+  Average True Range denotes <b>>voltaility</b>, it doesn't denote trending. "Average" True Range is purely an exponential moving average of the true range.<br> 
+<br>
+
+Tje range of a day's trading is simply <i>high</i> - <i>low</i>. The <b>true range</b> extends it to yesterday's closing price
+if it was outside of today's range.<br>
+<br>
+<img src="/static/TR.svg" alt="TR" class="center">
+
+The <b>true range</b> is the largest of the:
+<ul>
+<li>Most recent period's high minus the most recent period's low</li>
+<li>Absolute value of the most recent period's high minus the previous close</li>
+<li>Absolute value of the most recent period's low minus the previous close</li>
+</ul>
+The ATR at the moment of time t is calculated using the following formula:
+
+  <img src="/static/ATR.svg" alt="first_ATR" class="center">
+  The first ATR value is calculated using the arithmetic mean formula:
+<br>
+  <img src="/static/first_ATR_formula.svg" alt="ATR" class="center">
+
+
+
+<br>
+
+
+</p>
+</code>
+
+</body>
+{% include "base_dashboard.html" %}
+
+{%endblock%}
+
