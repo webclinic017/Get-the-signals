@@ -18,7 +18,7 @@ from utils.graphs import makeLinesSignal, makeOwnershipGraph, lineNBSignals
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
 magickey = os.environ.get('magickey')
 
-
+# https://www.youtube.com/watch?v=G8GAsYkZlpE&t=6s
 
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
