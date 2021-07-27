@@ -1,21 +1,43 @@
-
 @media only screen and (max-width: 600px) {
-    #ownership_page{
+  #Technicals_page{
       padding-top: 100px;
       padding-left: 0%;
       padding-right: 0%;
       margin:0;
-    }
   }
-  
+  }
+    
   
   @media only screen and (max-width: 6000px) {
-    #ownership_page{
+  #Technicals_page{
       padding-top: 100px;
-      padding-right: 11%;
-      padding-left: 11%;
-    }
+      padding-right: 2%;
+      padding-left: 12%;
   }
+  }
+  
+  
+  .my-custom-scrollbar {
+    margin-top: 4px;
+    position: relative;
+    height: 700px;
+    overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+  
+  
+  .table{
+    overflow-x: auto;
+    font-size: small;
+  }
+  
+  .form{
+    padding-right: 15px;
+  }
+  
+  
   
   
   @font-face{
@@ -24,9 +46,12 @@
   }
   
   
+  html *
+  {
+     font-family: Roboto !important;
+  }
+  
   h3 {
     color:rgba(0, 132, 255, 0.952) !important;
     font-family: Roboto;
   } 
-
-

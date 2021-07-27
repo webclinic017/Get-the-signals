@@ -12,14 +12,15 @@
   left: -200px;
   width: 200px;
   height: calc(100% - 58px);
-  background: #000000;
+  background-image: linear-gradient(to bottom right,#252d38, #374d6b);
   opacity: 0.95;
   transition: all 300ms linear;
-
 }
+
 #sidebar.active {
   left:0px;
 }
+
 #sidebar .toggle-btn {
   position:absolute;
   left:220px;
@@ -29,7 +30,7 @@
   display:block;
   width:20px;
   height: 2px;
-  background:#151719;
+  background: #2D3744;
   margin:5px 0px;
   cursor:pointer;
 }
@@ -62,5 +63,4 @@ a { color: #ffffff;
   src: url(../fonts/Roboto-Regular.ttf);
   font-family: Roboto;
 }
-
 
