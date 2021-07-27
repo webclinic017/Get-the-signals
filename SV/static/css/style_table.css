@@ -18,7 +18,9 @@
 }
 
 
-
+.p-3{
+  padding: 0;
+}
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 320px) 
@@ -46,8 +48,6 @@ font-size: 11px;
 .form{
 padding-right: 15px;
 }
-
-
 
 
 @font-face{

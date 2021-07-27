@@ -13,12 +13,10 @@
 <body id="Table_page" style="margin: 20px">
 
 <h3>Signals</h3>
-<p>
-
-</p>
 
 
-<div class="card mb-3">
+<div class="card mb-3 shadow bg-white rounded">
+
     <div class="card-header">
       Evolution of the number of signals over time
     </div>
@@ -29,12 +27,11 @@
         Plotly.plot('line',graphs,{});
       </script> 
     </div>
-  </div>
+  </div>  
 
 
 
 
-</p>
 
 
   <div class="card-footer text-muted">
@@ -52,7 +49,7 @@
 
 </div> <!--CARD 1-->
 
-<div class="card mb-3">
+<div class="card mb-3 shadow bg-white rounded">
   <div class="card-header">
 List of signaled stocks  
 </div>
@@ -62,7 +59,6 @@ List of signaled stocks
   <div class="row">
 
       <div class="col-sm">
-          <p class="alignleft">
 
                   <b>Number of signals:</b> {{nSignals}}
                   </br>
@@ -77,7 +73,6 @@ List of signaled stocks
                       (df["Aroon Up"] > df["Aroon Down"]) & (df['positions']==1) & (df["Aroon Down"]<75) &(df["Aroon Up"]>55),
                       1,0)
                   </code>
-          </p>
       </div>
     </div><!--CARD BODY-->
 
@@ -117,12 +112,11 @@ List of signaled stocks
 
 </div> <!--CARD 2-->
 
-</br>
-</br>
 
 
-    <h3 id="signal_chart_section">Signals visualization</h3>
-    <hr>
+<h3 id="signal_chart_section">Signals visualization</h3>
+
+<div class="card mb-3 shadow bg-white rounded">
 
     You can enter one of the Symbols present in the table above to visualize the Signals.
     For now, only the stocks marked as signaled can be charted with the tool below.
@@ -140,6 +134,7 @@ List of signaled stocks
       Plotly.plot('SignalChart',graphs,{});
     </script>
     </div>
+</div>  <!--CARD 3-->
 
 </section>
 <p>
