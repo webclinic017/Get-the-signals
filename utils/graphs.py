@@ -51,7 +51,7 @@ def lineNBSignals(dfitems, spData):
 
     fig.update_traces(line_width=1.5)
     fig.update_layout(
-    title=f'Evolution of the number of signals over time',
+    #title=f'Evolution of the number of signals over time',
     plot_bgcolor='rgba(0,0,0,0)',
     )
 
