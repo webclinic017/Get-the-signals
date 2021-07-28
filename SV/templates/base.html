@@ -12,12 +12,12 @@
     <title>Get the signals.</title>
 </head>
 
-<body style="background-color: #F9FAFE">
+<body>
     
-    <div class="container margin-top-10">
         
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="main-nav">
-            <div class="container">
+            <div class="container-fluid" style="padding-right: 2%; padding-left: 3%;">
+            <!--https://stackoverflow.com/questions/8676455/flask-current-page-in-request-variable --> 
                 <a href="{{ url_for('home') }}" class="navbar-brand">GTS</a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -52,7 +52,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
   
-</div>
         {% block content %}
         {% endblock %}
 
