@@ -14,7 +14,8 @@
 
 <h3>Signals</h3>
 
-
+<div class="row">
+<div class="col-sm-9">
 <div class="card mb-3 shadow bg-white rounded">
 
   <div class="card-header">
@@ -27,24 +28,52 @@
           Plotly.plot('line',graphs,{});
         </script> 
       </div>
-  </div>  
+  </div>  <!--BODY-->
 
 
 
   <div class="card-footer">
-    <p>
-      {%if SP500evolFLOAT>0%}
-      <b>SP 500</b> evol. over the same period: 
-      <font color="green"><b>{{SP500evolFLOAT}}</b></font> % 
-      {%else%}
-      <b>SP 500</b> evol. over the same period: 
-      <font color="red"><b>{{SP500evolFLOAT}}</b></font> % 
-      {% endif %}
-    (<strong>{{spSTART}}</strong> to <strong>{{spEND}}</strong>)
-    </p>
-    </div>
+    Last update: {{spEND}}
+  </div><!--FOOTER-->
 
 </div> <!--CARD 1-->
+</div><!--COL END-->
+
+<div class="col-sm-3">
+
+  <div class="card mb-3 shadow bg-white rounded">
+    <div class="card-header">
+    Number of signals
+    </div><!--HEADER-->
+
+    <div class="card-body">
+     <p style="text-align: center; font-size: 20px; color: rgba(0, 128, 0, 0.849);"> {{nSignals}} </p>
+
+    </div> <!--BODY-->
+  </div><!--CARD-->
+
+
+  <div class="card">
+    <div class="card-header">
+      <b>SP 500</b> evol. over the same period
+      (<strong>{{spSTART}}</strong> to <strong>{{spEND}}</strong>)
+
+    </div><!--HEADER-->
+        <div class="card-body">
+          <p style="text-align: center; font-size: 20px;">
+            {%if SP500evolFLOAT>0%}
+            <font color="green">{{SP500evolFLOAT}}</b></font> % 
+            {%else%}
+            <b>SP 500</b> evol. over the same period: 
+            <font color="red">{{SP500evolFLOAT}}</font> % 
+            {% endif %}
+          </p>
+        </div> <!--BODY-->
+    </div><!--CARD-->
+
+</div><!--COL-->
+
+</div>  <!--ROW-->
 
 <div class="card mb-3 shadow bg-white rounded">
   <div class="card-header">
@@ -57,8 +86,6 @@ List of signaled stocks
 
       <div class="col-sm">
 
-                  <b>Number of signals:</b> {{nSignals}}
-                  </br>
                   <code>
                   # When 'Aroon Up' crosses 'Aroon Down' from below </br>
                   df["signal"][short_window:] =np.where(df['short_mavg'][short_window:] > df['long_mavg'][short_window:], 1,0)</br>
@@ -103,17 +130,22 @@ List of signaled stocks
   </table>
 
 
+  </div><!--SCROLL-->
 
-  </div>
 </div><!--CARD BODY-->
 
 </div> <!--CARD 2-->
 
 
 
-<h3 id="signal_chart_section">Signals visualization</h3>
 
 <div class="card mb-3 shadow bg-white rounded">
+
+  <div class="card-header">
+    Signals visualization
+  </div>
+  <div class="card-body p-3">
+
 
     You can enter one of the Symbols present in the table above to visualize the Signals.
     For now, only the stocks marked as signaled can be charted with the tool below.
@@ -131,7 +163,6 @@ List of signaled stocks
       Plotly.plot('SignalChart',graphs,{});
     </script>
     </div>
-</div>  <!--CARD 3-->
 
 </section>
 <p>
@@ -146,6 +177,9 @@ Therefore, the most convincing signals are those which are going to be contraria
 </p>
 
 
+</div><!--CARD BODY-->
+
+</div> <!--CARD 3-->
 
 </body>
 

@@ -74,5 +74,6 @@ html *
 }
 
 .card-header {
-  color:#008ed6;
+  color:#000000;
+  font-weight: normal !important;
 }
