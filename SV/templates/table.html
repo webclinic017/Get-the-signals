@@ -5,9 +5,7 @@
   <link href="../static/css/style_table.css" rel="stylesheet" type="text/css">
   <title>GTS-Table</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
   <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
-
 </head>
 
 <body id="Table_page" style="background-color: #F9FAFE;">
@@ -29,9 +27,6 @@
         </script> 
       </div>
   </div>  <!--BODY-->
-
-
-
   <div class="card-footer">
     Last update: {{spEND}}
   </div><!--FOOTER-->
@@ -53,7 +48,7 @@
   </div><!--CARD-->
 
 
-  <div class="card">
+  <div class="card mb-3 shadow bg-white rounded">
     <div class="card-header">
       <b>SP 500</b> evol. over the same period
       (<strong>{{spSTART}}</strong> to <strong>{{spEND}}</strong>)
@@ -183,11 +178,6 @@ Therefore, the most convincing signals are those which are going to be contraria
 
 </body>
 
-{%if changeSig%}
-
-<script type="text/javascript" src="../static/JS/table.js"></script>
-{%else%}
-{% endif %}
 
 {% include "base_dashboard.html" %}
 

@@ -1,10 +1,18 @@
+
+@font-face{
+  src: url(../fonts/Roboto-Light.ttf);
+  font-family: Roboto;
+}
+
+
 * {
   margin:0px;
   padding:0px;
   box-sizing:border-box;
+  font-family: Roboto;
 }
 
-#sidebar {
+#side-bar {
   position: fixed;
   /* top: 57px; */
   bottom: 0px;
@@ -16,16 +24,16 @@
   transition: all 300ms linear;
 }
 
-#sidebar.active {
+#side-bar.active {
   left:0px;
 }
 
-#sidebar .toggle-btn {
+#side-bar .toggle-btn {
   position:absolute;
   left:220px;
   top:10px;
 }
-#sidebar .toggle-btn span {
+#side-bar .toggle-btn span {
   display:block;
   width:20px;
   height: 2px;
@@ -35,14 +43,46 @@
 }
 
 
-#sidebar div.list div.item a{
+#side-bar div.menu div.item i{
+  margin-right: 15px;
+}
+
+
+#side-bar div.menu div.item a{
   display: block;
   padding:15px 10px;
   color:#ffffff;
   font-size:12px;
   text-decoration: none;
-  
 }
+
+
+
+#side-bar div.menu div.sub-menu{
+  background: rgba(130, 133, 182, 0.281);
+  width: 100%;
+  display: none;
+}
+
+
+#side-bar div.menu div.sub-menu a{
+  padding-left: 50px;
+}
+
+#side-bar div.menu div.sub-item a{
+  display: block;
+  padding:15px 10px;
+  color:#ffffff;
+  font-size:12px;
+  text-decoration: none;
+}
+
+
+#side-bar div.menu div.item a .dropdown{
+  position: absolute;
+  right: 0%;
+}
+
 
 a { color: #ffffff; 
   display: block;
@@ -50,7 +90,7 @@ a { color: #ffffff;
   text-decoration: none;
 } 
 
-#sidebar div.list div.item:hover {
+#side-bar div.menu div.item a:hover {
     text-decoration: none;
     color: #fff;
     background: rgba(255, 255, 255, 0.2);
