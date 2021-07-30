@@ -7,35 +7,42 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../static/css/style_dashboard.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+       
         <title>Get the signals.</title>
 
         </head>
 
 <body>
-    <body id="Dashboard_page">
-
-        <div id="sidebar">
+        <div id="side-bar">
             <div class="toggle-btn" onclick="toggleSidebar(this)">
               <span></span>
               <span></span>
               <span></span>
             </div>  
-            <div class="list">
-              <div class="item"><a href="{{ url_for('investInfra') }}">Investment Infrastructure</a></div>
-              <div class="item"><a href="{{ url_for('macroView') }}">Macro View</a></div>
-              <div class="item"><a href="{{ url_for('technicals') }}">Technicals</a></div>
-              <div class="item"><a href="{{ url_for('ownership') }}">Ownership</a></div>
-              <div class="item"><a href="{{ url_for('table') }}">Signals</a></div>
-              <div class="item"><a href="{{ url_for('portfolios') }}">Portfolios <font color="#32CD32">(to come)</font></a></div>
-              <div class="item"><a href="#">Buffet <font color="#32CD32">(to come)</font></a></div>
-              <div class="item"><a href="#">Trading Ideas <font color="#32CD32">(to come)</font></a></div>
-              <div class="item"><a href="/">Options Monitoring</a></div>
+            <div class="menu">
+              <div class="item"><a href="{{ url_for('investInfra') }}"><i class="fas fa-industry"></i>Investment Infrastructure</a></div>
+              <div class="item"><a href="{{ url_for('macroView') }}"><i class="fas fa-globe"></i>Macro View</a></div>
+              
+              <div class="item">
+                  <a class="sub-btn"><i class="fas fa-braille"></i>Data<i class="fas fa-angle-right dropdown"></i></a>
+                        <div class="sub-menu">
+                            <a href="{{ url_for('technicals') }}" class="sub-item">Technicals</a>    
+                            <a href="{{ url_for('ownership') }}" class="sub-item">Ownership</a>    
+                        </div>
+              </div>
+              <div class="item"><a href="{{ url_for('table') }}"><i class="fas fa-desktop"></i>Signals</a></div>
+              <div class="item"><a href="{{ url_for('portfolios') }}"><i class="fas fa-wallet"></i>Portfolios <font color="#32CD32">(to come)</font></a></div>
+              <div class="item"><a href="#"><i class="fas fa-book"></i>Buffet <font color="#32CD32">(to come)</font></a></div>
+              <div class="item"><a href="#"><i class="fas fa-lightbulb"></i>Trading Ideas <font color="#32CD32">(to come)</font></a></div>
+              <div class="item"><a href="#"><i class="fas fa-chart-line"></i>Options Monitoring</a></div>
               </div>
           </div>
         
+
           <script type="text/javascript" src="../static/JS/dashboard.js"></script>
 
 {% block content %}

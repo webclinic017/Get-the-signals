@@ -47,12 +47,6 @@
 }
 
 
-html *
-{
-   font-family: Roboto !important;
-}
-
 h3 {
   color:rgba(0, 132, 255, 0.952) !important;
-  font-family: Roboto;
 } 
