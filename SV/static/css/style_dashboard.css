@@ -16,8 +16,8 @@
   position: fixed;
   /* top: 57px; */
   bottom: 0px;
-  left: -200px;
-  width: 200px;
+  left: -250px;
+  width: 250px;
   height: calc(100% - 58px);
   background-image: linear-gradient(to bottom right,#252d38, #374d6b);
   opacity: 0.95;
@@ -30,12 +30,12 @@
 
 #side-bar .toggle-btn {
   position:absolute;
-  left:220px;
+  left:260px;
   top:10px;
 }
 #side-bar .toggle-btn span {
   display:block;
-  width:20px;
+  pywidth:20px;
   height: 2px;
   background: #2D3744;
   margin:5px 0px;
@@ -44,7 +44,10 @@
 
 
 #side-bar div.menu div.item i{
-  margin-right: 15px;
+  margin-right: 20px;
+  cursor:pointer;
+
+  padding-left: 15px;
 }
 
 
@@ -52,8 +55,10 @@
   display: block;
   padding:15px 10px;
   color:#ffffff;
-  font-size:12px;
+  font-size:13.5px;
   text-decoration: none;
+  cursor:pointer;
+
 }
 
 
@@ -62,16 +67,18 @@
   background: rgba(130, 133, 182, 0.281);
   width: 100%;
   display: none;
+  cursor:pointer;
+
 }
 
 
 #side-bar div.menu div.sub-menu a{
-  padding-left: 50px;
+  padding-left: 80px;
 }
 
 #side-bar div.menu div.sub-item a{
   display: block;
-  padding:15px 10px;
+  padding:15px 20Px;
   color:#ffffff;
   font-size:12px;
   text-decoration: none;
@@ -81,6 +88,7 @@
 #side-bar div.menu div.item a .dropdown{
   position: absolute;
   right: 0%;
+  padding-top: 2px;
 }
 
 
