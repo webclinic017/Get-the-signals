@@ -39,6 +39,7 @@ def autocomplete():
 
 @app.route('/')
 def home():
+    print(request.path)
     return render_template('home.html')
 
 @app.route('/register', methods=['GET', 'POST'])

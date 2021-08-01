@@ -16,9 +16,18 @@
 
 <body>
     
-        
+
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="main-nav">
+            {% if request.path=='/'%} 
+            <div class="container" style="padding-right: 2%; padding-left: 3%;">
+    
+            {% else %}
             <div class="container-fluid" style="padding-right: 2%; padding-left: 3%;">
+        
+            {% endif %}
+        
+           
+           
             <!--https://stackoverflow.com/questions/8676455/flask-current-page-in-request-variable --> 
                 <a href="{{ url_for('home') }}" class="navbar-brand">GTS</a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
