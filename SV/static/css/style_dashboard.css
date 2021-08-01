@@ -17,7 +17,7 @@
   /* top: 57px; */
   bottom: 0px;
   left: -250px;
-  width: 250px;
+  width: 260px;
   height: calc(100% - 58px);
   background-image: linear-gradient(to bottom right,#252d38, #374d6b);
   opacity: 0.95;
@@ -30,12 +30,12 @@
 
 #side-bar .toggle-btn {
   position:absolute;
-  left:260px;
+  left:270px;
   top:10px;
 }
 #side-bar .toggle-btn span {
   display:block;
-  pywidth:20px;
+  width:20px;
   height: 2px;
   background: #2D3744;
   margin:5px 0px;
