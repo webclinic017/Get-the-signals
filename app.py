@@ -35,11 +35,6 @@ class SearchForm(Form):
     validChartSignal = TextField('validChartSignal', id='validChartSignal')
 
 
-@app.route('/_autocomplete', methods=['GET'])
-def autocomplete():
-    stocksList = list(pd.read_csv('utils/stocks_list.csv').iloc[:, 1])
-    return Response(json.dumps(stocksList), mimetype='application/json')
-
 
 
 @app.route('/')
@@ -162,22 +157,6 @@ def STD_FUNC_TABLE_PAGE():
 ####------Standard functions and arguments for the table page------#
 
 
-@app.route('/table')
-@login_required
-def table():
-    """
-    Standard view for the "table" page
-    """
-    standard_args_table_page = STD_FUNC_TABLE_PAGE()
-
-    return render_template('table.html',
-    **standard_args_table_page)
-
-@app.route('/portfolios')
-@login_required
-def portfolios():
-    return render_template('portfolios.html')
-
 
 
 
@@ -207,17 +186,6 @@ def tuplesToCSV(Tuples):
     return reReconstructedCSV
 
 
-
-@app.route("/getCSV", methods=['GET'])
-@login_required
-def getCSV():
-    items = fetchSignals()
-    reReconstructedCSV = tuplesToCSV(Tuples=items)
-    return Response(
-        reReconstructedCSV,
-        mimetype="text/csv",
-        headers={"Content-disposition":
-                 "attachment; filename=signals.csv"})
 
 
 @app.route('/technicals')
@@ -283,21 +251,38 @@ def investInfra():
     return render_template('investInfra.html')
 
 
-@app.route('/about')
+
+@app.route('/portfolios')
 @login_required
-def about():
-    return render_template('about.html')
+def portfolios():
+    return render_template('portfolios.html')
 
 
 
-@app.route('/search')
+@app.route('/table')
 @login_required
-def search():
-    form = SearchForm(request.form)
-    
-    return render_template('search.html', form=form)
+def table():
+    """
+    Standard view for the "table" page
+    """
+    standard_args_table_page = STD_FUNC_TABLE_PAGE()
 
-        
+    return render_template('table.html',
+    **standard_args_table_page)
+
+
+@app.route("/getCSV", methods=['GET'])
+@login_required
+def getCSV():
+    items = fetchSignals()
+    reReconstructedCSV = tuplesToCSV(Tuples=items)
+    return Response(
+        reReconstructedCSV,
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                 "attachment; filename=signals.csv"})
+
+
 
 @app.route('/api/fetchSignalChartJsonData')
 @login_required
