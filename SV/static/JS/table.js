@@ -136,8 +136,7 @@ function fetchGraphData(apiURL, graphID, spinnerID, refreshBtnID, tsID) {
 function fetchSignalChartJsonData() {
     // Graph_2
     console.log("sending request for > signalChart < to server");
-    fetchGraphData(`http://127.0.0.1:5000/api/fetchSignalChartJsonData?tick=${jQuery('#inputTick').val().trim()}`, "signalChart", "loader_graph2", "refreshBtn_2", "graph_2_TS");
-
+    fetchGraphData(`/api/fetchSignalChartJsonData?tick=${jQuery('#inputTick').val().trim()}`, "signalChart", "loader_graph2", "refreshBtn_2", "graph_2_TS");
 }
 
 

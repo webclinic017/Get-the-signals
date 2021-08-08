@@ -21,46 +21,10 @@ from utils.db_manage import QuRetType, std_db_acc_obj
 import plotly.graph_objs as go
 
 
-"""
-import tempfile
-from pychromepdf import ChromePDF
-from flask import send_file
-PATH_TO_CHROME_EXE = '/usr/bin/google-chrome-stable'
-cpdf = ChromePDF(PATH_TO_CHROME_EXE)
-"""
-
-# custom pdf route
-@app.route('/getpdf',defaults={'username': 'John'})
-@app.route('/getpdf/<username>')
-def getpdf(username):
-
-    standard_args_table_page = STD_FUNC_TABLE_PAGE()
-
-    # get the rendered html as string using the template
-    rendered_html = render_template('home.html',username=username, **standard_args_table_page)
-
-    # create a temporary output file which will be deleted when closed
-    with tempfile.NamedTemporaryFile(suffix='.pdf') as output_file:
-
-        # create a pdf from the rendered html and write it to output_file
-        if cpdf.html_to_pdf(rendered_html,output_file):
-            print("PDF generated successfully: {0}".format(output_file.name))
-
-            try:
-                # send the file to user
-                return send_file(output_file.name,attachment_filename='awesome.pdf')
-            except Exception as e:
-                return str(e)
-        else:
-            print("Error creating PDF")
-
-    return "Error"
-                
 
 strToday = str(datetime.today().strftime('%Y-%m-%d'))
 magickey = os.environ.get('magickey')
 
-# https://www.youtube.com/watch?v=G8GAsYkZlpE&t=6s
 
 class SearchForm(Form):
     stock = TextField('Insert Stock', id='stock_autocomplete')
@@ -319,25 +283,7 @@ def getCSV():
         headers={"Content-disposition":
                  "attachment; filename=signals.csv"})
 
-"""
-@app.route("/dashPDF")
-def dashPDF():
-    standard_args_table_page = STD_FUNC_TABLE_PAGE()
-    rendered = render_template('table.html',
-    **standard_args_table_page)
 
-    wkhtmltopdf_options = {
-        'enable-local-file-access': None,
-    }
-
-    pdf = pdfkit.from_string(rendered, False, options = wkhtmltopdf_options)
-
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'filename=output.pdf'
-
-    return response
-"""
 
 @app.route('/api/fetchSignalChartJsonData')
 @login_required
@@ -478,4 +424,4 @@ def makeLinesSignal():
 
 if __name__ == '__main__':
     db_acc_obj = std_db_acc_obj()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
