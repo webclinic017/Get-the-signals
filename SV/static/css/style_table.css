@@ -42,19 +42,15 @@ overflow: auto;
 display: block;
 }
 
-/**
-.table{
-overflow-x: auto;
-font-size: 11px;
-}
 
-*/
 
 table {
   background: #012B39;
   border-radius: 0.25em;
   border-collapse: collapse;
+  width: 100%;
 }
+
 th {
   border-bottom: 1px solid #364043;
   color: #E2B842;
@@ -63,12 +59,14 @@ th {
   padding: 0.5em 1em;
   text-align: left;
 }
+
 td {
   color: #fff;
   font-weight: 200;
   padding: 0.65em 1em;
-  font-size: 12px;
+  font-size: 11px;
 }
+
 .disabled td {
   color: #4F5F64;
 }
