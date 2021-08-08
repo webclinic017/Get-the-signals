@@ -31,18 +31,6 @@
       <button type="submit" class="btn btn-primary mb-2">Confirm</button>
     </form>
 
-    <script>
-      $(function () {
-          $.ajax({
-              url: '{{ url_for("autocomplete") }}'
-          }).done(function (data) {
-              $('#stock_autocomplete').autocomplete({
-                  source: data,
-                  minLength: 2
-              });
-          });
-      });
-    </script>
 
 
 
