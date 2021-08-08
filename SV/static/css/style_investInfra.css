@@ -12,7 +12,7 @@ padding-right: 0%;
 #investInfra_page{
 padding-top: 100px;
 padding-right: 2%;
-padding-left: 260px;
+padding-left: 280px;
 }
 }
 
@@ -41,3 +41,19 @@ display: block;
 margin-left: auto;
 margin-right: auto;
 }
+
+
+.card, .card-body, .card-footer, .card-header{
+    border-radius:.800rem !important;
+  }
+  
+  /* top-left | top-right | bottom-right | bottom-left */
+  .card-header{
+    background-color: white;
+    border-radius: .800rem .800rem 0rem 0rem !important;
+  }
+  
+  .card-footer{
+    border-radius: 0rem 0rem .800rem .800rem !important;
+  }
+  
