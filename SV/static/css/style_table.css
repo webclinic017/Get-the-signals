@@ -108,6 +108,7 @@ h3 {
   border-radius:.800rem !important;
 }
 
+/* top-left | top-right | bottom-right | bottom-left */
 .card-header{
   background-color: white;
   border-radius: .800rem .800rem 0rem 0rem !important;
