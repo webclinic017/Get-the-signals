@@ -23,12 +23,6 @@
   font-family: Roboto;
 }
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-}
-
 
 .my-custom-scrollbar {
 margin-top: 4px;
@@ -36,15 +30,56 @@ position: relative;
 height: 700px;
 overflow: auto;
 }
+
+
+@media print {
+  .new-page {
+    page-break-before: always;
+  }
+}
+
 .table-wrapper-scroll-y {
 display: block;
 }
 
-
+/**
 .table{
 overflow-x: auto;
 font-size: 11px;
 }
+
+*/
+
+table {
+  background: #012B39;
+  border-radius: 0.25em;
+  border-collapse: collapse;
+}
+th {
+  border-bottom: 1px solid #364043;
+  color: #E2B842;
+  font-size: 0.85em;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+td {
+  color: #fff;
+  font-weight: 200;
+  padding: 0.65em 1em;
+  font-size: 12px;
+}
+.disabled td {
+  color: #4F5F64;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #014055;
+}
+
+
 
 .form{
 padding-right: 15px;
@@ -65,6 +100,19 @@ h3 {
   margin-right: auto;
 }
 
-.card-header {
-  color:#000000;
+
+
+
+
+.card, .card-body, .card-footer, .card-header{
+  border-radius:.800rem !important;
+}
+
+.card-header{
+  background-color: white;
+  border-radius: .800rem .800rem 0rem 0rem !important;
+}
+
+.card-footer{
+  border-radius: 0rem 0rem .800rem .800rem !important;
 }

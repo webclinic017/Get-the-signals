@@ -7,7 +7,6 @@
   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <link href="../static/css/style_table.css" rel="stylesheet" type="text/css">
-  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
 
   <!-- use minified version of libraries for production deployment -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -22,15 +21,15 @@
   <script src="{{ url_for('static', filename='/JS/table.js') }}" defer></script>
 </head>
 
-<body id="Table_page" style="background-color: #F9FAFE;">
+<body id="Table_page" style="background-color: #f3f6fd;">
 
 <h3>Signals</h3>
 
 <div class="row">
 <div class="col-sm-9">
-  <div class="card mb-3 shadow bg-white rounded">
 
-  <div class="card-header" style="background-color: white; border: none;">
+  <div class="card shadow">
+  <div class="card-header">
     Evolution of number of signals per day
   </div>
         <div class="card-body">
@@ -41,7 +40,7 @@
         </script> 
       </div>
   </div>  <!--BODY-->
-  <div class="card-footer" style="background-color: white; border: none;">
+  <div class="card-footer" style="background-color: white;">
     Last update: {{spEND}}
   </div><!--FOOTER-->
 
@@ -53,23 +52,20 @@
 
 <div class="col-sm-3">
 
-  <div class="card shadow bg-white rounded-1" style="border: none">
-    <div class="card-header" style="background-color: white; border: none;">
-      <p style="font-weight: bold; font-size: large; float: left;">
+  <div class="card shadow">
+    <div class="card-header">
       Number of signals
-      </p>
     </div><!--HEADER-->
 
     <div class="card-body">
      <p style="text-align: center; font-size: 20px; color: rgba(0, 128, 0, 0.849);"> {{nSignals}} </p>
-
     </div> <!--BODY-->
   </div><!--CARD-->
 
 </br>
 
-  <div class="card shadow bg-white rounded-1" style="border: none">
-    <div class="card-header" style="background-color: white; border: none;">
+  <div class="card shadow">
+    <div class="card-header">
       <b>SP 500</b> evol. over the same period
       (<strong>{{spSTART}}</strong> to <strong>{{spEND}}</strong>)
 
@@ -87,18 +83,16 @@
     </div><!--CARD-->
 
 </div><!--COL-->
-
 </div>  <!--ROW-->
 
-<div class="card shadow bg-white rounded-1" style="border: none">
-  <div class="card-header" style="background-color: white; border: none;">
+<div class="card shadow">
+  <div class="card-header">
     List of signaled stocks  
 </div>
 
-<div class="card-body p-3">
+<div class="card-body">
 
   <div class="row">
-
       <div class="col-sm">
 
                   <code>
@@ -125,11 +119,16 @@
 
   <div class="table-wrapper-scroll-y my-custom-scrollbar" >
 
+
+    <!-- 
   <table class="table table-dark table-sm table-striped table-hover" 
   style=max-width:100%;overflow:hidden;border:none;padding:0;margin:0 
   auto;display:block;" marginheight="0" marginwidth="0">
+-->
 
-    <thead class="thead-dark">
+<table style=max-width:100>
+
+    <thead>
       {% for col in colNames %}
       <th scope="col">{{ col }}</th>
       {% endfor %}
@@ -155,12 +154,22 @@
 </br>
 
 <!-- Signals visualization -->
+<p class="new-page"></p> <!-- FOR PDF BREAK -->
 
-<div class="card shadow bg-white rounded-1" style="border: none">
-  <br>
+<div class="card shadow">
   <!--CARD HEADER-->
-  <div class="card-header" style="background-color: white; border: none;">
-      <div>
+  <div class="card-header">
+              <!-- class="spinner-border" -->
+            <div id="loader_graph2" role="status" style="float: left;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p style="float: left;">
+                <img id="refreshBtn_2" src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v2.png"
+                    alt="Refresh Graph_2" data-toggle="tooltip" title="Click to Refresh Graph 2"
+                    onclick="fetchSignalChartJsonData()" />
+                  Signals visualization
+                <!-- class="spinner-border" will be added to spinner div while ajax request is waiting for response to be completed & once fully received class will be removed-->
+            </p>
           <div class="input-group mb-3" style="width: fit-content; float: right;">
               <span class="input-group-text" id="basic-addon1">Ticker</span>
               <input type="text" class="form-control" id="inputTick" placeholder="Enter Tick" aria-label="Tick"
@@ -168,18 +177,6 @@
               <button class="btn btn-outline-secondary" type="button" id="button-addon2"
                   onclick="fetchSignalChartJsonData()">Go</button>
           </div>
-          <!-- class="spinner-border" -->
-          <div id="loader_graph2" role="status" style="float: left;">
-              <span class="visually-hidden">Loading...</span>
-          </div>
-          <p style="font-weight: bold; font-size: large; float: left;">
-              <img id="refreshBtn_2" src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v2.png"
-                  alt="Refresh Graph_2" data-toggle="tooltip" title="Click to Refresh Graph 2"
-                  onclick="fetchSignalChartJsonData()" />
-                Signals visualization
-              <!-- class="spinner-border" will be added to spinner div while ajax request is waiting for response to be completed & once fully received class will be removed-->
-          </p>
-      </div>
   </div>
 
         <!--CARD BODY-->
