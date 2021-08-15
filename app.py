@@ -40,8 +40,10 @@ class SearchForm(Form):
 
 @app.route('/')
 def home():
-    print(request.path)
     return render_template('home.html')
+
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -258,6 +260,12 @@ def investInfra():
 def portfolios():
     return render_template('portfolios.html')
 
+
+
+@app.route('/ideas')
+@login_required
+def ideas():
+    return render_template('ideas.html')
 
 
 @app.route('/table')

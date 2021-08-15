@@ -2,15 +2,13 @@
 <html lang="en">
 
 
-    <!DOCTYPE html>
-    <html lang="en">
         <head>
             <meta charset="UTF-8">
             <link href="../static/css/style_dashboard.css" rel="stylesheet" type="text/css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-            <title>Get the signals.</title>
 
+            <title>Get the signals.</title>
         </head>
 
 <body>
@@ -32,10 +30,16 @@
                             <a href="{{ url_for('ownership') }}" class="sub-item">Ownership</a>    
                         </div>
               </div>
-              <div class="item"><a href="{{ url_for('table') }}"><i class="fas fa-desktop"></i>Signals</a></div>
-              <div class="item"><a href="{{ url_for('portfolios') }}"><i class="fas fa-wallet"></i>Portfolios <font color="#32CD32">(to come)</font></a></div>
+              <div class="item">
+                <a class="sub-btn"><i class="fas fa-broadcast-tower"></i>Signals<i class="fas fa-arrow-down dropdown"></i></a>
+                        <div class="sub-menu">
+                            <a href="{{ url_for('table') }}"></i>Reversal</a>
+                            <a href="{{ url_for('table') }}"></i>Short</a>
+                        </div>
+              </div>
+                <div class="item"><a href="{{ url_for('portfolios') }}"><i class="fas fa-wallet"></i>Portfolios <font color="#32CD32">(to come)</font></a></div>
+              <div class="item"><a href="{{ url_for('ideas') }}"><i class="fas fa-lightbulb"></i>Trading Ideas</font></a></div>
               <div class="item"><a href="#"><i class="fas fa-book"></i>Buffet <font color="#32CD32">(to come)</font></a></div>
-              <div class="item"><a href="#"><i class="fas fa-lightbulb"></i>Trading Ideas <font color="#32CD32">(to come)</font></a></div>
               <div class="item"><a href="#"><i class="fas fa-chart-line"></i>Options Monitoring</a></div>
               </div>
           </div>

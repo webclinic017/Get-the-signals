@@ -1,3 +1,4 @@
+
 body {
   background: rgb(255, 255, 255);
   color: rgb(49, 46, 46);
@@ -13,10 +14,7 @@ body {
 }
 
 
-
-@font-face{
-  src: url(../fonts/Roboto-Light.ttf);
-  font-family: Roboto;
+.navbar-nav > li{
+  padding-left:10px;
+  padding-right:10px;
 }
-
-
