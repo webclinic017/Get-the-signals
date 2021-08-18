@@ -16,7 +16,7 @@
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="main-nav">
             {% if request.path=='/'%} 
-            <div class="container" style="padding-right: 2%; padding-left: 3%;">
+            <div class="container">
             {% else %}
             <div class="container-fluid" style="padding-right: 2%; padding-left: 3%;">
             {% endif %}
@@ -30,21 +30,21 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a href="{{ url_for('home') }}" class="nav-link"><i class="fa fa-home"></i></a>
+                            <a href="{{ url_for('home') }}" class="nav-link"><i class="fa fa-home"></i><br>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url_for('table') }}" class="nav-link"><i class="fa fa-desktop"></i></a>
+                            <a href="{{ url_for('table') }}" class="nav-link"><i class="fa fa-desktop"></i><br>Dashboard</a>
                         </li>
                         {% if current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a href="{{ url_for('logout') }}" class="nav-link"><i class="fa fa-sign-out-alt"></i></a>
+                            <a href="{{ url_for('logout') }}" class="nav-link"><i class="fa fa-sign-out-alt"></i><br>Log Out</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a href="{{ url_for('login') }}" class="nav-link"><i class="fa fa-sign-in-alt"></i></a>
+                            <a href="{{ url_for('login') }}" class="nav-link"><i class="fa fa-sign-in-alt"></i><br>Log In</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url_for('register') }}" class="nav-link"><i class="fa fa-signature"></i></a>
+                            <a href="{{ url_for('register') }}" class="nav-link"><i class="fa fa-signature"></i><br>Sign In</a>
                         </li>
                         {% endif %}
                     </ul>
