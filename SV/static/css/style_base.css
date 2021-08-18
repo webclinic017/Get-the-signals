@@ -24,3 +24,8 @@ body {
   text-align: center;
   font-size: 15px;
 }
+
+
+.container.custom-container {
+  padding-left: 20%;
+}
