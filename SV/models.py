@@ -2,13 +2,7 @@ from sqlalchemy.orm import backref
 from SV import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
-# By inheriting the UserMixin we get access to a lot of built-in attributes
-# which we will be able to call in our views!
-# is_authenticated()
-# is_active()
-# is_anonymous()
-# get_id()
+from datetime import datetime
 
 
 # The user_loader decorator allows flask-login to load the current user
@@ -48,3 +42,18 @@ class User(db.Model, UserMixin):
 class TradingIdea(db.Model):
 
     users = db.relationship(User)
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    title = db.Column(db.String(140), nullable=False)
+    text = db.Column(db.Text(140), nullable=False)
+
+    def __init__(self, title, text, user_id):
+        self.title = title
+        self.text = text
+        self.user_id = user_id
+
+    def __repr__(self):
+        return f"Post ID: {self.id} -- Date: {self.date} -- {self.title}"
