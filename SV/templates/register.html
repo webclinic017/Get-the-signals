@@ -3,68 +3,76 @@
 
 
 <head>
-    <link href="/static/style_register.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/style_register.css" rel="stylesheet" type="text/css">
     <title>GTS-Registration</title>
 </head>
 
-<div class="container"> 
 
-    <body>
-        <div class="row">
-                <div class="col-sm">
-                    <h1>Create your GTS account </h1>
-                </div>
-            <div class="col-sm">
 
-                <div class="card-body">
-                    <form class=" orm form-horizontal" method="POST" role="form">
-                        <div class="form-group">
-                            {# This hidden_tag is a CSRF security feature. #}
-                            {{ form.hidden_tag() }}
 
-                            {{ form.email(class="form-control form-control-lg", placeholder="Email") }}
-                            {% if form.email.errors %}
-                                {% for error in form.email.errors %}
-                                {{ error }}
-                                {% endfor %}
-                                {% endif %}
-                        </div>
-                        <div class="form-group">
-                            {{ form.username(class="form-control form-control-lg", placeholder="Username") }}
-                            {% if form.username.errors %}
-                                {% for error in form.username.errors %}
-                                {{ error }}
-                                {% endfor %}
-                                {% endif %}
-                        </div>
-                        <div class="form-group">
-                            {{ form.password(class="form-control form-control-lg",placeholder="Password") }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.pass_confirm(class="form-control form-control-lg",placeholder="Confirm Password") }}
-                        </div>
-                        {% if magics==True %}
-                        <div class="form-group">
-                            {{ formW.mW(class="form-control form-control-lg",placeholder="Magic word") }}
-                        </div>
-                        {% else %}
-                        {{ formW.mW(class="form-control is-invalid form-control-lg",placeholder="Magic word (provided by admin.)") }}
-                        <div class="invalid-feedback">
-                            Please provide a valid keyword.
-                          </div>
-                        {% endif %}
+<div class="box vertical-center">
+    <div class="container"> 
 
-                        
-                        <div class="form-group">
+            <div class="row vertical-center">
+                    <div class="col-sm">
 
-                        {{ form.submit(class="btn btn-outline-dark btn-block") }}
+                        <h1>Create your GTS account </h1>
+
+                <p style="font-style: italic;">GTS website is by invitation only.
+                        </p>
                     </div>
+                <div class="col-sm">
 
-                    </form>
+                    <div class="card-body">
+                        <form class=" orm form-horizontal" method="POST" role="form">
+                            <div class="form-group">
+                                {# This hidden_tag is a CSRF security feature. #}
+                                {{ form.hidden_tag() }}
+
+                                {{ form.email(class="form-control form-control-lg", placeholder="Email") }}
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                    {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.username(class="form-control form-control-lg", placeholder="Username") }}
+                                {% if form.username.errors %}
+                                    {% for error in form.username.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                    {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.password(class="form-control form-control-lg",placeholder="Password") }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.pass_confirm(class="form-control form-control-lg",placeholder="Confirm Password") }}
+                            </div>
+                            {% if magics==True %}
+                            <div class="form-group">
+                                {{ formW.mW(class="form-control form-control-lg",placeholder="Magic word") }}
+                            </div>
+                            {% else %}
+                            {{ formW.mW(class="form-control is-invalid form-control-lg",placeholder="Magic word (provided by admin.)") }}
+                            <div class="invalid-feedback">
+                                Please provide a valid keyword.
+                            </div>
+                            {% endif %}
+
+                            
+                            <div class="form-group">
+
+                            {{ form.submit(class="btn btn-outline-dark btn-block") }}
+                        </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </body>
+        </body>
+    </div>
 </div>
 {% endblock %}
