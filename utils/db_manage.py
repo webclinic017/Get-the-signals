@@ -28,13 +28,13 @@ class QuRetType(Enum):
     - ALLASXLS (all data returned as pandas data frame and export excel)
     
     """
-    NONE = auto()       #nothing returned
-    FIRST = auto()      #first data set returned as tuple
-    ALL = auto()        #all data returned as list of tuples
-    ALLASPD = auto()    #all data returned as pandas data frame
-    ALLASCSV = auto()   #all data written to some csv file
-    ALLASXLS = auto()   #all data written to some xls file    
-    MANY = auto()   #all data written to some xls file    
+    NONE        = auto()       #nothing returned
+    FIRST       = auto()      #first data set returned as tuple
+    ALL         = auto()        #all data returned as list of tuples
+    ALLASPD     = auto()    #all data returned as pandas data frame
+    ALLASCSV    = auto()   #all data written to some csv file
+    ALLASXLS    = auto()   #all data written to some xls file    
+    MANY        = auto()   #all data written to some xls file    
 
 
 
@@ -46,10 +46,10 @@ class DBAccCM:
     """
     def __init__(self, dbname):
 
-        self.dbname = dbname
-        self.db_pass = os.environ.get('aws_db_pass')
-        self.db_user = os.environ.get('aws_db_user')
-        self.db_endp = os.environ.get('aws_db_endpoint')
+        self.dbname     = dbname
+        self.db_pass    = os.environ.get('aws_db_pass')
+        self.db_user    = os.environ.get('aws_db_user')
+        self.db_endp    = os.environ.get('aws_db_endpoint')
         
     def __enter__(self):        
         """

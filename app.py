@@ -2,9 +2,7 @@ from flask import render_template, Response, redirect, request, url_for, flash
 from flask.helpers import make_response
 from flask_login import login_user, login_required, logout_user
 from wtforms import TextField, Form
-import os
-import json
-import pandas as pd
+import os, json
 from datetime import datetime 
 
 from SV import app, db
@@ -12,10 +10,9 @@ from SV.models import User
 from SV.forms import LoginForm, RegistrationForm
 from utils.db_manage import std_db_acc_obj
 from utils.fetchData import fetchSignals, fetchTechnicals, fetchOwnership, sp500evol
-from utils.graphs import makeLinesSignal, makeOwnershipGraph, lineNBSignals
+from utils.graphs import makeOwnershipGraph, lineNBSignals
 
 
-import plotly
 from plotly.subplots import make_subplots
 from utils.db_manage import QuRetType, std_db_acc_obj
 import plotly.graph_objs as go
@@ -47,9 +44,9 @@ def home():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
-    formW = SearchForm(request.form)
-    magic = formW.mW.data
+    form            = RegistrationForm()
+    formW           = SearchForm(request.form)
+    magic           = formW.mW.data
     
     if form.validate_on_submit():
         if magic==magickey:
@@ -132,27 +129,26 @@ def STD_FUNC_TABLE_PAGE():
     average, items, spSTART, spEND, nSignals, dfSignals = fetchSignals(ALL=True)
     
     
-    std_sp = sp500evol(spSTART,spEND)
+    std_sp          = sp500evol(spSTART,spEND)
+    form            = SearchForm(request.form)
 
-    form = SearchForm(request.form)
-
-    dfSignals =  dfSignals[['SignalDate','ValidTick']].\
-        groupby('SignalDate').agg(['count']).droplevel(0, axis=1)
+    dfSignals       =  dfSignals[['SignalDate','ValidTick']].\
+                    groupby('SignalDate').agg(['count']).droplevel(0, axis=1)
 
     NbSigchart = lineNBSignals(dfSignals,std_sp.sp500Data)
     # This is the standard set of arguments used in every route page
     standard_args_table_page = dict(
-        average = average,
-        items = items,
-        strToday = strToday,
-        spSTART = spSTART,
-        spEND = std_sp.spEND,
-        SP500evolFLOAT = std_sp.fetchSPEvol(),
-        nSignals = nSignals,
-        NbSigchart=NbSigchart,
-        form = form,
-        colNames = colNames,
-        widthDF = list(range(len(colNames)))
+        average             = average,
+        items               = items,
+        strToday            = strToday,
+        spSTART             = spSTART,
+        spEND               = std_sp.spEND,
+        SP500evolFLOAT      = std_sp.fetchSPEvol(),
+        nSignals            = nSignals,
+        NbSigchart          = NbSigchart,
+        form                = form,
+        colNames            = colNames,
+        widthDF             = list(range(len(colNames)))
         )
 
     return standard_args_table_page
@@ -194,18 +190,18 @@ def tuplesToCSV(Tuples):
 @app.route('/technicals')
 @login_required
 def technicals():
-    form = SearchForm(request.form)
-    text = form.stock.data.upper()
-    items = fetchTechnicals()
+    form    = SearchForm(request.form)
+    text    = form.stock.data.upper()
+    items   = fetchTechnicals()
 
     return render_template('technicals.html',items=items, form=form)
     
 @app.route('/technicals', methods=['POST'])
 @login_required
 def submitTechnicals():
-    form = SearchForm(request.form)
-    text = form.stock.data.upper()
-    items = fetchTechnicals(text)
+    form    = SearchForm(request.form)
+    text    = form.stock.data.upper()
+    items   = fetchTechnicals(text)
 
     return render_template('technicals.html', 
     items=items,
@@ -216,11 +212,11 @@ def submitTechnicals():
 @app.route('/ownership')
 @login_required
 def ownership():
-    tick= 'PLUG'
-    form = SearchForm(request.form)
-    text = form.stock.data.upper()
-    items = fetchOwnership(tick)
-    plot = makeOwnershipGraph(items, tick)
+    tick    = 'PLUG'
+    form    = SearchForm(request.form)
+    text    = form.stock.data.upper()
+    items   = fetchOwnership(tick)
+    plot    = makeOwnershipGraph(items, tick)
 
     return render_template('ownership.html',
     items=items,
@@ -231,10 +227,10 @@ def ownership():
 @app.route('/ownership', methods=['POST'])
 @login_required
 def submitOwnership():
-    form = SearchForm(request.form)
-    text = form.stock.data.upper()
-    items = fetchOwnership(text)
-    plot = makeOwnershipGraph(items, text)
+    form    = SearchForm(request.form)
+    text    = form.stock.data.upper()
+    items   = fetchOwnership(text)
+    plot    = makeOwnershipGraph(items, text)
 
     return render_template('ownership.html', items=items,\
     form=form, stock=text,plot=plot)
@@ -327,6 +323,8 @@ def makeLinesSignal():
                         [{}],
                         [{}]
                         ])
+
+                        
     fig.add_trace(go.Candlestick(x=df.Date,open=df.Open,close=df.Close,low=df.Low,high=df.High),
                 row=1, col=1)
 
